@@ -37,7 +37,7 @@ MisoSOUPy
     Misophonia Stimuli Organization Using Python
 
 
-A longer description of your project goes here...
+A Python package to customize stimuli for experiments on misophonia based on participants' self-reported triggers.
 
 
 .. _pyscaffold-notes:
