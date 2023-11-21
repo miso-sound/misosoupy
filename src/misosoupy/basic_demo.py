@@ -64,7 +64,7 @@ with open(categorySpreadsheetFile, "r") as t:
         else:
             txtArray = np.vstack(
                 [txtArray, [soundCategory, soundLabel, soundSource, soundFile]]
-            )  # line_clean)
+            )
 
 # Save variables
 txtArray = txtArray[1:, :]
@@ -101,11 +101,11 @@ def ExpParameters():
     expInfo["psychopyVersion"] = psychopyVersion
 
     # Where data will save
-    dataDir = homeDir + os.sep + "data" + os.sep  # + expInfo['participant']
+    dataDir = homeDir + os.sep + "data" + os.sep
     if not os.path.isdir(dataDir):
         os.mkdir(dataDir)
 
-    return expInfo, dataDir  # outputFilename
+    return expInfo, dataDir
 
 
 # Show dialog box, save output variables to use elsewhere
@@ -608,7 +608,6 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
         resetText.draw()
         exitShape.draw()
         win.flip()
-        # core.wait(.5) #reset button press
 
         if Mouse.isPressedIn(exitShape):
             win.close()
@@ -805,8 +804,6 @@ presentInstructions(breakInstructions, 0)
 
 instr1 = "Now, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
 instr2 = "LEAST\n\n\n\n\n\n"
-# instr1='Now, please choose \nthe sounds you find the \n\n\n\n\nIf all of these sounds\nare pleasant/unpleasant, \ncontinue to the \nnext page.'
-# instr2='MOST NEUTRAL\n\n\n\n\n\n'
 
 leastTriggeringList = []
 for iPage in range(numPages):
