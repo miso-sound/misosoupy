@@ -140,9 +140,8 @@ def presentInstructions(instructionText, waitTime):
     # Prep instructions
     instructTxt1 = visual.TextStim(
         win, text=instructionText, pos=(0, 0), color=textColor, height=0.09, wrapWidth=6
-    )  # height=0.12, alignText='Left')
-    # # Prep Continue Button
-    # continueShape = visual.ShapeStim(win, vertices=((-.7, -.3), (-.7, .3), (.7, .3), (.7, -.3)), pos=(0, -.75), size=(1.5, .05), opacity=100, fillColor=continueShapeColor, lineColor=shapeLineColor,lineWidth=4.0)
+    )
+    # Prep Continue Button
     continueText = visual.TextStim(
         win,
         text="Click here to continue",
@@ -243,9 +242,7 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
     ]
     allScreenWords = []
     allBoxes = []
-    for iItem in range(
-        0, len(currPageItems)
-    ):  # (totalPicCount,totalPicCount+(numPicRows*numPicsPerRow)): #len(allDistTrialStim)):
+    for iItem in range(0, len(currPageItems)):
         if doneWithMostTriggering:
             if (
                 currPageItems[iItem] in mostTriggeringList
@@ -322,13 +319,13 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
     # # Prep Continue Button
     instructTxt1 = visual.TextStim(
         win, text=instr1, pos=(-0.7, 0.1), color=textColor, height=0.09, wrapWidth=6
-    )  # height=0.12, alignText='Left')
+    )
     instructTxt2 = visual.TextStim(
         win, text=instr2, pos=(-0.7, 0.05), color=instr2color, height=0.09, wrapWidth=6
-    )  # height=0.12, alignText='Left')
+    )
     instructTxt3 = visual.TextStim(
         win, text=instr3, pos=(-0.7, -0.85), color=textColor, height=0.09, wrapWidth=6
-    )  # height=0.12, alignText='Left')
+    )
     continueText = visual.TextStim(
         win,
         text="Click here to continue",
@@ -370,7 +367,6 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
         continueText.draw()
         exitShape.draw()
         win.flip()
-        # core.wait(.5) #reset button press
 
         if Mouse.isPressedIn(exitShape):
             win.close()
@@ -378,9 +374,7 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
 
         # Check for checkbox clicks
         for s in range(0, len(allBoxes)):
-            if Mouse.isPressedIn(
-                allBoxes[s]
-            ):  # button1shp.contains(Mouse): #Mouse.isPressedIn(button1shp):
+            if Mouse.isPressedIn(allBoxes[s]):
                 mouseDown = Mouse.getPressed()[0]
                 if (
                     mouseDown and not previousMouseDown
@@ -433,7 +427,6 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
         # Make Continue Button visible after 1s
         currTime = time.time()
         if currTime - startTime > pauseTime:
-            # if itemClicked == True:
             continueShape = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
@@ -527,9 +520,7 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
     allScreenWords = []
     allBoxes = []
     allChoices = []
-    for iItem in range(
-        0, len(items)
-    ):  # (totalPicCount,totalPicCount+(numPicRows*numPicsPerRow)): #len(allDistTrialStim)):
+    for iItem in range(0, len(items)):
         if (
             numCols > 1 and len(items[iItem]) > 16
         ):  # for long labels, decrease font size
@@ -567,10 +558,10 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
     # # Prep Continue Button
     instructTxt1 = visual.TextStim(
         win, text=instr1, pos=(-0.7, 0.1), color=textColor, height=0.09, wrapWidth=6
-    )  # height=0.12, alignText='Left')
+    )
     instructTxt2 = visual.TextStim(
         win, text=instr2, pos=(-0.7, 0.05), color=instr2color, height=0.09, wrapWidth=6
-    )  # height=0.12, alignText='Left')
+    )
     continueText = visual.TextStim(
         win,
         text="Click here to continue",
@@ -598,14 +589,10 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
     event.clearEvents()
     previousMouseDown = False
 
-    # itemRanks = [1,2,3,4,5]
     allRanksChosen = False
     currRank = 1  # 0
-    # itemClicked = False
     continueChosen = False
-    # resetChosen = False
     itemsChosen = [0 for i in range(len(items))]
-    # startTime = time.time()
     while continueChosen == False:
         for i in allScreenWords:
             i.draw()
@@ -615,8 +602,6 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
             c.draw()
         instructTxt1.draw()
         instructTxt2.draw()
-        # choiceTxt.draw()
-        # instructTxt3.draw()
         continueShape.draw()
         continueText.draw()
         resetShape.draw()
@@ -631,40 +616,29 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
 
         # Check for checkbox clicks
         for s in range(0, len(allBoxes)):
-            if Mouse.isPressedIn(
-                allBoxes[s]
-            ):  # button1shp.contains(Mouse): #Mouse.isPressedIn(button1shp):
+            if Mouse.isPressedIn(allBoxes[s]):
                 mouseDown = Mouse.getPressed()[0]
                 if (
                     mouseDown and not previousMouseDown
                 ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
                     if itemsChosen[s] == 0:  # item hasn't been chosen yet
-                        # if itemClicked==False:
-                        #     itemClicked=True
                         itemsChosen[s] = 1
                         allChoices[s].pos = allSquarePosValues[s]
                         allChoices[s].text = str(currRank)
-                        # choiceTxt.pos=allSquarePosValues[s]
-                        # choiceTxt.text=str(currRank)
-                        # choiceTxt.setAutoDraw(True)
                         if currRank == 5:
                             allRanksChosen = True
                         else:
                             currRank += 1
-                        # allBoxes[s]=visual.ShapeStim(win, vertices=((-.5, -.3), (-.5, .3), (.5, .3), (.5, -.3)), pos=allSquarePosValues[s], size=(squareSize*.5,squareSize*1.5), opacity=100, fillColor=shapeLineColor, lineColor=shapeLineColor,lineWidth=3.0)
                         core.wait(0.01)  # reset button press
 
                     elif (
                         itemsChosen[s] == 1
                     ):  # item was already chosen and is being de-selected
                         itemsChosen[s] = 0
-                        # choiceTxt.pos=(0,0) #allSquarePosValues[s]
-                        # choiceTxt.text=' '
                         allChoices[s].pos = (0, 0)
                         allChoices[s].text = " "
                         if currRank > 1:
                             currRank -= 1
-                        # allBoxes[s]=visual.ShapeStim(win, vertices=((-.5, -.3), (-.5, .3), (.5, .3), (.5, -.3)), pos=allSquarePosValues[s], size=(squareSize*.5,squareSize*1.5), opacity=100, fillColor=None, lineColor=shapeLineColor,lineWidth=3.0)
                     previousMouseDown = mouseDown
                     Mouse.clickReset()
                     event.clearEvents()
@@ -672,7 +646,6 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
                     previousMouseDown = False
 
         # Make Continue Button visible after 1s
-        # currTime=time.time()
 
         if sum(itemsChosen) != 0:  # if they've clicked something, give option to reset
             resetText = visual.TextStim(
@@ -691,7 +664,6 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
             )
 
         if Mouse.isPressedIn(resetShape):
-            # resetChosen = True
             itemsChosen = [0 for i in range(len(items))]
             currRank = 1
             continueShape = exitShape
@@ -700,8 +672,7 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
                 allChoices[r].pos = (0, 0)
                 allChoices[r].text = " "
 
-        if allRanksChosen:  # currTime-startTime > pauseTime:
-            # if itemClicked == True:
+        if allRanksChosen:
             continueShape = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
@@ -728,7 +699,6 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
                 j.draw()
             instructTxt1.draw()
             instructTxt2.draw()
-            # instructTxt3.draw()
             continueChosen = True
             continueShape.draw()
             continueText.draw()
@@ -767,11 +737,6 @@ win = visual.Window(
     colorSpace="rgb",
     units="norm",
 )
-# winType='pyglet', allowStencil=False,
-# monitor='testMonitor',
-# blendMode='avg', useFBO=True)
-# units='height')
-# win.mouseVisible = False
 
 instructions1 = (
     "In this experiment, you will listen to sounds."
@@ -797,8 +762,6 @@ presentInstructions(instructions1, 1)
 
 instr1 = "First, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf none of these sounds\nare triggering, \ncontinue to the \nnext page."
 instr2 = "MOST\n\n\n\n\n\n"
-# instr1='First, please choose \nthe sounds you find the \n\n\n\n\nIf none of these sounds\nare unpleasant, \ncontinue to the \nnext page.'
-# instr2='MOST UNPLEASANT\n\n\n\n\n\n'
 
 doneWithMostTriggering = False
 mostTriggeringList = []
@@ -821,7 +784,6 @@ instr1 = "Please rank the \n\nsounds you \nare triggered by. \n\n1 = more trigge
 instr2 = "TOP 5\n\n\n\n\n\n\n\n\n\n"
 
 refinedMostTriggeringList = []
-# refinedTriggerIdx=np.zeros(len(mostTriggeringList))
 [mostTriggeringList_refined, mostTriggering_ranks] = presentRefinedItemList(
     mostTriggeringList, pauseTime, instr1, instr2, "red"
 )
@@ -883,7 +845,7 @@ refinedLeastTriggeringList = sorted(refinedLeastTriggeringList)
 compileInstructions = "Please wait as we compile your chosen sounds...\n\nThe experiment will begin shortly!"
 instructTxt1 = visual.TextStim(
     win, text=compileInstructions, pos=(0, 0), color=textColor, height=0.09, wrapWidth=6
-)  # height=0.12, alignText='Left')
+)
 exitShape = visual.ShapeStim(
     win,
     vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
@@ -915,7 +877,6 @@ while soundsCompiled == False:
         core.quit()
 
     # Make output file to save selections
-    # filename = homeDir + u'data\%s_%s_%s_%s' % (expInfo['participant'], expName,'SoundSelect',expInfo['date'] + '.txt')
     filename = dataDir + "\%s_%s_%s_%s" % (
         expInfo["participant"],
         expName,
@@ -937,13 +898,6 @@ while soundsCompiled == False:
                 iMost,
                 file=textfile,
             )
-        # if round(mostTriggering_ranks[rankPos]) != 0:
-        #     mostRows=txtArray[(allSoundLabels==iMost),:]
-        #     for iRow in mostRows:
-        #         if iRow[4] != '1': # Don't use standard sounds in personalized list
-        #             currPath=homeDir+'\\allsounds\\BEHAV\\'+iRow[2]+'\\'+iRow[3]+'.wav'
-        #             mostTriggerCats.append(iMost)
-        #             mostTriggerPaths.append(currPath)
         rankPos += 1
 
     leastTriggerPaths = []
@@ -957,13 +911,6 @@ while soundsCompiled == False:
                 iLeast,
                 file=textfile,
             )
-        # if round(leastTriggering_ranks[rankPos]) != 0:
-        #     leastRows=txtArray[(allSoundLabels==iLeast),:]
-        #     for iRow in leastRows:
-        #         if iRow[4] != '1': # Don't use standard sounds in personalized list
-        #             currPath=homeDir+'\\allsounds\\BEHAV\\'+iRow[2]+'\\'+iRow[3]+'.wav'
-        #             leastTriggerCats.append(iLeast)
-        #             leastTriggerPaths.append(currPath)
         rankPos += 1
 
     # Save paths to excel for use in behav script
@@ -971,123 +918,8 @@ while soundsCompiled == False:
     leastPaths = np.array([leastTriggerPaths]).T
     mostCats = np.array([mostTriggerCats]).T
     leastCats = np.array([leastTriggerCats]).T
-    # standPaths=np.array([standardPaths]).T
-    allPaths = np.vstack([mostPaths, leastPaths])  # ,standPaths])
-    # df = DataFrame(allPaths.T,columns=['mysound'])
-    # filepath_save=homeDir+'\\sounds\\sounds_behav_HHtest.xlsx'
-    # df.to_excel(filepath_save,index=False)
-
-    # # Make sure folders are empty, then copy files to correct folder
-    # mostCopied=False
-    # trigFolder=homeDir+'\\allsounds\\BEHAV\\PARTICIPANT_behav_trigger_HHtest\\'
-    # if len(os.listdir(trigFolder)) > 1 and not mostCopied:
-    #     for f in Path(trigFolder).glob("*"):
-    #         if f.is_file():
-    #             f.unlink()
-    # for iMost in mostPaths:
-    #     mostPath=iMost[0]
-    #     mostName=mostPath.split('\\')[-1]
-    #     destinationPath=trigFolder+mostName #+'.wav'
-    #     shutil.copyfile(mostPath, destinationPath)
-    # mostCopied=True
-
-    # leastCopied=False
-    # neutFolder=homeDir+'\\allsounds\\BEHAV\\PARTICIPANT_behav_neutral_HHtest\\'
-    # if len(os.listdir(neutFolder)) > 1 and not leastCopied:
-    #     for f in Path(neutFolder).glob("*"):
-    #         if f.is_file():
-    #             f.unlink()
-    # for iLeast in leastPaths:
-    #     leastPath=iLeast[0]
-    #     leastName=leastPath.split('\\')[-1]
-    #     destinationPath=neutFolder+leastName #+'.wav'
-    #     shutil.copyfile(leastPath, destinationPath)
-    # leastCopied=True
-
-    # End waiting screen (Break while loop so files aren't added more than once)
+    allPaths = np.vstack([mostPaths, leastPaths])
     soundsCompiled = True
-
-
-# file_mappings = []
-
-# # Specify the source and destination folders
-# source_folder5 = "allsounds/BEHAV/PARTICIPANT_behav_neutral_HHtest"
-# destination_folder5 = "sounds/behav/soundneutralperso"
-
-# for file_name in os.listdir(destination_folder5):
-#     file_path = os.path.join(destination_folder5, file_name)
-#     if os.path.isfile(file_path):
-#         os.remove(file_path)
-
-# # Iterate over the files in the source folder
-# file_count = 0
-# for filename in os.listdir(source_folder5):
-#     if filename.endswith(".wav"):
-#         file_count += 1
-#         source_file = os.path.join(source_folder5, filename)
-#         destination_file = os.path.join(destination_folder5, f"sound_neutral_perso_{file_count}.wav")
-#         shutil.copyfile(source_file, destination_file)
-
-#         filename_short=filename[:-4] #remove '.wav'
-#         currCat=allSoundLabels[allSoundFiles==filename_short][0] #find corresponding label
-
-#         file_mappings.append(('NEUTRAL',currCat,filename, f"sound_neutral_perso_{file_count}.wav"))
-
-
-# print(f"Files successfully copied to {destination_folder5}!")
-
-# # Specify the source and destination folders
-# source_folder6 = "allsounds/BEHAV/PARTICIPANT_behav_trigger_HHtest"
-# destination_folder6 = "sounds/behav/soundtriggerperso"
-
-# for file_name in os.listdir(destination_folder6):
-#     file_path = os.path.join(destination_folder6, file_name)
-#     if os.path.isfile(file_path):
-#         os.remove(file_path)
-
-# # Iterate over the files in the source folder
-# file_count = 0
-# for filename in os.listdir(source_folder6):
-#     if filename.endswith(".wav"):
-#         file_count += 1
-#         source_file = os.path.join(source_folder6, filename)
-#         destination_file = os.path.join(destination_folder6, f"sound_trigger_perso_{file_count}.wav")
-#         shutil.copyfile(source_file, destination_file)
-
-#         filename_short=filename[:-4] #remove '.wav'
-#         currCat=allSoundLabels[allSoundFiles==filename_short][0] #find corresponding label
-
-#         file_mappings.append(('TRIGGER',currCat,filename, f"sound_trigger_perso_{file_count}.wav"))
-
-
-# print(f"Files successfully copied to {destination_folder6}!")
-
-
-# # Save reference excel files
-# # filename2 = dataDir +u'\%s_%s_%s_%s' % (expInfo['participant'], expName,'SoundMappings',expInfo['date'] + '.xlsx')
-# filename2 = dataDir +u'\%s_%s_%s_%s' % (expInfo['participant'], expName,'SoundMappings',expInfo['date'] + '.csv')
-# df = DataFrame(file_mappings,columns=['SOUND_TYPE','SOUND_LABEL','SOUND_FILENAME','EXPERIMENT_LABEL'])
-# # df.to_excel(filename2,index=False)
-# df.to_csv(filename2,index=False)
-
-# filename3 = homeDir+'\\sounds\\sounds_behav_HHtest.xlsx'
-
-# allSoundPaths=[]
-# for i in df.EXPERIMENT_LABEL:
-#     if 'trigger_perso' in i:
-#         subFolder='soundtriggerperso\\'
-#     elif 'neutral_perso' in i:
-#         subFolder='soundneutralperso\\'
-#     allSoundPaths.append(homeDir+'\\sounds\\behav\\'+subFolder+i)
-# # add standard sounds to file
-# for i in range(5):
-#     allSoundPaths.append(homeDir+'\\sounds\\behav\\soundtriggerstandard\\sound_trigger_stand_'+str(i+1)+'.wav')
-# for i in range(5):
-#     # allSoundPaths.append(homeDir+os.sep+'sounds'+os.sep+'behav'+os.sep+'neutralstandard'+os.sep+'neutral_stand_'+str(i+1)+'.wav')
-#     allSoundPaths.append(homeDir+'\\sounds\\behav\\soundneutralstandard\\sound_neutral_stand_'+str(i+1)+'.wav')
-
-# df2 = DataFrame(allSoundPaths,columns=['mysound'])
-# df2.to_excel(filename3,index=False)
 
 print("****************** READY TO START EXPERIMENT!")
 
@@ -1105,6 +937,4 @@ win.flip()
 
 logging.flush()
 # make sure everything is closed down
-
-
 exitOut()
