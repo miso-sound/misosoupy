@@ -7,17 +7,12 @@ Created on Thu Nov  2 10:53:23 2023
 
 from __future__ import division
 import time
-import glob
 import math
 
 # --- Import packages ---
 from psychopy import gui, visual, core, data, event, logging
 
-import shutil
 import numpy as np
-import csv
-from pandas import DataFrame
-from pathlib import Path
 import os  # handy system and path functions
 
 
