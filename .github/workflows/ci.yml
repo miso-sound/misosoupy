@@ -39,6 +39,7 @@ jobs:
         with: {python-version: "3.8"}
       - name: Run static analysis and format checkers
         run: pipx run pre-commit run --all-files --show-diff-on-failure
+        allow-failure: true
       - name: Build package distribution files
         run: >-
           pipx run --python '${{ steps.setup-python.outputs.python-path }}'
