@@ -94,7 +94,7 @@ def ExpParameters():
     }
     # --- Show participant info dialog --
     dlgBox = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
-    if dlgBox.OK == False:
+    if dlgBox.OK is False:
         core.quit()  # user pressed cancel
     expInfo["date"] = data.getDateStr()  # add a simple timestamp
     expInfo["expName"] = expName
@@ -173,7 +173,7 @@ def presentInstructions(instructionText, waitTime):
     exitShape.draw()
     win.flip()
     core.wait(waitTime)
-    while continueChosen == False:
+    while continueChosen is False:
         instructTxt1.draw()
         continueShape.draw()
         continueText.draw()
@@ -355,7 +355,7 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
     continueChosen = False
     itemsChosen = [0 for i in range(len(currPageItems))]
     startTime = time.time()
-    while continueChosen == False:
+    while continueChosen is False:
         for i in allScreenWords:
             i.draw()
         for j in allBoxes:
@@ -380,7 +380,7 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
                     mouseDown and not previousMouseDown
                 ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
                     if itemsChosen[s] == 0:  # item hasn't been chosen yet
-                        if itemClicked == False:
+                        if itemClicked is False:
                             itemClicked = True
                         itemsChosen[s] = 1
                         allBoxes[s] = visual.ShapeStim(
@@ -593,7 +593,7 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
     currRank = 1  # 0
     continueChosen = False
     itemsChosen = [0 for i in range(len(items))]
-    while continueChosen == False:
+    while continueChosen is False:
         for i in allScreenWords:
             i.draw()
         for j in allBoxes:
@@ -863,7 +863,7 @@ soundsCompiled = False
 instructTxt1.draw()
 win.flip()
 core.wait(2)
-while soundsCompiled == False:
+while soundsCompiled is False:
     instructTxt1.draw()
     exitShape.draw()
     win.flip()
