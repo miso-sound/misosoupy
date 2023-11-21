@@ -30,7 +30,7 @@
 |
 
 =========
-misosoupy
+MisoSOUPy
 =========
 
 
