@@ -40,12 +40,6 @@ participant=setup_misosoupy.get_participant_id() #creates global variable "parti
 global source_sound_list
 source_sound_list=setup_misosoupy.get_sound_list() #creates global variable "source_sound_list"
 
-#participant = 'TEST'
-#source_sound_list = "naturalsounds165" # "sound_list.csv" (FOAMS), "naturalsounds165"
-
-## Ensure that relative paths start from the same directory as this script
-#homeDir = os.path.dirname(os.path.abspath("__file__"))
-#os.chdir(homeDir)
 
 if step_importSoundList:
     import import_sound_list_v2
@@ -63,7 +57,6 @@ if step_selectSoundList or step_refineSoundList:
     textColor = "black"
     continueShapeColor = "gray"
     shapeLineColor = "black"
-    # itemHeight = 0.085
     squareOutlineSize = 0.12
     squareSize = 0.1
     numColumnsPerPage = 2
@@ -162,7 +155,7 @@ if step_selectSoundList or step_refineSoundList:
             )
             continueText = visual.TextStim(
                 win,
-                text="CONTINUE", #"Click here to continue",
+                text="CONTINUE", 
                 pos=(0.7, -0.85),
                 color=textColor,
                 height=0.08,
@@ -171,7 +164,7 @@ if step_selectSoundList or step_refineSoundList:
             if Mouse.isPressedIn(continueShape):
                 instructTxt1.draw()
                 continueShape.draw()
-                continueText.draw() 
+                continueText.draw()
                 win.flip()
                 continueChosen = True
     
@@ -205,7 +198,7 @@ if step_selectSoundList or step_refineSoundList:
             instr3='Page '+str(iPage+1)+'/'+str(numPages) 
             mostTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, iPage,pauseTime,instr1,instr2,'firebrick',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
             pageSeen[iPage]=True
-            mostTriggeringList_allPages[iPage]=mostTriggeringList_page # if len(mostTriggeringList_page)<numItemsPerPage: #last page has fewer items, can't stack if unequal lengths
+            mostTriggeringList_allPages[iPage]=mostTriggeringList_page 
         
             if backChosen_page: #if participant chooses back button
                 iPage-=1
@@ -236,7 +229,7 @@ if step_selectSoundList or step_refineSoundList:
                 instr3='Page '+str(iPage+1)+'/'+str(numPages) 
                 mostTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, iPage,pauseTime,instr1,instr2,'firebrick',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
                 pageSeen[iPage]=True
-                mostTriggeringList_allPages[iPage]=mostTriggeringList_page # if len(mostTriggeringList_page)<numItemsPerPage: #last page has fewer items, can't stack if unequal lengths
+                mostTriggeringList_allPages[iPage]=mostTriggeringList_page 
         
                 if backChosen_page: #if participant chooses back button
                     iPage-=1
@@ -294,7 +287,7 @@ if step_selectSoundList or step_refineSoundList:
             instr3='Page '+str(iPage+1)+'/'+str(numPages) 
             leastTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, iPage,pauseTime,instr6,instr7,'green',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
             pageSeen[iPage]=True
-            leastTriggeringList_allPages[iPage]=leastTriggeringList_page # if len(mostTriggeringList_page)<numItemsPerPage: #last page has fewer items, can't stack if unequal lengths
+            leastTriggeringList_allPages[iPage]=leastTriggeringList_page 
         
             if backChosen_page: #if participant chooses back button
                 iPage-=1
@@ -325,7 +318,7 @@ if step_selectSoundList or step_refineSoundList:
                 instr3='Page '+str(iPage+1)+'/'+str(numPages) 
                 leastTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win,iPage,pauseTime,instr6,instr7,'green',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
                 pageSeen[iPage]=True
-                leastTriggeringList_allPages[iPage]=leastTriggeringList_page # if len(mostTriggeringList_page)<numItemsPerPage: #last page has fewer items, can't stack if unequal lengths
+                leastTriggeringList_allPages[iPage]=leastTriggeringList_page 
         
                 if backChosen_page: #if participant chooses back button
                     iPage-=1
@@ -388,7 +381,6 @@ if step_organizeSounds:
         mostTriggerPaths = []
         rankPos = 0
         for iMost in mostTriggeringList:
-            # currPath = allSoundFiles[np.char.find(allSoundLabels,iMost) >= 0][0] #find returns -1 for paths not containing the label
             currPath = allSoundFiles[np.char.find(allSoundLabels,iMost) >= 0]
             with open(filename, "a") as textfile:
                 if step_refineTrigger:
@@ -412,7 +404,6 @@ if step_organizeSounds:
         leastTriggerPaths = []
         rankPos = 0
         for iLeast in leastTriggeringList:
-            # currPath = allSoundFiles[np.char.find(allSoundLabels,iLeast) > 0][0] #find returns -1 for paths not containing the label
             currPath = allSoundFiles[np.char.find(allSoundLabels,iLeast) >= 0]
             with open(filename, "a") as textfile:
                 if step_refineNeutral:

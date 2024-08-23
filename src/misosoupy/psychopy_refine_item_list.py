@@ -83,7 +83,7 @@ def presentRefinedItemList(meanLength,
                 - squareOutlineSize * 1.25 * (iYpos)
             )
 
-            allWordPosValues.append((currXpos + (0.35), currYpos))  # [iYpos]))
+            allWordPosValues.append((currXpos + (0.35), currYpos))  
             allSquarePosValues.append((currXpos - 0.2, currYpos))
 
     allScreenWords = []
@@ -91,7 +91,7 @@ def presentRefinedItemList(meanLength,
     allChoices = []
     for iItem in range(0, len(items)):
         if (
-            numCols > 1 and len(items[iItem]) > meanLength #16
+            numCols > 1 and len(items[iItem]) > meanLength 
         ):  # for long labels, decrease font size
             currItemHeight = refItemHeight - 0.005 #0.01
         else:
@@ -144,7 +144,7 @@ def presentRefinedItemList(meanLength,
     )
     continueText = visual.TextStim(
         win,
-        text="CONTINUE", #"Click here to continue",
+        text="CONTINUE", 
         pos=(0.7, -0.85),
         color=screenColor,
         height=0.08,
@@ -162,7 +162,7 @@ def presentRefinedItemList(meanLength,
     )
     exitText = visual.TextStim(
         win,
-        text="EXIT", #"Click here to continue",
+        text="EXIT", 
         pos=(.75, 0.9),
         color=textColor,
         height=0.08,
@@ -273,7 +273,7 @@ def presentRefinedItemList(meanLength,
             )
             continueText = visual.TextStim(
                 win,
-                text="CONTINUE", #"Click here to continue",
+                text="CONTINUE", 
                 pos=(0.7, -0.85),
                 color=textColor,
                 height=0.08,

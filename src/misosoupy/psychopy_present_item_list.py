@@ -50,7 +50,7 @@ def presentItemList(uniqueSoundLabels,
     allSquarePosValues = []
     for iXpos in range(numColumnsPerPage):
         currXpos = (
-           xPosCenter + 0.1 + 0.65 * (iXpos) # xPosCenter + 0.1 + 0.6 * (iXpos)
+           xPosCenter + 0.1 + 0.65 * (iXpos) 
         )  # first column starts at center, next shifts right
         for iYpos in range(numItemsPerColumn):
             currYpos = (
@@ -59,9 +59,7 @@ def presentItemList(uniqueSoundLabels,
                 - squareOutlineSize * 1.25 * (iYpos)
             )
 
-            # allWordPosValues.append((currXpos + 0.35, currYpos))  # [iYpos]))
-            # allSquarePosValues.append((currXpos - 0.2, currYpos))
-            allWordPosValues.append((currXpos + 0.3, currYpos))  # [iYpos]))
+            allWordPosValues.append((currXpos + 0.3, currYpos))  
             allSquarePosValues.append((currXpos - 0.25, currYpos))
 
     currPageItems = uniqueSoundLabels[
@@ -70,7 +68,7 @@ def presentItemList(uniqueSoundLabels,
     allScreenWords = []
     allBoxes = []
     for iItem in range(0, len(currPageItems)):
-        if len(currPageItems[iItem]) > meanLength: #16 # for long labels, decrease font size
+        if len(currPageItems[iItem]) > meanLength: # for long labels, decrease font size
             currItemHeight=itemHeight-0.005
         else:
             currItemHeight=itemHeight
@@ -170,7 +168,7 @@ def presentItemList(uniqueSoundLabels,
     )
     continueText = visual.TextStim(
         win,
-        text="CONTINUE", #"Click here to continue",
+        text="CONTINUE", 
         pos=(0.7, -0.85),
         color=screenColor,
         height=0.08,
@@ -189,7 +187,7 @@ def presentItemList(uniqueSoundLabels,
     )
     exitText = visual.TextStim(
         win,
-        text="EXIT", #"Click here to continue",
+        text="EXIT", 
         pos=(.75, 0.9),
         color=textColor,
         height=0.08,
@@ -214,7 +212,6 @@ def presentItemList(uniqueSoundLabels,
     itemClicked = False
     continueChosen = False
     backChosen = False
-    # itemsChosen = [0 for i in range(len(currPageItems))]
     startTime = time.time()
     while continueChosen is False and backChosen == False:
         for i in allScreenWords:
@@ -303,7 +300,7 @@ def presentItemList(uniqueSoundLabels,
             )
             continueText = visual.TextStim(
                 win,
-                text="CONTINUE", #"Click here to continue",
+                text="CONTINUE", 
                 pos=(0.7, -0.85),
                 color=textColor,
                 height=0.08,
