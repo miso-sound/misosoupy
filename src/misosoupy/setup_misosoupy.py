@@ -11,10 +11,10 @@ import os  # handy system and path functions
 
 # Ensure that relative paths start from the same directory as this script
 def get_home_dir():
-    homeDir = os.path.dirname(os.path.abspath("__file__")) #NOTE: needed to manually change directory to /src/misosoupy/, since pwd and os.path were returning the directory above?
-    os.chdir(homeDir)
+    home_dir = os.path.dirname(os.path.abspath("__file__")) #NOTE: needed to manually change directory to /src/misosoupy/, since pwd and os.path were returning the directory above?
+    os.chdir(home_dir)
 
-    return homeDir
+    return home_dir
 
 
 def get_participant_id():

@@ -14,289 +14,288 @@ import numpy as np
 # --- Import packages ---
 from psychopy import core, event, logging, visual
 
-def exitOut(win):
+def function_exit_out(win):
        logging.flush()
        win.close()
        core.quit()
 
-def presentRefinedItemList(meanLength,
-                           itemHeight,
-                           squareOutlineSize, 
-                           squareSize,
-                           textColor,
-                           screenColor, 
-                           continueShapeColor,
-                           shapeLineColor,
+def presentRefinedItemList(mean_length,
+                           setup_item_height,
+                           setup_square_outline_size, 
+                           setup_square_size,
+                           setup_text_color,
+                           setup_screen_color, 
+                           setup_continue_shape_color,
+                           setup_shape_line_color,
                            win,
                            items, 
                            pauseTime, 
-                           instr1, 
-                           instr2, 
-                           instr2color):
+                           instructions1, 
+                           instructions2, 
+                           instructions2_color):
     # Determine how many rows/columns are needed
-    numItems = len(items)
-    if numItems <= 12:
-        numCols = 1
-        numRows = numItems
-        refItemHeight = itemHeight
-        xPosCenter = 0  #
-        colGap = 0.6
-    elif numItems > 12 and numItems <= 24:
-        numCols = 2
-        numRows = math.ceil(numItems / 2)
-        xPosCenter = (
-            2 / numCols
+    num_items = len(items)
+    if num_items <= 12:
+        num_columns = 1
+        num_rows = num_items
+        refined_item_height = setup_item_height
+        x_position_center = 0  #
+        column_gap = 0.6
+    elif num_items > 12 and num_items <= 24:
+        num_columns = 2
+        num_rows = math.ceil(num_items / 2)
+        x_position_center = (
+            2 / num_columns
         ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale
-        refItemHeight = itemHeight
-        colGap = 0.6
-    elif numItems > 24 and numItems <= 36:
-        numCols = 3
-        numRows = math.ceil(numItems / 3)
-        refItemHeight = 0.075
-        xPosCenter = (
-            2 / numCols
+        refined_item_height = setup_item_height
+        column_gap = 0.6
+    elif num_items > 24 and num_items <= 36:
+        num_columns = 3
+        num_rows = math.ceil(num_items / 3)
+        refined_item_height = 0.075
+        x_position_center = (
+            2 / num_columns
         ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale
-        colGap = 0.45
-    elif numItems > 36:
-        numCols = 4
-        numRows = math.ceil(numItems / 4)
-        refItemHeight = 0.065
-        xPosCenter = (
-            2 / numCols
+        column_gap = 0.45
+    elif num_items > 36:
+        num_columns = 4
+        num_rows = math.ceil(num_items / 4)
+        refined_item_height = 0.065
+        x_position_center = (
+            2 / num_columns
         ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale
-        colGap = 0.35
+        column_gap = 0.35
 
-    yPosCenter = (
-        (numRows * refItemHeight) / 2
-    ) + refItemHeight * 5  # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
+    y_position_center = (
+        (num_rows * refined_item_height) / 2
+    ) + refined_item_height * 5  # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
 
-    allWordPosValues = []
-    allSquarePosValues = []
-    for iXpos in range(numCols):
-        currXpos = (
-            xPosCenter + 0.1 + colGap * (iXpos)
+    all_word_position_values = []
+    all_square_position_values = []
+    for iXpos in range(num_columns):
+        current_x_position = (
+            x_position_center + 0.1 + column_gap * (iXpos)
         )  # first column starts at center, next shifts right
-        for iYpos in range(numRows):
-            currYpos = (
-                yPosCenter
-                - (squareOutlineSize / 2)
-                - squareOutlineSize * 1.25 * (iYpos)
+        for iYpos in range(num_rows):
+            current_y_position = (
+                y_position_center
+                - (setup_square_outline_size / 2)
+                - setup_square_outline_size * 1.25 * (iYpos)
             )
 
-            allWordPosValues.append((currXpos + (0.35), currYpos))  
-            allSquarePosValues.append((currXpos - 0.2, currYpos))
+            all_word_position_values.append((current_x_position + (0.35), current_y_position))  
+            all_square_position_values.append((current_x_position - 0.2, current_y_position))
 
-    allScreenWords = []
-    allBoxes = []
-    allChoices = []
+    all_screen_words = []
+    all_boxes = []
+    all_choices = []
     for iItem in range(0, len(items)):
         if (
-            numCols > 1 and len(items[iItem]) > meanLength 
+            num_columns > 1 and len(items[iItem]) > mean_length 
         ):  # for long labels, decrease font size
-            currItemHeight = refItemHeight - 0.005 #0.01
+            current_item_height = refined_item_height - 0.005 #0.01
         else:
-            currItemHeight = refItemHeight
-        if len(items[iItem]) > meanLength*2: # for really long labels, put on two lines
-            currItemHeight=currItemHeight-0.005
-            currItemText_temp=items[iItem].replace("_", " ")
-            currSpaceIdx=[i for i in range(len(currItemText_temp)) if currItemText_temp.startswith(" ",i)]
-            if len(currSpaceIdx) > 4:
-                currItemBreakPoint=currSpaceIdx[3] #break on 4th space
+            current_item_height = refined_item_height
+        if len(items[iItem]) > mean_length*2: # for really long labels, put on two lines
+            current_item_height=current_item_height-0.005
+            current_item_text_temp=items[iItem].replace("_", " ")
+            current_space_index=[i for i in range(len(current_item_text_temp)) if current_item_text_temp.startswith(" ",i)]
+            if len(current_space_index) > 4:
+                current_item_break_point=current_space_index[3] #break on 4th space
             else:
-                currItemBreakPoint=currSpaceIdx[-1] #break on last space
-            currItemText=currItemText_temp[:currItemBreakPoint] + '\n\t' + currItemText_temp[currItemBreakPoint:]
+                current_item_break_point=current_space_index[-1] #break on last space
+            current_item_text=current_item_text_temp[:current_item_break_point] + '\n\t' + current_item_text_temp[current_item_break_point:]
         else:
-            currItemText=items[iItem].replace("_", " ")    
-        allScreenWords.append(
+            current_item_text=items[iItem].replace("_", " ")    
+        all_screen_words.append(
             visual.TextStim(
                 win,
-                text=currItemText,
-                pos=allWordPosValues[iItem],
-                color=instr2color,
-                height=currItemHeight,
+                text=current_item_text,
+                pos=all_word_position_values[iItem],
+                color=instructions2_color,
+                height=current_item_height,
                 alignText="Left",
             )
         )
-        allBoxes.append(
+        all_boxes.append(
             visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-                pos=allSquarePosValues[iItem],
-                size=(squareSize * 0.5, squareSize * 1.5),
+                pos=all_square_position_values[iItem],
+                size=(setup_square_size * 0.5, setup_square_size * 1.5),
                 opacity=100,
                 fillColor=None,
-                lineColor=shapeLineColor,
+                lineColor=setup_shape_line_color,
                 lineWidth=3.0,
             )
         )
-        allChoices.append(
+        all_choices.append(
             visual.TextStim(
-                win, text=" ", color=textColor, height=refItemHeight, bold=True
+                win, text=" ", color=setup_text_color, height=refined_item_height, bold=True
             )
         )
 
     # # Prep Continue Button
-    instructTxt1 = visual.TextStim(
-        win, text=instr1, pos=(-0.7, 0.1), color=textColor, height=0.09, wrapWidth=6
+    stim_text_instruction1 = visual.TextStim(
+        win, text=instructions1, pos=(-0.7, 0.1), color=setup_text_color, height=0.09, wrapWidth=6
     )
-    instructTxt2 = visual.TextStim(
-        win, text=instr2, pos=(-0.7, 0.05), color=instr2color, height=0.09, wrapWidth=6
+    stim_text_instruction2 = visual.TextStim(
+        win, text=instructions2, pos=(-0.7, 0.05), color=instructions2_color, height=0.09, wrapWidth=6
     )
-    continueText = visual.TextStim(
+    stim_text_continue = visual.TextStim(
         win,
         text="CONTINUE", 
         pos=(0.7, -0.85),
-        color=screenColor,
+        color=setup_screen_color,
         height=0.08,
     )
-    exitShape = visual.ShapeStim(
+    stim_shape_exit = visual.ShapeStim(
         win,
         vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
         pos=(.75, 0.9),
         size=(0.35, 0.2),
         opacity=100,
-        fillColor=screenColor,
-        lineColor=shapeLineColor,
+        fillColor=setup_screen_color,
+        lineColor=setup_shape_line_color,
         lineWidth=4.0,
-        name="exitShape",
+        name="stim_shape_exit",
     )
-    exitText = visual.TextStim(
+    stim_text_exit = visual.TextStim(
         win,
         text="EXIT", 
         pos=(.75, 0.9),
-        color=textColor,
+        color=setup_text_color,
         height=0.08,
     )
-    resetShape = exitShape  # just temp placeholders
-    resetText = continueText
-    continueShape = exitShape
+    stim_shape_reset = stim_shape_exit  # just temp placeholders
+    stim_text_reset = stim_text_continue
+    stim_shape_continue = stim_shape_exit
 
-    Mouse = event.Mouse(win=win, visible=True)
-    Mouse.clickReset()
+    mouse = event.Mouse(win=win, visible=True)
+    mouse.clickReset()
     event.clearEvents()
-    previousMouseDown = False
+    previous_mouse_down = False
 
-    allRanksChosen = False
-    currRank = 1  # 0
-    continueChosen = False
-    itemsChosen = [0 for i in range(len(items))]
-    while continueChosen is False:
-        for i in allScreenWords:
+    all_ranks_chosen = False
+    current_rank = 1  # 0
+    continue_chosen = False
+    items_chosen = [0 for i in range(len(items))]
+    while continue_chosen is False:
+        for i in all_screen_words:
             i.draw()
-        for j in allBoxes:
+        for j in all_boxes:
             j.draw()
-        for c in allChoices:
+        for c in all_choices:
             c.draw()
-        instructTxt1.draw()
-        instructTxt2.draw()
-        continueShape.draw()
-        continueText.draw()
-        resetShape.draw()
-        resetText.draw()
-        exitShape.draw()
-        exitText.draw()
+        stim_text_instruction1.draw()
+        stim_text_instruction2.draw()
+        stim_shape_continue.draw()
+        stim_text_continue.draw()
+        stim_shape_reset.draw()
+        stim_text_reset.draw()
+        stim_shape_exit.draw()
+        stim_text_exit.draw()
         win.flip()
 
-        if Mouse.isPressedIn(exitShape):
-            win.close()
-            core.quit()
+        if mouse.isPressedIn(stim_shape_exit):
+            function_exit_out()
 
         # Check for checkbox clicks
-        for s in range(0, len(allBoxes)):
-            if Mouse.isPressedIn(allBoxes[s]):
-                mouseDown = Mouse.getPressed()[0]
+        for s in range(0, len(all_boxes)):
+            if mouse.isPressedIn(all_boxes[s]):
+                mouse_down = mouse.getPressed()[0]
                 if (
-                    mouseDown and not previousMouseDown
+                    mouse_down and not previous_mouse_down
                 ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
-                    if itemsChosen[s] == 0:  # item hasn't been chosen yet
-                        itemsChosen[s] = 1
-                        allChoices[s].pos = allSquarePosValues[s]
-                        allChoices[s].text = str(currRank)
-                        if currRank == 5:
-                            allRanksChosen = True
+                    if items_chosen[s] == 0:  # item hasn't been chosen yet
+                        items_chosen[s] = 1
+                        all_choices[s].pos = all_square_position_values[s]
+                        all_choices[s].text = str(current_rank)
+                        if current_rank == 5:
+                            all_ranks_chosen = True
                         else:
-                            currRank += 1
+                            current_rank += 1
                         core.wait(0.01)  # reset button press
 
                     elif (
-                        itemsChosen[s] == 1
+                        items_chosen[s] == 1
                     ):  # item was already chosen and is being de-selected
-                        itemsChosen[s] = 0
-                        allChoices[s].pos = (0, 0)
-                        allChoices[s].text = " "
-                        if currRank > 1:
-                            currRank -= 1
-                    previousMouseDown = mouseDown
-                    Mouse.clickReset()
+                        items_chosen[s] = 0
+                        all_choices[s].pos = (0, 0)
+                        all_choices[s].text = " "
+                        if current_rank > 1:
+                            current_rank -= 1
+                    previous_mouse_down = mouse_down
+                    mouse.clickReset()
                     event.clearEvents()
                     core.wait(0.25)
-                    previousMouseDown = False
+                    previous_mouse_down = False
 
         # Make Continue Button visible after 1s
 
-        if sum(itemsChosen) != 0:  # if they've clicked something, give option to reset
-            resetText = visual.TextStim(
+        if sum(items_chosen) != 0:  # if they've clicked something, give option to reset
+            stim_text_reset = visual.TextStim(
                 win, text="RESET", pos=(-0.7, -0.85), color="white", height=0.08
             )
-            resetShape = visual.ShapeStim(
+            stim_shape_reset = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
                 pos=(-0.7, -0.85),
                 size=(0.3, 0.2),
                 opacity=100,
                 fillColor="black",
-                lineColor=shapeLineColor,
+                lineColor=setup_shape_line_color,
                 lineWidth=4.0,
-                name="continueShape",
+                name="stim_shape_continue",
             )
 
-        if Mouse.isPressedIn(resetShape):
-            itemsChosen = [0 for i in range(len(items))]
-            currRank = 1
-            continueShape = exitShape
-            continueText = resetText
-            for r in range(0, len(allBoxes)):
-                allChoices[r].pos = (0, 0)
-                allChoices[r].text = " "
+        if mouse.isPressedIn(stim_shape_reset):
+            items_chosen = [0 for i in range(len(items))]
+            current_rank = 1
+            stim_shape_continue = stim_shape_exit
+            stim_text_continue = stim_text_reset
+            for r in range(0, len(all_boxes)):
+                all_choices[r].pos = (0, 0)
+                all_choices[r].text = " "
 
-        if allRanksChosen:
-            continueShape = visual.ShapeStim(
+        if all_ranks_chosen:
+            stim_shape_continue = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
                 pos=(0.7, -0.85),
                 size=(0.45, 0.2),
                 opacity=100,
-                fillColor=continueShapeColor,
-                lineColor=shapeLineColor,
+                fillColor=setup_continue_shape_color,
+                lineColor=setup_shape_line_color,
                 lineWidth=4.0,
-                name="continueShape",
+                name="stim_shape_continue",
             )
-            continueText = visual.TextStim(
+            stim_text_continue = visual.TextStim(
                 win,
                 text="CONTINUE", 
                 pos=(0.7, -0.85),
-                color=textColor,
+                color=setup_text_color,
                 height=0.08,
             )
 
-        if Mouse.isPressedIn(continueShape):
-            for i in allScreenWords:
+        if mouse.isPressedIn(stim_shape_continue):
+            for i in all_screen_words:
                 i.draw()
-            for j in allBoxes:
+            for j in all_boxes:
                 j.draw()
-            instructTxt1.draw()
-            instructTxt2.draw()
-            continueChosen = True
-            continueShape.draw()
-            continueText.draw()
-            exitShape.draw()
-            exitText.draw()
+            stim_text_instruction1.draw()
+            stim_text_instruction2.draw()
+            continue_chosen = True
+            stim_shape_continue.draw()
+            stim_text_continue.draw()
+            stim_shape_exit.draw()
+            stim_text_exit.draw()
             win.flip()
 
-    allRanks = np.zeros(len(allChoices))
-    for i in range(len(allChoices)):
-        currItemRank = allChoices[i].text
-        if currItemRank != " ":
-            allRanks[i] = int(currItemRank)
+    all_ranks = np.zeros(len(all_choices))
+    for i in range(len(all_choices)):
+        current_item_rank = all_choices[i].text
+        if current_item_rank != " ":
+            all_ranks[i] = int(current_item_rank)
 
-    return itemsChosen, allRanks  # results are a list of 0s and 1s
+    return items_chosen, all_ranks  # results are a list of 0s and 1s

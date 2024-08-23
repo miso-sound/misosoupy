@@ -20,7 +20,7 @@ import numpy as np
 """
 
 ##############################################################################
-def function_import_sound_list(homeDir,participant,source):
+def function_import_sound_list(home_dir,participant,source):
     # Example:
         # source = "sound_list.csv", "naturalsounds165"
 
@@ -30,51 +30,51 @@ def function_import_sound_list(homeDir,participant,source):
     # Parse sound list source
     if os.path.isfile(source):
     
-        labelSpreadsheetFile = homeDir + os.sep + source
+        label_spreadsheet_file = home_dir + os.sep + source
 
         # Open sound spreadsheet
-        txtArray = np.array([])
-        with open(labelSpreadsheetFile, "r") as t:
+        text_array = np.array([])
+        with open(label_spreadsheet_file, "r") as t:
             for line in t:
                 line_clean = line[:-1]  # removes the new line characters from the end
                 row = line_clean.split(",")  # convert to list instead of string with commas
-                soundID = row[0]
-                soundLabel = row[1]
-                if len(txtArray) == 0:  # if first row, save as headers
-                    txtArray = np.array(row[0:])
+                sound_ID = row[0]
+                sound_label = row[1]
+                if len(text_array) == 0:  # if first row, save as headers
+                    text_array = np.array(row[0:])
                 else:
-                    txtArray = np.vstack(
-                        [txtArray, [soundID, soundLabel]]
+                    text_array = np.vstack(
+                        [text_array, [sound_ID, sound_label]]
                     )
                 # Save variables
-            txtArray = txtArray[1:, :]
-            allSoundFiles = txtArray[:, 0]
-            allSoundLabels = txtArray[:, 1]
+            text_array = text_array[1:, :]
+            all_sound_files = text_array[:, 0]
+            all_sound_labels = text_array[:, 1]
             
     elif os.path.isdir(source):
         
-        allSoundFiles=np.array([])
-        allSoundLabels=np.array([])
+        all_sound_files=np.array([])
+        all_sound_labels=np.array([])
         
         for item in os.listdir(source):
             if not item.startswith('.'):
-                allSoundFiles=np.append(allSoundFiles,item)
-                itemLabel_temp=item.partition('_')[2] #returns string after first underscore
-                itemLabel=itemLabel_temp.partition('.')[0] #returns string before file extension
-                allSoundLabels=np.append(allSoundLabels,itemLabel)
+                all_sound_files=np.append(all_sound_files,item)
+                item_label_temp=item.partition('_')[2] #returns string after first underscore
+                item_label=item_label_temp.partition('.')[0] #returns string before file extension
+                all_sound_labels=np.append(all_sound_labels,item_label)
         
     else:
         raise Exception("Can't parse sound list!")    
 
     
     # Count number of unique labels to present
-    uniqueSoundLabels = np.unique(allSoundLabels)
+    unique_sound_labels = np.unique(all_sound_labels)
     
-    print('Number of Sounds: ', len(allSoundFiles))
-    print('Number of Labels: ', len(uniqueSoundLabels))
-    print('Labels: ', list(uniqueSoundLabels)[0:10],'...\n' if len(uniqueSoundLabels)>10 else '\n') 
+    print('Number of Sounds: ', len(all_sound_files))
+    print('Number of Labels: ', len(unique_sound_labels))
+    print('Labels: ', list(unique_sound_labels)[0:10],'...\n' if len(unique_sound_labels)>10 else '\n') 
     
-    return allSoundFiles, allSoundLabels, uniqueSoundLabels
+    return all_sound_files, all_sound_labels, unique_sound_labels
 
 ##############################################################################
 

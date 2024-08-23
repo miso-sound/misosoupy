@@ -24,154 +24,153 @@ import os  # handy system and path functions
 import numpy as np
 
 # Set up preferences ################
-step_importSoundList = True
-step_selectSoundList = True
-step_selectTrigger, step_selectNeutral = True, True
-step_refineSoundList = True
-step_refineTrigger, step_refineNeutral = True, True
-step_organizeSounds = True
+step_import_sound_list = True
+step_select_sound_list = True
+step_select_trigger, step_select_neutral = True, True
+step_refine_sound_list = True
+step_refine_trigger, step_refine_neutral = True, True
+step_organize_sounds = True
 
 # Setup paths and IDs
 import setup_misosoupy
-global homeDir
-homeDir=setup_misosoupy.get_home_dir() #creates global variable "homeDir"
+global home_dir
+home_dir=setup_misosoupy.get_home_dir() #creates global variable "home_dir"
 global participant
 participant=setup_misosoupy.get_participant_id() #creates global variable "participant"
 global source_sound_list
 source_sound_list=setup_misosoupy.get_sound_list() #creates global variable "source_sound_list"
 
 
-if step_importSoundList:
+if step_import_sound_list:
     import import_sound_list_v2
-    [allSoundFiles, allSoundLabels, uniqueSoundLabels]=import_sound_list_v2.function_import_sound_list(homeDir,participant,source_sound_list) #'naturalsounds165' sound_list.csv
+    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list_v2.function_import_sound_list(home_dir,participant,source_sound_list) #'naturalsounds165' sound_list.csv
 else:
     raise Exception("Need sounds to select from!")    
     
-if step_selectSoundList or step_refineSoundList:
+if step_select_sound_list or step_refine_sound_list:
     from psychopy import core, event, logging, visual
     
-    fullScreenChoice = True  # make True during actual task
-    screenChoice = 0  # 2 #make 1 when only 1 monitor
-    screenSize = [1920, 1080]  # make [2048, 1152]
-    screenColor = "lightgray"
-    textColor = "black"
-    continueShapeColor = "gray"
-    shapeLineColor = "black"
-    squareOutlineSize = 0.12
-    squareSize = 0.1
-    numColumnsPerPage = 2
-    numItemsPerColumn = 10
-    pauseTime = 2  # stay on item screen for 2s before skipping
+    setup_full_screen_choice = True  # make True during actual task
+    setup_which_screen = 0  # 2 #make 1 when only 1 monitor
+    setup_screen_size = [1920, 1080]  # make [2048, 1152]
+    setup_screen_color = "lightgray"
+    setup_text_color = "black"
+    setup_continue_shape_color = "gray"
+    setup_shape_line_color = "black"
+    setup_square_outline_size = 0.12
+    setup_square_size = 0.1
+    num_columns_per_page = 2
+    num_items_per_column = 10
+    pause_time = 2  # stay on item screen for 2s before skipping
     
-    numSoundLabels = len(uniqueSoundLabels)
-    numItemsPerPage = numItemsPerColumn * numColumnsPerPage
-    numPages = math.ceil(numSoundLabels / numItemsPerPage)  # round up if not even
+    num_sound_labels = len(unique_sound_labels)
+    num_items_per_page = num_items_per_column * num_columns_per_page
+    num_pages = math.ceil(num_sound_labels / num_items_per_page)  # round up if not even
     
         # --- Setup the Window ---
     win = visual.Window(
-        size=screenSize,
-        fullscr=fullScreenChoice,
-        screen=screenChoice,
-        color=screenColor,
+        size=setup_screen_size,
+        fullscr=setup_full_screen_choice,
+        screen=setup_which_screen,
+        color=setup_screen_color,
         colorSpace="rgb",
         units="norm",
     )
     
     # find average length of labels
-    labelLengths=[]
-    for iLabel in uniqueSoundLabels:
-        labelLengths.append(len(iLabel))
-    meanLength=math.floor(sum(labelLengths)/numSoundLabels)
-    if meanLength > 10:
-        itemHeight = 0.08
+    label_lengths=[]
+    for iLabel in unique_sound_labels:
+        label_lengths.append(len(iLabel))
+    mean_length=math.floor(sum(label_lengths)/num_sound_labels)
+    if mean_length > 10:
+        setup_item_height = 0.08
     else:
-        itemHeight = 0.085
+        setup_item_height = 0.085
         
-    def exitOut():
+    def function_exit_out():
         logging.flush()
         win.close()
         core.quit()
         
         
-    def presentInstructions(instructionText, waitTime):
+    def function_present_instructions(instruction_text, wait_time):
         # Prep instructions
-        instructTxt1 = visual.TextStim(
-            win, text=instructionText, pos=(0, 0), color=textColor, height=0.09, wrapWidth=6
+        stim_text_instruction1 = visual.TextStim(
+            win, text=instruction_text, pos=(0, 0), color=setup_text_color, height=0.09, wrapWidth=6
         )
         # Prep Continue Button
-        continueText = visual.TextStim(
+        stim_text_continue = visual.TextStim(
             win,
             text="Click here to continue",
             pos=(0.7, -0.85),
-            color=screenColor,
+            color=setup_screen_color,
             height=0.08,
         )
-        exitShape = visual.ShapeStim(
+        stim_shape_exit = visual.ShapeStim(
             win,
             vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
             pos=(1, 1),
             size=(0.35, 0.35),
             opacity=100,
-            fillColor=screenColor,
+            fillColor=setup_screen_color,
             lineColor=None,
             lineWidth=4.0,
-            name="exitShape",
+            name="stim_shape_exit",
         )
-        continueShape = exitShape
+        stim_shape_continue = stim_shape_exit
     
-        Mouse = event.Mouse(win=win, visible=True)
-        Mouse.clickReset()
+        mouse = event.Mouse(win=win, visible=True)
+        mouse.clickReset()
         event.clearEvents()
     
-        continueChosen = False
-        instructTxt1.draw()
-        continueShape.draw()
-        continueText.draw()
-        exitShape.draw()
+        continue_chosen = False
+        stim_text_instruction1.draw()
+        stim_shape_continue.draw()
+        stim_text_continue.draw()
+        stim_shape_exit.draw()
         win.flip()
-        core.wait(waitTime)
-        while continueChosen is False:
-            instructTxt1.draw()
-            continueShape.draw()
-            continueText.draw()
-            exitShape.draw()
+        core.wait(wait_time)
+        while continue_chosen is False:
+            stim_text_instruction1.draw()
+            stim_shape_continue.draw()
+            stim_text_continue.draw()
+            stim_shape_exit.draw()
             win.flip()
     
-            if Mouse.isPressedIn(exitShape):
-                win.close()
-                core.quit()
+            if mouse.isPressedIn(stim_shape_exit):
+                function_exit_out()
     
             # Make Continue Button visible after 3 seconds
-            continueShape = visual.ShapeStim(
+            stim_shape_continue = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
                 pos=(0.7, -0.85),
                 size=(0.45, 0.2),
                 opacity=100,
-                fillColor=continueShapeColor,
-                lineColor=shapeLineColor,
+                fillColor=setup_continue_shape_color,
+                lineColor=setup_shape_line_color,
                 lineWidth=4.0,
-                name="continueShape",
+                name="stim_shape_continue",
             )
-            continueText = visual.TextStim(
+            stim_text_continue = visual.TextStim(
                 win,
                 text="CONTINUE", 
                 pos=(0.7, -0.85),
-                color=textColor,
+                color=setup_text_color,
                 height=0.08,
             )
     
-            if Mouse.isPressedIn(continueShape):
-                instructTxt1.draw()
-                continueShape.draw()
-                continueText.draw()
+            if mouse.isPressedIn(stim_shape_continue):
+                stim_text_instruction1.draw()
+                stim_shape_continue.draw()
+                stim_text_continue.draw()
                 win.flip()
-                continueChosen = True
+                continue_chosen = True
     
-    if step_selectTrigger:
+    if step_select_trigger:
         import psychopy_present_item_list
 
-        instructions1 = (
+        instructions_general = (
             "In this experiment, you will listen to sounds."
             + "\nIt is important that we use the most effective sounds for each participant."
             + "\n\nOn the next pages, you will see the names of sounds. \nPlease select the sounds "
@@ -180,248 +179,248 @@ if step_selectSoundList or step_refineSoundList:
             + "\nDo this by clicking the box next to the sound name."
             + "\n\nThere will be 5 pages for each prompt (most and least). \nTry to choose AT LEAST 4-5 sounds for each prompt."
         )
-        presentInstructions(instructions1, 1)
+        function_present_instructions(instructions_general, 1)
 
         
-        instr1='First, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf none of these \nsounds are triggering, \ncontinue to the \nnext page.'
-        instr2='MOST\n\n\n\n\n\n'
-        instrError='Please try that again.\n\nRemember, you must select at LEAST 5 sounds.'
+        instructions1='First, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf none of these \nsounds are triggering, \ncontinue to the \nnext page.'
+        instructions2='MOST\n\n\n\n\n\n'
+        instructions_error='Please try that again.\n\nRemember, you must select at LEAST 5 sounds.'
         
         
-        doneWithMostTriggering = False
+        done_with_most_triggering = False
         iPage=0
-        pageSeen=[False]*numPages
-        mostTriggeringList=[] 
-        mostTriggeringList_allPages=[[0] * numItemsPerPage] * numPages #initialize index with 0s
-        initSquares=[0] * numItemsPerPage #choices from previous page
-        while iPage < numPages:
-            instr3='Page '+str(iPage+1)+'/'+str(numPages) 
-            mostTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, iPage,pauseTime,instr1,instr2,'firebrick',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
-            pageSeen[iPage]=True
-            mostTriggeringList_allPages[iPage]=mostTriggeringList_page 
+        page_seen=[False]*num_pages
+        most_triggering_list=[] 
+        most_triggering_list_all_pages=[[0] * num_items_per_page] * num_pages #initialize index with 0s
+        initial_squares=[0] * num_items_per_page #choices from previous page
+        while iPage < num_pages:
+            instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
+            most_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions1,instructions2,'firebrick',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+            page_seen[iPage]=True
+            most_triggering_list_all_pages[iPage]=most_triggering_list_page 
         
-            if backChosen_page: #if participant chooses back button
+            if back_chosen_page: #if participant chooses back button
                 iPage-=1
-                initSquares=mostTriggeringList_allPages[iPage]
+                initial_squares=most_triggering_list_all_pages[iPage]
             else:
                 iPage+=1
-                if iPage < numPages and pageSeen[iPage]==True:
-                    initSquares=mostTriggeringList_allPages[iPage]
+                if iPage < num_pages and page_seen[iPage]==True:
+                    initial_squares=most_triggering_list_all_pages[iPage]
                 else:
-                    initSquares=[0] * numItemsPerPage
+                    initial_squares=[0] * num_items_per_page
         
-        mostTriggeringIdx_temp=np.array(mostTriggeringList_allPages)
-        mostTriggeringIdx=mostTriggeringIdx_temp.flatten() #vectorizes to single column       
-        for iItem in range(len(mostTriggeringIdx)):
-            if mostTriggeringIdx[iItem]==1:
-                mostTriggeringList.append(uniqueSoundLabels[iItem])
+        most_triggering_index_temp=np.array(most_triggering_list_all_pages)
+        most_triggering_index=most_triggering_index_temp.flatten() #vectorizes to single column       
+        for iItem in range(len(most_triggering_index)):
+            if most_triggering_index[iItem]==1:
+                most_triggering_list.append(unique_sound_labels[iItem])
         
         #check to make sure enough categories were chosen, if not redo
-        if len(mostTriggeringList)<5:
-            presentInstructions(instrError, 1)
+        if len(most_triggering_list)<5:
+            function_present_instructions(instructions_error, 1)
             
-            doneWithMostTriggering=False
+            done_with_most_triggering=False
             iPage=0
-            pageSeen=[False]*numPages
-            mostTriggeringList_allPages=[[0] * numItemsPerPage] * numPages #initialize index with 0s
-            initSquares=[0] * numItemsPerPage #choices from previous page
-            while iPage < numPages:
-                instr3='Page '+str(iPage+1)+'/'+str(numPages) 
-                mostTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, iPage,pauseTime,instr1,instr2,'firebrick',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
-                pageSeen[iPage]=True
-                mostTriggeringList_allPages[iPage]=mostTriggeringList_page 
+            page_seen=[False]*num_pages
+            most_triggering_list_all_pages=[[0] * num_items_per_page] * num_pages #initialize index with 0s
+            initial_squares=[0] * num_items_per_page #choices from previous page
+            while iPage < num_pages:
+                instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
+                most_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions1,instructions2,'firebrick',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+                page_seen[iPage]=True
+                most_triggering_list_all_pages[iPage]=most_triggering_list_page 
         
-                if backChosen_page: #if participant chooses back button
+                if back_chosen_page: #if participant chooses back button
                     iPage-=1
-                    initSquares=mostTriggeringList_allPages[iPage]
+                    initial_squares=most_triggering_list_all_pages[iPage]
                 else:
                     iPage+=1
-                    if iPage < numPages and pageSeen[iPage]==True:
-                        initSquares=mostTriggeringList_allPages[iPage]
+                    if iPage < num_pages and page_seen[iPage]==True:
+                        initial_squares=most_triggering_list_all_pages[iPage]
                     else:
-                        initSquares=[0] * numItemsPerPage
+                        initial_squares=[0] * num_items_per_page
             
-            mostTriggeringIdx_temp=np.array(mostTriggeringList_allPages)
-            mostTriggeringIdx=mostTriggeringIdx_temp.flatten() #vectorizes to single column
-            mostTriggeringList=[]        
-            for iItem in range(len(mostTriggeringIdx)):
-                if mostTriggeringIdx[iItem]==1:
-                    mostTriggeringList.append(uniqueSoundLabels[iItem])
+            most_triggering_index_temp=np.array(most_triggering_list_all_pages)
+            most_triggering_index=most_triggering_index_temp.flatten() #vectorizes to single column
+            most_triggering_list=[]        
+            for iItem in range(len(most_triggering_index)):
+                if most_triggering_index[iItem]==1:
+                    most_triggering_list.append(unique_sound_labels[iItem])
         
-        doneWithMostTriggering = True
+        done_with_most_triggering = True
 
-    if step_refineTrigger:
+    if step_refine_trigger:
         import psychopy_refine_item_list
         
-        breakInstructions1 = ('Great! \n\nOn the next page, you will see the sounds you selected. \n\nPlease choose your TOP 5 most triggering \nsounds from this list, and rank order them from \n1 (more triggering) to 5 (less triggering).')
-        instr4='Please rank the \n\nsounds you \nare triggered by. \n\n1 = more triggering\n5 = less triggering \n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page.'
-        instr5='TOP 5\n\n\n\n\n\n\n\n\n\n'
+        instructions_break1 = ('Great! \n\nOn the next page, you will see the sounds you selected. \n\nPlease choose your TOP 5 most triggering \nsounds from this list, and rank order them from \n1 (more triggering) to 5 (less triggering).')
+        instructions4='Please rank the \n\nsounds you \nare triggered by. \n\n1 = more triggering\n5 = less triggering \n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page.'
+        instructions5='TOP 5\n\n\n\n\n\n\n\n\n\n'
 
-        presentInstructions(breakInstructions1, 0)
+        function_present_instructions(instructions_break1, 0)
         
-        refinedMostTriggeringList = []
-        [mostTriggeringList_refined, mostTriggering_ranks] = psychopy_refine_item_list.presentRefinedItemList(meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, mostTriggeringList, pauseTime, instr4, instr5, "firebrick"
+        refined_most_triggering_list = []
+        [most_triggering_list_refined, most_triggering_ranks] = psychopy_refine_item_list.presentRefinedItemList(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, most_triggering_list, pause_time, instructions4, instructions5, "firebrick"
         )
-        for iItem in range(len(mostTriggeringList)):
-            if mostTriggeringList_refined[iItem] == 1:
-                refinedMostTriggeringList.append(
-                    [mostTriggering_ranks[iItem], mostTriggeringList[iItem]]
+        for iItem in range(len(most_triggering_list)):
+            if most_triggering_list_refined[iItem] == 1:
+                refined_most_triggering_list.append(
+                    [most_triggering_ranks[iItem], most_triggering_list[iItem]]
                 )
         
-        refinedMostTriggeringList = sorted(refinedMostTriggeringList)
+        refined_most_triggering_list = sorted(refined_most_triggering_list)
         
-    if step_selectNeutral:
-        breakInstructions2 = ('Next, you will repeat this process with sounds \nyou find the LEAST triggering or MOST NEUTRAL.')
-        instr6='Now, please choose \nthe sounds you \nfind most\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page.'
-        instr7='\nNEUTRAL\n\n\n\n\n'
+    if step_select_neutral:
+        instructions_break2 = ('Next, you will repeat this process with sounds \nyou find the LEAST triggering or MOST NEUTRAL.')
+        instructions6='Now, please choose \nthe sounds you \nfind most\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page.'
+        instructions7='\nNEUTRAL\n\n\n\n\n'
         
 
-        presentInstructions(breakInstructions2, 0)
+        function_present_instructions(instructions_break2, 0)
 
         
         iPage=0
-        pageSeen=[False]*numPages
-        leastTriggeringList_allPages=[[0] * numItemsPerPage] * numPages #initialize index with 0s
-        initSquares=[0] * numItemsPerPage #choices from previous page
-        while iPage < numPages:
-            instr3='Page '+str(iPage+1)+'/'+str(numPages) 
-            leastTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, iPage,pauseTime,instr6,instr7,'green',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
-            pageSeen[iPage]=True
-            leastTriggeringList_allPages[iPage]=leastTriggeringList_page 
+        page_seen=[False]*num_pages
+        least_triggering_list_all_pages=[[0] * num_items_per_page] * num_pages #initialize index with 0s
+        initial_squares=[0] * num_items_per_page #choices from previous page
+        while iPage < num_pages:
+            instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
+            least_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions6,instructions7,'green',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+            page_seen[iPage]=True
+            least_triggering_list_all_pages[iPage]=least_triggering_list_page 
         
-            if backChosen_page: #if participant chooses back button
+            if back_chosen_page: #if participant chooses back button
                 iPage-=1
-                initSquares=leastTriggeringList_allPages[iPage]
+                initial_squares=least_triggering_list_all_pages[iPage]
             else:
                 iPage+=1
-                if iPage < numPages and pageSeen[iPage]==True:
-                    initSquares=leastTriggeringList_allPages[iPage]
+                if iPage < num_pages and page_seen[iPage]==True:
+                    initial_squares=least_triggering_list_all_pages[iPage]
                 else:
-                    initSquares=[0] * numItemsPerPage
+                    initial_squares=[0] * num_items_per_page
         
-        leastTriggeringIdx_temp=np.array(leastTriggeringList_allPages)
-        leastTriggeringIdx=leastTriggeringIdx_temp.flatten() #vectorizes to single column
-        leastTriggeringList=[]        
-        for iItem in range(len(leastTriggeringIdx)):
-            if leastTriggeringIdx[iItem]==1:
-                leastTriggeringList.append(uniqueSoundLabels[iItem])
+        least_triggering_index_temp=np.array(least_triggering_list_all_pages)
+        least_triggering_index=least_triggering_index_temp.flatten() #vectorizes to single column
+        least_triggering_list=[]        
+        for iItem in range(len(least_triggering_index)):
+            if least_triggering_index[iItem]==1:
+                least_triggering_list.append(unique_sound_labels[iItem])
         
         #check to make sure enough categories were chosen, if not redo
-        if len(leastTriggeringList)<5:
-            presentInstructions(instrError, 1)
+        if len(least_triggering_list)<5:
+            function_present_instructions(instructions_error, 1)
             
             iPage=0
-            pageSeen=[False]*numPages
-            leastTriggeringList_allPages=[[0] * numItemsPerPage] * numPages #initialize index with 0s
-            initSquares=[0] * numItemsPerPage #choices from previous page
-            while iPage < numPages:
-                instr3='Page '+str(iPage+1)+'/'+str(numPages) 
-                leastTriggeringList_page,backChosen_page=psychopy_present_item_list.presentItemList(uniqueSoundLabels, numColumnsPerPage, numItemsPerColumn, numItemsPerPage, meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win,iPage,pauseTime,instr6,instr7,'green',instr3,initSquares,mostTriggeringList,doneWithMostTriggering)
-                pageSeen[iPage]=True
-                leastTriggeringList_allPages[iPage]=leastTriggeringList_page 
+            page_seen=[False]*num_pages
+            least_triggering_list_all_pages=[[0] * num_items_per_page] * num_pages #initialize index with 0s
+            initial_squares=[0] * num_items_per_page #choices from previous page
+            while iPage < num_pages:
+                instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
+                least_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win,iPage,pause_time,instructions6,instructions7,'green',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+                page_seen[iPage]=True
+                least_triggering_list_all_pages[iPage]=least_triggering_list_page 
         
-                if backChosen_page: #if participant chooses back button
+                if back_chosen_page: #if participant chooses back button
                     iPage-=1
-                    initSquares=leastTriggeringList_allPages[iPage]
+                    initial_squares=least_triggering_list_all_pages[iPage]
                 else:
                     iPage+=1
-                    if iPage < numPages and pageSeen[iPage]==True:
-                        initSquares=leastTriggeringList_allPages[iPage]
+                    if iPage < num_pages and page_seen[iPage]==True:
+                        initial_squares=least_triggering_list_all_pages[iPage]
                     else:
-                        initSquares=[0] * numItemsPerPage
+                        initial_squares=[0] * num_items_per_page
             
-            leastTriggeringIdx_temp=np.array(leastTriggeringList_allPages)
-            leastTriggeringIdx=leastTriggeringIdx_temp.flatten() #vectorizes to single column
-            leastTriggeringList=[]        
-            for iItem in range(len(leastTriggeringIdx)):
-                if leastTriggeringIdx[iItem]==1:
-                    leastTriggeringList.append(uniqueSoundLabels[iItem])
+            least_triggering_index_temp=np.array(least_triggering_list_all_pages)
+            least_triggering_index=least_triggering_index_temp.flatten() #vectorizes to single column
+            least_triggering_list=[]        
+            for iItem in range(len(least_triggering_index)):
+                if least_triggering_index[iItem]==1:
+                    least_triggering_list.append(unique_sound_labels[iItem])
                     
-    if step_refineNeutral:
+    if step_refine_neutral:
         
-        instr8='Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral \n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page.'
-        instr9='5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n'
+        instructions8='Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral \n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page.'
+        instructions9='5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n'
         
-        refinedLeastTriggeringList = []
-        [leastTriggeringList_refined, leastTriggering_ranks] = psychopy_refine_item_list.presentRefinedItemList(meanLength, itemHeight, squareOutlineSize, squareSize, textColor, screenColor, continueShapeColor, shapeLineColor, win, leastTriggeringList, pauseTime, instr8, instr9, "green")
-        for iItem in range(len(leastTriggeringList)):
-            if leastTriggeringList_refined[iItem] == 1:
-                refinedLeastTriggeringList.append(
-                    [leastTriggering_ranks[iItem], leastTriggeringList[iItem]]
+        refined_least_triggering_list = []
+        [least_triggering_list_refined, least_triggering_ranks] = psychopy_refine_item_list.presentRefinedItemList(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, least_triggering_list, pause_time, instructions8, instructions9, "green")
+        for iItem in range(len(least_triggering_list)):
+            if least_triggering_list_refined[iItem] == 1:
+                refined_least_triggering_list.append(
+                    [least_triggering_ranks[iItem], least_triggering_list[iItem]]
                 )
         
-        refinedLeastTriggeringList = sorted(refinedLeastTriggeringList)
+        refined_least_triggering_list = sorted(refined_least_triggering_list)
 
         
-    doneInstructions = ('Done!')
-    presentInstructions(doneInstructions, 0)
+    instructions_done = ('Done!')
+    function_present_instructions(instructions_done, 0)
     win.close()
 
-if step_organizeSounds:
+if step_organize_sounds:
     # Make output file to save selections
-    dataDir = homeDir + os.sep + 'Sound_Selections' + os.sep
-    if not os.path.isdir(dataDir):
-        os.makedirs(dataDir)
-    filename = dataDir + participant + '.txt' 
-    if os.path.isfile(filename) and participant != "TEST":
+    data_dir = home_dir + os.sep + 'Sound_Selections' + os.sep
+    if not os.path.isdir(data_dir):
+        os.makedirs(data_dir)
+    file_name = data_dir + participant + '.txt' 
+    if os.path.isfile(file_name) and participant != "TEST":
         if participant != "TEST":
             raise Exception('Sound Selections file for this participant already exists! Choose a different participant name.')
         else: 
-            os.remove(filename)
+            os.remove(file_name)
    
         
-    with open(filename, "w") as textfile:
-        if step_refineSoundList:
+    with open(file_name, "w") as textfile:
+        if step_refine_sound_list:
             print("SOUND_TYPE\t", "RANK\t", "SOUND_LABEL\t\t", "FILE_NAME(S)", file=textfile)
         else:
             print("SOUND_TYPE\t", "SOUND_LABEL\t\t", "FILE_NAME(S)", file=textfile)
 
     # Cycle through selections to grab path names
-    if step_selectTrigger:
-        mostTriggerPaths = []
-        rankPos = 0
-        for iMost in mostTriggeringList:
-            currPath = allSoundFiles[np.char.find(allSoundLabels,iMost) >= 0]
-            with open(filename, "a") as textfile:
-                if step_refineTrigger:
+    if step_select_trigger:
+        most_trigger_paths = []
+        rank_position = 0
+        for iMost in most_triggering_list:
+            current_path = all_sound_files[np.char.find(all_sound_labels,iMost) >= 0]
+            with open(file_name, "a") as textfile:
+                if step_refine_trigger:
                     print(
                         "Trigger\t\t",
-                        str(round(mostTriggering_ranks[rankPos])) + "\t",
+                        str(round(most_triggering_ranks[rank_position])) + "\t",
                         iMost + "\t\t",
-                        currPath.tolist(),
+                        current_path.tolist(),
                         file=textfile,
                     )
                 else:
                     print(
                         "Trigger\t\t",
                         iMost + "\t\t",
-                        currPath,
+                        current_path,
                         file=textfile,
                     )
-            rankPos += 1
+            rank_position += 1
 
-    if step_selectNeutral:
-        leastTriggerPaths = []
-        rankPos = 0
-        for iLeast in leastTriggeringList:
-            currPath = allSoundFiles[np.char.find(allSoundLabels,iLeast) >= 0]
-            with open(filename, "a") as textfile:
-                if step_refineNeutral:
+    if step_select_neutral:
+        least_trigger_paths = []
+        rank_position = 0
+        for iLeast in least_triggering_list:
+            current_path = all_sound_files[np.char.find(all_sound_labels,iLeast) >= 0]
+            with open(file_name, "a") as textfile:
+                if step_refine_neutral:
                     print(
                         "Neutral\t\t",
-                        str(round(leastTriggering_ranks[rankPos])) + "\t",
+                        str(round(least_triggering_ranks[rank_position])) + "\t",
                         iLeast + "\t\t",
-                        currPath.tolist(),
+                        current_path.tolist(),
                         file=textfile,
                     )
                 else:
                     print(
                         "Neutral\t\t",
                         iLeast + "\t\t",
-                        currPath.tolist(),
+                        current_path.tolist(),
                         file=textfile,
                     )
-            rankPos += 1
+            rank_position += 1
 
     
 print("****************** Misosoupy is finished!")

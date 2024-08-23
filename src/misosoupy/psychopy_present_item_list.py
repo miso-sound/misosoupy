@@ -12,238 +12,238 @@ import time
 # --- Import packages ---
 from psychopy import core, event, visual, logging
 
-def exitOut(win):
+def function_exit_out(win):
        logging.flush()
        win.close()
        core.quit()
        
-def presentItemList(uniqueSoundLabels, 
-                    numColumnsPerPage, 
-                    numItemsPerColumn, 
-                    numItemsPerPage, 
-                    meanLength, 
-                    itemHeight, 
-                    squareOutlineSize, 
-                    squareSize,
-                    textColor, 
-                    screenColor,
-                    continueShapeColor,
-                    shapeLineColor, 
+def presentItemList(unique_sound_labels, 
+                    num_columns_per_page, 
+                    num_items_per_column, 
+                    num_items_per_page, 
+                    mean_length, 
+                    setup_item_height, 
+                    setup_square_outline_size, 
+                    setup_square_size,
+                    setup_text_color, 
+                    setup_screen_color,
+                    setup_continue_shape_color,
+                    setup_shape_line_color, 
                     win, 
-                    pageNum, 
-                    pauseTime, 
-                    instr1, 
-                    instr2, 
-                    instr2color, 
-                    instr3, 
-                    initSquares, 
-                    mostTriggeringList, 
-                    doneWithMostTriggering):
-    xPosCenter = (
-        2 / numColumnsPerPage
+                    page_num, 
+                    pause_time, 
+                    instructions1, 
+                    instructions2, 
+                    instructions2_color, 
+                    instructions3, 
+                    initial_squares, 
+                    most_triggering_list, 
+                    done_with_most_triggering):
+    x_position_center = (
+        2 / num_columns_per_page
     ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale
-    yPosCenter = (
-        (numItemsPerColumn * itemHeight) / 2
-    ) + itemHeight * 4.5  # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
+    y_position_center = (
+        (num_items_per_column * setup_item_height) / 2
+    ) + setup_item_height * 4.5  # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
 
-    allWordPosValues = []
-    allSquarePosValues = []
-    for iXpos in range(numColumnsPerPage):
-        currXpos = (
-           xPosCenter + 0.1 + 0.65 * (iXpos) 
+    all_word_position_values = []
+    all_square_position_values = []
+    for iXpos in range(num_columns_per_page):
+        current_x_position = (
+           x_position_center + 0.1 + 0.65 * (iXpos) 
         )  # first column starts at center, next shifts right
-        for iYpos in range(numItemsPerColumn):
-            currYpos = (
-                yPosCenter
-                - (squareOutlineSize / 2)
-                - squareOutlineSize * 1.25 * (iYpos)
+        for iYpos in range(num_items_per_column):
+            current_y_position = (
+                y_position_center
+                - (setup_square_outline_size / 2)
+                - setup_square_outline_size * 1.25 * (iYpos)
             )
 
-            allWordPosValues.append((currXpos + 0.3, currYpos))  
-            allSquarePosValues.append((currXpos - 0.25, currYpos))
+            all_word_position_values.append((current_x_position + 0.3, current_y_position))  
+            all_square_position_values.append((current_x_position - 0.25, current_y_position))
 
-    currPageItems = uniqueSoundLabels[
-        0 + pageNum * numItemsPerPage : numItemsPerPage + pageNum * numItemsPerPage
+    current_page_items = unique_sound_labels[
+        0 + page_num * num_items_per_page : num_items_per_page + page_num * num_items_per_page
     ]
-    allScreenWords = []
-    allBoxes = []
-    for iItem in range(0, len(currPageItems)):
-        if len(currPageItems[iItem]) > meanLength: # for long labels, decrease font size
-            currItemHeight=itemHeight-0.005
+    all_screen_words = []
+    all_boxes = []
+    for iItem in range(0, len(current_page_items)):
+        if len(current_page_items[iItem]) > mean_length: # for long labels, decrease font size
+            current_item_height=setup_item_height-0.005
         else:
-            currItemHeight=itemHeight
-        if len(currPageItems[iItem]) > meanLength*2: # for really long labels, put on two lines
-            currItemHeight=currItemHeight-0.005
-            currItemText_temp=currPageItems[iItem].replace("_", " ")
-            currSpaceIdx=[i for i in range(len(currItemText_temp)) if currItemText_temp.startswith(" ",i)]
-            if len(currSpaceIdx) > 4:
-                currItemBreakPoint=currSpaceIdx[3] #break on 4th space
+            current_item_height=setup_item_height
+        if len(current_page_items[iItem]) > mean_length*2: # for really long labels, put on two lines
+            current_item_height=current_item_height-0.005
+            current_item_text_temp=current_page_items[iItem].replace("_", " ")
+            current_space_index=[i for i in range(len(current_item_text_temp)) if current_item_text_temp.startswith(" ",i)]
+            if len(current_space_index) > 4:
+                current_item_break_point=current_space_index[3] #break on 4th space
             else:
-                currItemBreakPoint=currSpaceIdx[-1] #break on last space
-            currItemText=currItemText_temp[:currItemBreakPoint] + '\n\t' + currItemText_temp[currItemBreakPoint:]
+                current_item_break_point=current_space_index[-1] #break on last space
+            current_item_text=current_item_text_temp[:current_item_break_point] + '\n\t' + current_item_text_temp[current_item_break_point:]
         else:
-            currItemText=currPageItems[iItem].replace("_", " ")
-        if doneWithMostTriggering:
+            current_item_text=current_page_items[iItem].replace("_", " ")
+        if done_with_most_triggering:
             if (
-                currPageItems[iItem] in mostTriggeringList
+                current_page_items[iItem] in most_triggering_list
             ):  # make sounds already chosen unclickable
-                allScreenWords.append(
+                all_screen_words.append(
                     visual.TextStim(
                         win,
-                        text=currItemText,
-                        pos=allWordPosValues[iItem],
+                        text=current_item_text,
+                        pos=all_word_position_values[iItem],
                         color="gray",
-                        height=currItemHeight,
+                        height=current_item_height,
                         alignText="Left",
                     )
                 )
-                allBoxes.append(
+                all_boxes.append(
                     visual.ShapeStim(
                         win,
                         vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-                        pos=allSquarePosValues[iItem],
+                        pos=all_square_position_values[iItem],
                         size=(0, 0),
                         opacity=100,
                         fillColor=None,
-                        lineColor=shapeLineColor,
+                        lineColor=setup_shape_line_color,
                         lineWidth=3.0,
                     )
                 )
             else:
-                allScreenWords.append(
+                all_screen_words.append(
                     visual.TextStim(
                         win,
-                        text=currItemText,
-                        pos=allWordPosValues[iItem],
-                        color=textColor,
-                        height=currItemHeight,
+                        text=current_item_text,
+                        pos=all_word_position_values[iItem],
+                        color=setup_text_color,
+                        height=current_item_height,
                         alignText="Left",
                     )
                 )
-                allBoxes.append(
+                all_boxes.append(
                     visual.ShapeStim(
                         win,
                         vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-                        pos=allSquarePosValues[iItem],
-                        size=(squareSize * 0.5, squareSize * 1.5),
+                        pos=all_square_position_values[iItem],
+                        size=(setup_square_size * 0.5, setup_square_size * 1.5),
                         opacity=100,
                         fillColor=None,
-                        lineColor=shapeLineColor,
+                        lineColor=setup_shape_line_color,
                         lineWidth=3.0,
                     )
                 )
         else:
-            allScreenWords.append(
+            all_screen_words.append(
                 visual.TextStim(
                     win,
-                    text=currItemText,
-                    pos=allWordPosValues[iItem],
-                    color=textColor,
-                    height=currItemHeight,
+                    text=current_item_text,
+                    pos=all_word_position_values[iItem],
+                    color=setup_text_color,
+                    height=current_item_height,
                     alignText="Left",
                 )
             )
-            allBoxes.append(
+            all_boxes.append(
                 visual.ShapeStim(
                     win,
                     vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-                    pos=allSquarePosValues[iItem],
-                    size=(squareSize * 0.5, squareSize * 1.5),
+                    pos=all_square_position_values[iItem],
+                    size=(setup_square_size * 0.5, setup_square_size * 1.5),
                     opacity=100,
                     fillColor=None,
-                    lineColor=shapeLineColor,
+                    lineColor=setup_shape_line_color,
                     lineWidth=3.0,
                 )
             )
 
     # # Prep Continue Button
-    instructTxt1 = visual.TextStim(
-        win, text=instr1, pos=(-0.7, 0.1), color=textColor, height=0.09, wrapWidth=6
+    stim_text_instruction1 = visual.TextStim(
+        win, text=instructions1, pos=(-0.7, 0.1), color=setup_text_color, height=0.09, wrapWidth=6
     )
-    instructTxt2 = visual.TextStim(
-        win, text=instr2, pos=(-0.7, 0.05), color=instr2color, height=0.09, wrapWidth=6
+    stim_text_instruction2 = visual.TextStim(
+        win, text=instructions2, pos=(-0.7, 0.05), color=instructions2_color, height=0.09, wrapWidth=6
     )
-    instructTxt3 = visual.TextStim(
-        win, text=instr3, pos=(-0.7, -0.85), color=textColor, height=0.09, wrapWidth=6
+    stim_text_instruction3 = visual.TextStim(
+        win, text=instructions3, pos=(-0.7, -0.85), color=setup_text_color, height=0.09, wrapWidth=6
     )
-    continueText = visual.TextStim(
+    stim_text_continue = visual.TextStim(
         win,
         text="CONTINUE", 
         pos=(0.7, -0.85),
-        color=screenColor,
+        color=setup_screen_color,
         height=0.08,
     )
-    backText = continueText
-    exitShape = visual.ShapeStim(
+    stim_text_back = stim_text_continue
+    stim_shape_exit = visual.ShapeStim(
         win,
         vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
         pos=(.75, 0.9),
         size=(0.35, 0.2),
         opacity=100,
-        fillColor=screenColor,
-        lineColor=shapeLineColor,
+        fillColor=setup_screen_color,
+        lineColor=setup_shape_line_color,
         lineWidth=4.0,
-        name="exitShape",
+        name="stim_shape_exit",
     )
-    exitText = visual.TextStim(
+    stim_text_exit = visual.TextStim(
         win,
         text="EXIT", 
         pos=(.75, 0.9),
-        color=textColor,
+        color=setup_text_color,
         height=0.08,
     )
-    continueShape = exitShape
-    backShape = exitShape
+    stim_shape_continue = stim_shape_exit
+    stim_shape_back = stim_shape_exit
     
     # If page has been completed, re-present choices
-    if len(initSquares) > 0:
-        for i in range(len(initSquares)):
-            if initSquares[i]==1:
-                allBoxes[i]=visual.ShapeStim(win, vertices=((-.5, -.3), (-.5, .3), (.5, .3), (.5, -.3)), pos=allSquarePosValues[i], size=(squareSize*.5,squareSize*1.5), opacity=100, fillColor=shapeLineColor, lineColor=shapeLineColor,lineWidth=3.0)
-        itemsChosen = initSquares
+    if len(initial_squares) > 0:
+        for i in range(len(initial_squares)):
+            if initial_squares[i]==1:
+                all_boxes[i]=visual.ShapeStim(win, vertices=((-.5, -.3), (-.5, .3), (.5, .3), (.5, -.3)), pos=all_square_position_values[i], size=(setup_square_size*.5,setup_square_size*1.5), opacity=100, fillColor=setup_shape_line_color, lineColor=setup_shape_line_color,lineWidth=3.0)
+        items_chosen = initial_squares
     else:
-        itemsChosen = [0 for i in range(len(currPageItems))]
+        items_chosen = [0 for i in range(len(current_page_items))]
 
-    Mouse = event.Mouse(win=win, visible=True)
-    Mouse.clickReset()
+    mouse = event.Mouse(win=win, visible=True)
+    mouse.clickReset()
     event.clearEvents()
-    previousMouseDown = False
+    previous_mouse_down = False
 
-    itemClicked = False
-    continueChosen = False
-    backChosen = False
-    startTime = time.time()
-    while continueChosen is False and backChosen == False:
-        for i in allScreenWords:
+    item_clicked = False
+    continue_chosen = False
+    back_chosen = False
+    start_time = time.time()
+    while continue_chosen is False and back_chosen == False:
+        for i in all_screen_words:
             i.draw()
-        for j in allBoxes:
+        for j in all_boxes:
             j.draw()
-        instructTxt1.draw()
-        instructTxt2.draw()
-        instructTxt3.draw()
-        backShape.draw()
-        backText.draw()
-        continueShape.draw()
-        continueText.draw()
-        exitShape.draw()
-        exitText.draw()
+        stim_text_instruction1.draw()
+        stim_text_instruction2.draw()
+        stim_text_instruction3.draw()
+        stim_shape_back.draw()
+        stim_text_back.draw()
+        stim_shape_continue.draw()
+        stim_text_continue.draw()
+        stim_shape_exit.draw()
+        stim_text_exit.draw()
         win.flip()
 
-        if Mouse.isPressedIn(exitShape):
-            exitOut(win)   
+        if mouse.isPressedIn(stim_shape_exit):
+            function_exit_out(win)   
 
         # Check for checkbox clicks
-        for s in range(0, len(allBoxes)):
-            if Mouse.isPressedIn(allBoxes[s]):
-                mouseDown = Mouse.getPressed()[0]
+        for s in range(0, len(all_boxes)):
+            if mouse.isPressedIn(all_boxes[s]):
+                mouse_down = mouse.getPressed()[0]
                 if (
-                    mouseDown and not previousMouseDown
+                    mouse_down and not previous_mouse_down
                 ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
-                    if itemsChosen[s] == 0:  # item hasn't been chosen yet
-                        if itemClicked is False:
-                            itemClicked = True
-                        itemsChosen[s] = 1
-                        allBoxes[s] = visual.ShapeStim(
+                    if items_chosen[s] == 0:  # item hasn't been chosen yet
+                        if item_clicked is False:
+                            item_clicked = True
+                        items_chosen[s] = 1
+                        all_boxes[s] = visual.ShapeStim(
                             win,
                             vertices=(
                                 (-0.5, -0.3),
@@ -251,19 +251,19 @@ def presentItemList(uniqueSoundLabels,
                                 (0.5, 0.3),
                                 (0.5, -0.3),
                             ),
-                            pos=allSquarePosValues[s],
-                            size=(squareSize * 0.5, squareSize * 1.5),
+                            pos=all_square_position_values[s],
+                            size=(setup_square_size * 0.5, setup_square_size * 1.5),
                             opacity=100,
-                            fillColor=shapeLineColor,
-                            lineColor=shapeLineColor,
+                            fillColor=setup_shape_line_color,
+                            lineColor=setup_shape_line_color,
                             lineWidth=3.0,
                         )
                         core.wait(0.01)  # reset button press
                     elif (
-                        itemsChosen[s] == 1
+                        items_chosen[s] == 1
                     ):  # item was already chosen and is being de-selected
-                        itemsChosen[s] = 0
-                        allBoxes[s] = visual.ShapeStim(
+                        items_chosen[s] = 0
+                        all_boxes[s] = visual.ShapeStim(
                             win,
                             vertices=(
                                 (-0.5, -0.3),
@@ -271,73 +271,73 @@ def presentItemList(uniqueSoundLabels,
                                 (0.5, 0.3),
                                 (0.5, -0.3),
                             ),
-                            pos=allSquarePosValues[s],
-                            size=(squareSize * 0.5, squareSize * 1.5),
+                            pos=all_square_position_values[s],
+                            size=(setup_square_size * 0.5, setup_square_size * 1.5),
                             opacity=100,
                             fillColor=None,
-                            lineColor=shapeLineColor,
+                            lineColor=setup_shape_line_color,
                             lineWidth=3.0,
                         )
-                    previousMouseDown = mouseDown
-                    Mouse.clickReset()
+                    previous_mouse_down = mouse_down
+                    mouse.clickReset()
                     event.clearEvents()
                     core.wait(0.25)
-                    previousMouseDown = False
+                    previous_mouse_down = False
 
         # Make Continue Button visible after 1s
-        currTime = time.time()
-        if currTime - startTime > pauseTime:
-            continueShape = visual.ShapeStim(
+        curr_time = time.time()
+        if curr_time - start_time > pause_time:
+            stim_shape_continue = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
                 pos=(0.7, -0.85),
                 size=(0.45, 0.2),
                 opacity=100,
-                fillColor=continueShapeColor,
-                lineColor=shapeLineColor,
+                fillColor=setup_continue_shape_color,
+                lineColor=setup_shape_line_color,
                 lineWidth=4.0,
-                name="continueShape",
+                name="stim_shape_continue",
             )
-            continueText = visual.TextStim(
+            stim_text_continue = visual.TextStim(
                 win,
                 text="CONTINUE", 
                 pos=(0.7, -0.85),
-                color=textColor,
+                color=setup_text_color,
                 height=0.08,
             )
 
-        if Mouse.isPressedIn(continueShape):
-            for i in allScreenWords:
+        if mouse.isPressedIn(stim_shape_continue):
+            for i in all_screen_words:
                 i.draw()
-            for j in allBoxes:
+            for j in all_boxes:
                 j.draw()
-            instructTxt1.draw()
-            instructTxt2.draw()
-            instructTxt3.draw()
-            continueChosen = True
-            continueShape.draw()
-            continueText.draw()
-            exitShape.draw()
-            exitText.draw()
+            stim_text_instruction1.draw()
+            stim_text_instruction2.draw()
+            stim_text_instruction3.draw()
+            continue_chosen = True
+            stim_shape_continue.draw()
+            stim_text_continue.draw()
+            stim_shape_exit.draw()
+            stim_text_exit.draw()
             win.flip()
             
-        if pageNum != 0: #after first page, give option to go back to previous
-            backText = visual.TextStim(win, text='BACK', pos=(xPosCenter-.05, -.85), color='white', height=0.08) 
-            backShape = visual.ShapeStim(win, vertices=((-.5, -.3), (-.5, .3), (.5, .3), (.5, -.3)), pos=(xPosCenter-.05, -.85), size=(.25, .2), opacity=100, fillColor='black', lineColor=shapeLineColor,lineWidth=4.0,name='continueShape')
+        if page_num != 0: #after first page, give option to go back to previous
+            stim_text_back = visual.TextStim(win, text='BACK', pos=(x_position_center-.05, -.85), color='white', height=0.08) 
+            stim_shape_back = visual.ShapeStim(win, vertices=((-.5, -.3), (-.5, .3), (.5, .3), (.5, -.3)), pos=(x_position_center-.05, -.85), size=(.25, .2), opacity=100, fillColor='black', lineColor=setup_shape_line_color,lineWidth=4.0,name='stim_shape_continue')
         
-            if Mouse.isPressedIn(backShape):
-                for i in allScreenWords:
+            if mouse.isPressedIn(stim_shape_back):
+                for i in all_screen_words:
                     i.draw()
-                for j in allBoxes:
+                for j in all_boxes:
                     j.draw()
-                instructTxt1.draw()
-                instructTxt2.draw()
-                instructTxt3.draw()    
-                backChosen = True
-                continueShape.draw()
-                continueText.draw()
-                exitShape.draw()
-                exitText.draw()
+                stim_text_instruction1.draw()
+                stim_text_instruction2.draw()
+                stim_text_instruction3.draw()    
+                back_chosen = True
+                stim_shape_continue.draw()
+                stim_text_continue.draw()
+                stim_shape_exit.draw()
+                stim_text_exit.draw()
                 win.flip()     
 
-    return itemsChosen, backChosen  # results are a list of 0s and 1s
+    return items_chosen, back_chosen  # results are a list of 0s and 1s
