@@ -19,7 +19,7 @@ def function_exit_out(win):
        win.close()
        core.quit()
 
-def presentRefinedItemList(mean_length,
+def function_present_refined_item_list(mean_length,
                            setup_item_height,
                            setup_square_outline_size, 
                            setup_square_size,

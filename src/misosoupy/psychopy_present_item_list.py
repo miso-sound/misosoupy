@@ -17,7 +17,7 @@ def function_exit_out(win):
        win.close()
        core.quit()
        
-def presentItemList(unique_sound_labels, 
+def function_present_item_list(unique_sound_labels, 
                     num_columns_per_page, 
                     num_items_per_column, 
                     num_items_per_page, 

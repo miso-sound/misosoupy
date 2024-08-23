@@ -42,8 +42,8 @@ source_sound_list=setup_misosoupy.get_sound_list() #creates global variable "sou
 
 
 if step_import_sound_list:
-    import import_sound_list_v2
-    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list_v2.function_import_sound_list(home_dir,participant,source_sound_list) #'naturalsounds165' sound_list.csv
+    import import_sound_list
+    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list.function_import_sound_list(home_dir,participant,source_sound_list) #'naturalsounds165' sound_list.csv
 else:
     raise Exception("Need sounds to select from!")    
     
@@ -195,7 +195,7 @@ if step_select_sound_list or step_refine_sound_list:
         initial_squares=[0] * num_items_per_page #choices from previous page
         while iPage < num_pages:
             instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
-            most_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions1,instructions2,'firebrick',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+            most_triggering_list_page,back_chosen_page=psychopy_present_item_list.function_present_item_list(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions1,instructions2,'firebrick',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
             page_seen[iPage]=True
             most_triggering_list_all_pages[iPage]=most_triggering_list_page 
         
@@ -226,7 +226,7 @@ if step_select_sound_list or step_refine_sound_list:
             initial_squares=[0] * num_items_per_page #choices from previous page
             while iPage < num_pages:
                 instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
-                most_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions1,instructions2,'firebrick',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+                most_triggering_list_page,back_chosen_page=psychopy_present_item_list.function_present_item_list(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions1,instructions2,'firebrick',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
                 page_seen[iPage]=True
                 most_triggering_list_all_pages[iPage]=most_triggering_list_page 
         
@@ -259,7 +259,7 @@ if step_select_sound_list or step_refine_sound_list:
         function_present_instructions(instructions_break1, 0)
         
         refined_most_triggering_list = []
-        [most_triggering_list_refined, most_triggering_ranks] = psychopy_refine_item_list.presentRefinedItemList(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, most_triggering_list, pause_time, instructions4, instructions5, "firebrick"
+        [most_triggering_list_refined, most_triggering_ranks] = psychopy_refine_item_list.function_present_refined_item_list(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, most_triggering_list, pause_time, instructions4, instructions5, "firebrick"
         )
         for iItem in range(len(most_triggering_list)):
             if most_triggering_list_refined[iItem] == 1:
@@ -284,7 +284,7 @@ if step_select_sound_list or step_refine_sound_list:
         initial_squares=[0] * num_items_per_page #choices from previous page
         while iPage < num_pages:
             instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
-            least_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions6,instructions7,'green',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+            least_triggering_list_page,back_chosen_page=psychopy_present_item_list.function_present_item_list(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, iPage,pause_time,instructions6,instructions7,'green',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
             page_seen[iPage]=True
             least_triggering_list_all_pages[iPage]=least_triggering_list_page 
         
@@ -315,7 +315,7 @@ if step_select_sound_list or step_refine_sound_list:
             initial_squares=[0] * num_items_per_page #choices from previous page
             while iPage < num_pages:
                 instructions3='Page '+str(iPage+1)+'/'+str(num_pages) 
-                least_triggering_list_page,back_chosen_page=psychopy_present_item_list.presentItemList(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win,iPage,pause_time,instructions6,instructions7,'green',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
+                least_triggering_list_page,back_chosen_page=psychopy_present_item_list.function_present_item_list(unique_sound_labels, num_columns_per_page, num_items_per_column, num_items_per_page, mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win,iPage,pause_time,instructions6,instructions7,'green',instructions3,initial_squares,most_triggering_list,done_with_most_triggering)
                 page_seen[iPage]=True
                 least_triggering_list_all_pages[iPage]=least_triggering_list_page 
         
@@ -342,7 +342,7 @@ if step_select_sound_list or step_refine_sound_list:
         instructions9='5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n'
         
         refined_least_triggering_list = []
-        [least_triggering_list_refined, least_triggering_ranks] = psychopy_refine_item_list.presentRefinedItemList(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, least_triggering_list, pause_time, instructions8, instructions9, "green")
+        [least_triggering_list_refined, least_triggering_ranks] = psychopy_refine_item_list.function_present_refined_item_list(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, least_triggering_list, pause_time, instructions8, instructions9, "green")
         for iItem in range(len(least_triggering_list)):
             if least_triggering_list_refined[iItem] == 1:
                 refined_least_triggering_list.append(
