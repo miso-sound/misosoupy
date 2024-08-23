@@ -31,16 +31,25 @@ step_refineSoundList = True
 step_refineTrigger, step_refineNeutral = True, True
 step_organizeSounds = True
 
-participant = 'TEST'
-source_sound_list = "naturalsounds165" # "sound_list.csv" (FOAMS), "naturalsounds165"
+# Setup paths and IDs
+import setup_misosoupy
+global homeDir
+homeDir=setup_misosoupy.get_home_dir() #creates global variable "homeDir"
+global participant
+participant=setup_misosoupy.get_participant_id() #creates global variable "participant"
+global source_sound_list
+source_sound_list=setup_misosoupy.get_sound_list() #creates global variable "source_sound_list"
 
-# Ensure that relative paths start from the same directory as this script
-homeDir = os.path.dirname(os.path.abspath("__file__"))
-os.chdir(homeDir)
+#participant = 'TEST'
+#source_sound_list = "naturalsounds165" # "sound_list.csv" (FOAMS), "naturalsounds165"
+
+## Ensure that relative paths start from the same directory as this script
+#homeDir = os.path.dirname(os.path.abspath("__file__"))
+#os.chdir(homeDir)
 
 if step_importSoundList:
     import import_sound_list_v2
-    [allSoundFiles, allSoundLabels, uniqueSoundLabels]=import_sound_list_v2.function_import_sound_list(source_sound_list) #'naturalsounds165' sound_list.csv
+    [allSoundFiles, allSoundLabels, uniqueSoundLabels]=import_sound_list_v2.function_import_sound_list(homeDir,participant,source_sound_list) #'naturalsounds165' sound_list.csv
 else:
     raise Exception("Need sounds to select from!")    
     
@@ -162,7 +171,7 @@ if step_selectSoundList or step_refineSoundList:
             if Mouse.isPressedIn(continueShape):
                 instructTxt1.draw()
                 continueShape.draw()
-                continueText.draw()
+                continueText.draw() 
                 win.flip()
                 continueChosen = True
     

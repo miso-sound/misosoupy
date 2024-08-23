@@ -13,11 +13,6 @@ import os  # handy system and path functions
 import numpy as np
 
 
-# Ensure that relative paths start from the same directory as this script
-homeDir = os.path.dirname(os.path.abspath("__file__"))
-os.chdir(homeDir)
-participant = 'TEST'
-
 """
 ===============================================================================
                         DEFINE FUNCTIONS
@@ -25,7 +20,7 @@ participant = 'TEST'
 """
 
 ##############################################################################
-def function_import_sound_list(source):
+def function_import_sound_list(homeDir,participant,source):
     # Example:
         # source = "sound_list.csv", "naturalsounds165"
 
