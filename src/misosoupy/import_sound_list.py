@@ -7,6 +7,8 @@ Created on Thu Nov  2 10:53:23 2023
 
 from __future__ import division
 import os  # handy system and path functions
+from pathlib import Path
+
 import numpy as np
 
 
@@ -56,9 +58,9 @@ def function_import_sound_list(home_dir,source):
 
     print('\n>>>>>>>>>>> Importing Sound List .................................')
     
-    
+    full_source_path = Path(home_dir, source)
     # Parse sound list source
-    if os.path.isfile(source):
+    if full_source_path.is_file():
     
         label_spreadsheet_file = home_dir + os.sep + source
 
@@ -81,7 +83,7 @@ def function_import_sound_list(home_dir,source):
             all_sound_files = text_array[:, 0]
             all_sound_labels = text_array[:, 1]
             
-    elif os.path.isdir(source):
+    elif full_source_path.is_dir():
         
         all_sound_files=np.array([])
         all_sound_labels=np.array([])
