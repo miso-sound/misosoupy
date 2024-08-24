@@ -38,10 +38,11 @@ participant=setup_misosoupy.get_participant_id() #creates global variable "parti
 global source_sound_list
 source_sound_list=setup_misosoupy.get_sound_list() #creates global variable "source_sound_list"
 
+path_to_assets = setup_misosoupy.get_path_to_assets()
 
 if step_import_sound_list:
     import import_sound_list
-    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list.function_import_sound_list(home_dir,source_sound_list) #'naturalsounds165' sound_list.csv
+    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list.function_import_sound_list(path_to_assets,source_sound_list) #'naturalsounds165' sound_list.csv
 else:
     raise Exception("Need sounds to select from!")    
     

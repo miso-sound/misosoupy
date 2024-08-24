@@ -8,6 +8,10 @@ Created on Thu Aug 22 10:53:23 2023
 from __future__ import division
 
 import os  # handy system and path functions
+from pathlib import Path
+from importlib import resources
+import pkg_resources
+import misosoupy
 
 # Ensure that relative paths start from the same directory as this script
 def get_home_dir():
@@ -47,3 +51,10 @@ def get_sound_list():
     print('Sound List is:',source_sound_list)
 
     return source_sound_list
+
+def get_path_to_assets():
+    """Get the path to the assets directory"""
+    if hasattr(resources, "files"):
+        return Path(resources.files(misosoupy) / "assets")
+    else:
+        return Path(pkg_resources.resource_filename("misosoupy", "assets"))

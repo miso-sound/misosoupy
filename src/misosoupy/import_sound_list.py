@@ -62,7 +62,7 @@ def function_import_sound_list(home_dir,source):
     # Parse sound list source
     if full_source_path.is_file():
     
-        label_spreadsheet_file = home_dir + os.sep + source
+        label_spreadsheet_file = full_source_path
 
         # Open sound spreadsheet
         text_array = np.array([])
