@@ -96,7 +96,7 @@ def function_import_sound_list(home_dir,source):
                 all_sound_labels=np.append(all_sound_labels,item_label)
         
     else:
-        raise Exception("Can't parse sound list!")    
+        raise Exception("Can't parse sound list! Path of sound list not found: " + str(full_source_path))
 
     
     # Count number of unique labels to present
