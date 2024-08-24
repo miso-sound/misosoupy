@@ -4,14 +4,12 @@ Created on Sat Jun  8 12:02:55 2024
 
 @author: heath
 
-THINGS TO STILL ADD (JUN 8 2024):
+THINGS TO STILL ADD (AUG 23 2024):
     
     Option to set minimum required sounds (current default: 5 per category)
     Option to change instructions?
     Option to change colors
     Option to select sounds without needing psychopy?
-    How to input preferences in run_misosoupy function, without needing to edit text
-    Docstrings/comments
 
 
 """
@@ -43,7 +41,7 @@ source_sound_list=setup_misosoupy.get_sound_list() #creates global variable "sou
 
 if step_import_sound_list:
     import import_sound_list
-    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list.function_import_sound_list(home_dir,participant,source_sound_list) #'naturalsounds165' sound_list.csv
+    [all_sound_files, all_sound_labels, unique_sound_labels]=import_sound_list.function_import_sound_list(home_dir,source_sound_list) #'naturalsounds165' sound_list.csv
 else:
     raise Exception("Need sounds to select from!")    
     
@@ -88,12 +86,24 @@ if step_select_sound_list or step_refine_sound_list:
         setup_item_height = 0.085
         
     def function_exit_out():
+        """Safely exit out of presentation, closing window and flushing log."""
+
         logging.flush()
         win.close()
         core.quit()
         
         
     def function_present_instructions(instruction_text, wait_time):
+        """ Present instruction text onscreen using PsychoPy. 
+
+        Parameters
+        ----------
+        instruction_text : str
+            Text to display.
+        wait_time : int
+            Time (in seconds) to pause before CONTINUE button is displayed.
+        """
+
         # Prep instructions
         stim_text_instruction1 = visual.TextStim(
             win, text=instruction_text, pos=(0, 0), color=setup_text_color, height=0.09, wrapWidth=6
@@ -259,7 +269,7 @@ if step_select_sound_list or step_refine_sound_list:
         function_present_instructions(instructions_break1, 0)
         
         refined_most_triggering_list = []
-        [most_triggering_list_refined, most_triggering_ranks] = psychopy_refine_item_list.function_present_refined_item_list(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, most_triggering_list, pause_time, instructions4, instructions5, "firebrick"
+        [most_triggering_list_refined, most_triggering_ranks] = psychopy_refine_item_list.function_present_refined_item_list(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, most_triggering_list, instructions4, instructions5, "firebrick"
         )
         for iItem in range(len(most_triggering_list)):
             if most_triggering_list_refined[iItem] == 1:
@@ -342,7 +352,7 @@ if step_select_sound_list or step_refine_sound_list:
         instructions9='5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n'
         
         refined_least_triggering_list = []
-        [least_triggering_list_refined, least_triggering_ranks] = psychopy_refine_item_list.function_present_refined_item_list(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, least_triggering_list, pause_time, instructions8, instructions9, "green")
+        [least_triggering_list_refined, least_triggering_ranks] = psychopy_refine_item_list.function_present_refined_item_list(mean_length, setup_item_height, setup_square_outline_size, setup_square_size, setup_text_color, setup_screen_color, setup_continue_shape_color, setup_shape_line_color, win, least_triggering_list, instructions8, instructions9, "green")
         for iItem in range(len(least_triggering_list)):
             if least_triggering_list_refined[iItem] == 1:
                 refined_least_triggering_list.append(
