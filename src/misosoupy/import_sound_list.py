@@ -6,10 +6,7 @@ Created on Thu Nov  2 10:53:23 2023
 """
 
 from __future__ import division
-
-import math
 import os  # handy system and path functions
-
 import numpy as np
 
 
@@ -19,10 +16,43 @@ import numpy as np
 ===============================================================================
 """
 
-##############################################################################
-def function_import_sound_list(home_dir,participant,source):
-    # Example:
-        # source = "sound_list.csv", "naturalsounds165"
+def function_import_sound_list(home_dir,source):
+    """ Read desired sound list and parse for unique labels.
+
+    Parameters
+    ----------
+    home_dir : str
+        The parent directory in which the sound list or folder of sounds is saved. 
+        Assumed to be the same directory as where scripts are located. Defined in setup_misosoupy.py.
+    source : str
+        The name of the sound list file (e.g., sound_list.csv) or folder of sounds (e.g., naturalsounds165/).
+        Defined in setup_misosoupy.py. 
+
+    Returns
+    -------
+    all_sound_files : numpy array
+        A list of the sound file names, as listed in the file or folder.
+        Length will equal total number of sounds.
+            Examples:
+                sound_list.csv: 30709, 84275, etc.
+                naturalsounds165/: stim102_crumpling_paper.wav, stim103_crying.wav, etc.
+    all_sound_labels : numpy array
+        A list of the sound labels, as listed in the file or folder (parsed from file names).
+        Length will equal total number of sounds.
+            Examples:
+                    sound_list.csv: 'human_breathing', 'plastic_crumpling', etc.
+                    naturalsounds165/: 'crumpling_paper', 'crying', etc.
+    unique_sound_labels : numpy array
+        A list of unique sound labels (i.e., all_sound_labels but ignoring duplicates), in alphabetical order.
+        Use for participant selection onscreen. 
+
+    Raises
+    ------
+    Exception
+        If path to sound list file or folder cannot be found. 
+        Check directory structure, and ensure sound list is in current working directory.
+    """
+
 
     print('\n>>>>>>>>>>> Importing Sound List .................................')
     
@@ -75,6 +105,3 @@ def function_import_sound_list(home_dir,participant,source):
     print('Labels: ', list(unique_sound_labels)[0:10],'...\n' if len(unique_sound_labels)>10 else '\n') 
     
     return all_sound_files, all_sound_labels, unique_sound_labels
-
-##############################################################################
-

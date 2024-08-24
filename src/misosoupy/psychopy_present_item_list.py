@@ -13,9 +13,11 @@ import time
 from psychopy import core, event, visual, logging
 
 def function_exit_out(win):
-       logging.flush()
-       win.close()
-       core.quit()
+    """Safely exit out of presentation, closing window and flushing log."""
+
+    logging.flush()
+    win.close()
+    core.quit()
        
 def function_present_item_list(unique_sound_labels, 
                     num_columns_per_page, 
@@ -39,6 +41,70 @@ def function_present_item_list(unique_sound_labels,
                     initial_squares, 
                     most_triggering_list, 
                     done_with_most_triggering):
+    """Present list of sound labels onscreen for participant selection. 
+        If step_select_trigger is true, participants will be instructed to select sounds that are the most triggering.
+        If step_select_neutral is true, participants will be instructed to select sounds that are the most neutral (i.e., least triggering).
+        Input parameters are defined within run_misosoupy.py.
+
+    Parameters
+    ----------
+    unique_sound_labels : np.array
+        List of sound labels to present onscreen, defined in import_sound_list.py 
+    num_columns_per_page : int
+        Default is 2.
+    num_items_per_column : int
+        Default is 10.
+    num_items_per_page : int
+        Default is 20. 
+    mean_length : int
+        Average number of characters comprising the sound labels. Used to determine font size.
+    setup_item_height : int
+        Font height. Default is 0.085.
+    setup_square_outline_size : int
+        Default is 0.12.
+    setup_square_size : int
+        Default is 0.1.
+    setup_text_color : str
+        Default is "black".
+    setup_screen_color : str
+        Default is "lightgray".
+    setup_continue_shape_color : str
+        Default is "gray".
+    setup_shape_line_color : str
+        Default is "black".
+    win : visual.Window object
+        Screen set up.
+    page_num : int
+        Current page number.
+    pause_time : int
+        How long to pause on each page before continue button appears. Default is 2 (seconds).
+    instructions1 : str
+        Task instructions, written in black.
+    instructions2 : str
+        Instruction word to emphasize (e.g., MOST, LEAST), written in color.
+    instructions2_color: str
+        Default is 'firebrick' for MOST, 'green' for LEAST.
+    instructions3 : str
+        Page counter (e.g., Page 1/5) 
+    initial_squares : array
+        If page was previously viewed, which squares were initially selected.
+        Default: 0s for size of num_items_per_page 
+    most_triggering_list : array
+        List of selected trigger sounds to be grayed out during neutral sound selection.
+        Starts as empty and updates as script progresses.
+    done_with_most_triggering : bool
+        Starts as False and updates to True after trigger selection.
+    
+    Returns
+    -------
+    items_chosen : list
+        Record of which items on each page were selected (1) vs. not selected (0).
+        Length will equal num_items_per_page. Resets for each page.
+    back_chosen : bool
+        Whether or not participant selected the BACK button.
+        Default is False. If True, screen returns to previous page, maintaining selections.
+    """
+    
     x_position_center = (
         2 / num_columns_per_page
     ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale

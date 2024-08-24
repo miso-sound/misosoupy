@@ -15,9 +15,11 @@ import numpy as np
 from psychopy import core, event, logging, visual
 
 def function_exit_out(win):
-       logging.flush()
-       win.close()
-       core.quit()
+    """Safely exit out of presentation, closing window and flushing log."""
+
+    logging.flush()
+    win.close()
+    core.quit()
 
 def function_present_refined_item_list(mean_length,
                            setup_item_height,
@@ -28,11 +30,54 @@ def function_present_refined_item_list(mean_length,
                            setup_continue_shape_color,
                            setup_shape_line_color,
                            win,
-                           items, 
-                           pauseTime, 
+                           items,  
                            instructions1, 
                            instructions2, 
                            instructions2_color):
+    """Present all participant selections onscreen for further refinement. 
+        If step_refine_trigger is true, participants will refine their trigger sound selections.
+        If step_refine_neutral is true, participants will refined their neutral sound selections.
+        Input parameters are defined within run_misosoupy.py.
+
+    Parameters
+    ----------
+    mean_length : int
+        Average number of characters comprising the sound labels. Used to determine font size.
+    setup_item_height : int
+        Font height. Default is 0.085.
+    setup_square_outline_size : int
+        Default is 0.12.
+    setup_square_size : int
+        Default is 0.1.
+    setup_text_color : str
+        Default is "black".
+    setup_screen_color : str
+        Default is "lightgray".
+    setup_continue_shape_color : str
+        Default is "gray".
+    setup_shape_line_color : str
+        Default is "black".
+    win : visual.Window object
+        Screen set up.
+    items : list
+        Sound labels selected during psychopy_present_item_list.py.
+    instructions1 : str
+        Task instructions, written in black.
+    instructions2 : str
+        Instruction word(s) to emphasize (e.g., MOST, LEAST), written in color.
+    instructions2_color: str
+        Default is 'firebrick' for MOST, 'green' for LEAST.
+    
+    Returns
+    -------
+    items_chosen : list
+        Record of which items on each page were selected (1) vs. not selected (0).
+        Length will equal length of "items".
+    all_ranks : numpy array
+        Record of ranks assigned to each item.
+        Length will equal length of "items", with 0s for un-selected items and chosen rank (e.g., 1-5) for selected items. 
+    """
+
     # Determine how many rows/columns are needed
     num_items = len(items)
     if num_items <= 12:

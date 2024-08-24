@@ -11,6 +11,8 @@ import os  # handy system and path functions
 
 # Ensure that relative paths start from the same directory as this script
 def get_home_dir():
+    """Return the path name of the home directory where the script is saved, and change to that directory (if not already there)."""
+    
     home_dir = os.path.dirname(os.path.abspath("__file__")) #NOTE: needed to manually change directory to /src/misosoupy/, since pwd and os.path were returning the directory above?
     os.chdir(home_dir)
 
@@ -18,6 +20,8 @@ def get_home_dir():
 
 
 def get_participant_id():
+    """Take user input of the participant ID (string) and return as variable "participant"."""
+
     print('Please enter Participant ID:')
     participant=input()
     if len(participant) < 1: #if no input
@@ -28,6 +32,8 @@ def get_participant_id():
 
 
 def get_sound_list():
+    """Take user input of the desired sound list and return as variable "source_sound_list"."""
+
     print('Choose your sound list: Press "1" for soundlist.csv (FOAMS), or "2" for naturalsounds165')
     sound_list_choice=int(input())
 
