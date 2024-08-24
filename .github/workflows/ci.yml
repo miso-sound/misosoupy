@@ -62,10 +62,11 @@ jobs:
       matrix:
         python:
         - "3.7"
-        - "3.8"
         platform:
-        - windows-latest
-        # - macos-latest
+        - ubuntu-latest
+        include:
+          - python: "3.8"
+            platform: windows-latest
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
