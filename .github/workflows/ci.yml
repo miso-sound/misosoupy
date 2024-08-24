@@ -61,15 +61,10 @@ jobs:
     strategy:
       matrix:
         python:
-        - "3.7"  # oldest Python supported by PSF
+        - "3.8"
         platform:
-        - ubuntu-latest
+        - windows-latest
         - macos-latest
-        include:
-          - python: "3.8"
-            platform: macos-latest
-          - python: "3.8"
-            platform: windows-latest
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
