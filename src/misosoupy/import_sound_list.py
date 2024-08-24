@@ -88,7 +88,7 @@ def function_import_sound_list(home_dir,source):
         all_sound_files=np.array([])
         all_sound_labels=np.array([])
         
-        for item in os.listdir(source):
+        for item in os.listdir(full_source_path):
             if not item.startswith('.'):
                 all_sound_files=np.append(all_sound_files,item)
                 item_label_temp=item.partition('_')[2] #returns string after first underscore
