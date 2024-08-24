@@ -49,7 +49,7 @@ if step_import_sound_list:
 
     [all_sound_files, all_sound_labels, unique_sound_labels] = (
         import_sound_list.function_import_sound_list(home_dir, source_sound_list)
-    )  #'naturalsounds165' sound_list.csv
+    )  # 'naturalsounds165' sound_list.csv
 else:
     raise Exception("Need sounds to select from!")
 
