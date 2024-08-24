@@ -330,7 +330,7 @@ def function_present_item_list(
     continue_chosen = False
     back_chosen = False
     start_time = time.time()
-    while continue_chosen is False and back_chosen == False:
+    while continue_chosen is False and back_chosen is False:
         for i in all_screen_words:
             i.draw()
         for j in all_boxes:
