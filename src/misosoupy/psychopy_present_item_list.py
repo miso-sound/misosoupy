@@ -45,9 +45,12 @@ def function_present_item_list(
     done_with_most_triggering,
 ):
     """Present list of sound labels onscreen for participant selection.
-        If step_select_trigger is true, participants will be instructed to select sounds that are the most triggering.
-        If step_select_neutral is true, participants will be instructed to select sounds that are the most neutral (i.e., least triggering).
-        Input parameters are defined within run_misosoupy.py.
+
+    If step_select_trigger is true, participants will be instructed
+    to select sounds that are the most triggering.
+    If step_select_neutral is true, participants will be instructed
+    to select sounds that are the most neutral (i.e., least triggering).
+    Input parameters are defined within run_misosoupy.py.
 
     Parameters
     ----------
@@ -113,7 +116,8 @@ def function_present_item_list(
     ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale
     y_position_center = (
         (num_items_per_column * setup_item_height) / 2
-    ) + setup_item_height * 4.5  # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
+    ) + setup_item_height * 4.5
+    # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
 
     all_word_position_values = []
     all_square_position_values = []

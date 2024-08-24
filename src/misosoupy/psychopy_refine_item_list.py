@@ -115,9 +115,8 @@ def function_present_refined_item_list(
         ) / 2 - 0.5 * 1.25  # 2/ since distance of screen units (+1-->-1), /2 for middle of word, *1.5 for scale
         column_gap = 0.35
 
-    y_position_center = (
-        (num_rows * refined_item_height) / 2
-    ) + refined_item_height * 5  # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
+    y_position_center = ((num_rows * refined_item_height) / 2) + refined_item_height * 5
+    # items*height gives total screen needed, /2 to split equally b/w top and bottom half of screen
 
     all_word_position_values = []
     all_square_position_values = []
@@ -285,7 +284,8 @@ def function_present_refined_item_list(
                 mouse_down = mouse.getPressed()[0]
                 if (
                     mouse_down and not previous_mouse_down
-                ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
+                ):  # Only add to list if new click
+                    # (otherwise, outputs each time frame refreshes, even if in the same button click)
                     if items_chosen[s] == 0:  # item hasn't been chosen yet
                         items_chosen[s] = 1
                         all_choices[s].pos = all_square_position_values[s]

@@ -199,7 +199,8 @@ if step_select_sound_list or step_refine_sound_list:
             + "that you find \nthe MOST triggering (e.g., bothersome, unpleasant) "
             + "and \nthe LEAST triggering (e.g., neutral, neither pleasant nor unpleasant)."
             + "\nDo this by clicking the box next to the sound name."
-            + "\n\nThere will be 5 pages for each prompt (most and least). \nTry to choose AT LEAST 4-5 sounds for each prompt."
+            + "\n\nThere will be 5 pages for each prompt (most and least). "
+            + "\nTry to choose AT LEAST 4-5 sounds for each prompt."
         )
         function_present_instructions(instructions_general, 1)
 
