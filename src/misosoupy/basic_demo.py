@@ -86,7 +86,8 @@ numPages = math.ceil(numSoundLabels / numItemsPerPage)  # round up if not even
 """
 
 
-# this function controls the start of the experiment and pops up a box for the experimenter to enter participant number and condition
+# this function controls the start of the experiment and pops up a box for the
+# experimenter to enter participant number and condition
 def ExpParameters():
     # Ensure that relative paths start from the same directory as this script
     expInfo = {
@@ -376,9 +377,8 @@ def presentItemList(pageNum, pauseTime, instr1, instr2, instr2color, instr3):
         for s in range(0, len(allBoxes)):
             if Mouse.isPressedIn(allBoxes[s]):
                 mouseDown = Mouse.getPressed()[0]
-                if (
-                    mouseDown and not previousMouseDown
-                ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
+                if mouseDown and not previousMouseDown:  # Only add to list if new click
+                    # (otherwise, outputs each time frame refreshes, even if in the same button click)
                     if itemsChosen[s] == 0:  # item hasn't been chosen yet
                         if itemClicked is False:
                             itemClicked = True
@@ -617,9 +617,8 @@ def presentRefinedItemList(items, pauseTime, instr1, instr2, instr2color):
         for s in range(0, len(allBoxes)):
             if Mouse.isPressedIn(allBoxes[s]):
                 mouseDown = Mouse.getPressed()[0]
-                if (
-                    mouseDown and not previousMouseDown
-                ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
+                if mouseDown and not previousMouseDown:  # Only add to list if new click
+                    # (otherwise, outputs each time frame refreshes, even if in the same button click)
                     if itemsChosen[s] == 0:  # item hasn't been chosen yet
                         itemsChosen[s] = 1
                         allChoices[s].pos = allSquarePosValues[s]
@@ -759,7 +758,10 @@ presentInstructions(instructions1, 1)
 
 """
 
-instr1 = "First, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf none of these sounds\nare triggering, \ncontinue to the \nnext page."
+instr1 = (
+    "First, please choose \nthe sounds you are \n\n triggered by."
+    + "\n\n\nIf none of these sounds\nare triggering, \ncontinue to the \nnext page."
+)
 instr2 = "MOST\n\n\n\n\n\n"
 
 doneWithMostTriggering = False
@@ -776,10 +778,17 @@ for iPage in range(numPages):
             )
 
 doneWithMostTriggering = True
-breakInstructions = "Great! \n\nOn the next page, you will see the sounds you selected. \n\nPlease choose your TOP 5 most triggering \nsounds from this list, and rank order them from \n1 (more triggering) to 5 (less triggering)."
+breakInstructions = (
+    "Great! \n\nOn the next page, you will see the sounds you selected."
+    + " \n\nPlease choose your TOP 5 most triggering \nsounds from this list, "
+    + "and rank order them from \n1 (more triggering) to 5 (less triggering)."
+)
 presentInstructions(breakInstructions, 0)
 
-instr1 = "Please rank the \n\nsounds you \nare triggered by. \n\n1 = more triggering\n5 = less triggering \n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+instr1 = (
+    "Please rank the \n\nsounds you \nare triggered by. "
+    + "\n\n1 = more triggering\n5 = less triggering \n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+)
 instr2 = "TOP 5\n\n\n\n\n\n\n\n\n\n"
 
 refinedMostTriggeringList = []
@@ -802,7 +811,10 @@ refinedMostTriggeringList = sorted(refinedMostTriggeringList)
 breakInstructions = "Next, you will repeat this process with sounds \nyou find the LEAST triggering or MOST NEUTRAL."
 presentInstructions(breakInstructions, 0)
 
-instr1 = "Now, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
+instr1 = (
+    "Now, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf all of these sounds\nare triggering, "
+    + "\ncontinue to the \nnext page."
+)
 instr2 = "LEAST\n\n\n\n\n\n"
 
 leastTriggeringList = []
@@ -817,7 +829,10 @@ for iPage in range(numPages):
                 uniqueSoundLabels[iItem + iPage * numItemsPerPage]
             )
 
-instr1 = "Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral \n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+instr1 = (
+    "Please rank the \n\nsounds to you. "
+    + "\n\n1 = more neutral\n5 = less neutral \n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+)
 instr2 = "5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n"
 
 refinedLeastTriggeringList = []
@@ -874,7 +889,7 @@ while soundsCompiled is False:
         core.quit()
 
     # Make output file to save selections
-    filename = dataDir + "\%s_%s_%s_%s" % (
+    filename = dataDir + r"\%s_%s_%s_%s" % (
         expInfo["participant"],
         expName,
         "SoundSelect",
