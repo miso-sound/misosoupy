@@ -204,7 +204,10 @@ if step_select_sound_list or step_refine_sound_list:
         )
         function_present_instructions(instructions_general, 1)
 
-        instructions1 = "First, please choose \nthe sounds you are \n\n triggered by.\n\n\nIf none of these \nsounds are triggering, \ncontinue to the \nnext page."
+        instructions1 = (
+            "First, please choose \nthe sounds you are \n\n triggered by."
+            + "\n\n\nIf none of these \nsounds are triggering, \ncontinue to the \nnext page."
+        )
         instructions2 = "MOST\n\n\n\n\n\n"
         instructions_error = (
             "Please try that again.\n\nRemember, you must select at LEAST 5 sounds."
@@ -333,8 +336,16 @@ if step_select_sound_list or step_refine_sound_list:
     if step_refine_trigger:
         import psychopy_refine_item_list
 
-        instructions_break1 = "Great! \n\nOn the next page, you will see the sounds you selected. \n\nPlease choose your TOP 5 most triggering \nsounds from this list, and rank order them from \n1 (more triggering) to 5 (less triggering)."
-        instructions4 = "Please rank the \n\nsounds you \nare triggered by. \n\n1 = more triggering\n5 = less triggering \n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+        instructions_break1 = (
+            "Great! \n\nOn the next page, you will see the sounds you selected. "
+            + "\n\nPlease choose your TOP 5 most triggering \nsounds from this list, "
+            + "and rank order them from \n1 (more triggering) to 5 (less triggering)."
+        )
+        instructions4 = (
+            "Please rank the \n\nsounds you \nare triggered by. "
+            + "\n\n1 = more triggering\n5 = less triggering \n\n"
+            + "Once you have \nselected your top 5, \ncontinue to the \nnext page."
+        )
         instructions5 = "TOP 5\n\n\n\n\n\n\n\n\n\n"
 
         function_present_instructions(instructions_break1, 0)
@@ -366,8 +377,14 @@ if step_select_sound_list or step_refine_sound_list:
         refined_most_triggering_list = sorted(refined_most_triggering_list)
 
     if step_select_neutral:
-        instructions_break2 = "Next, you will repeat this process with sounds \nyou find the LEAST triggering or MOST NEUTRAL."
-        instructions6 = "Now, please choose \nthe sounds you \nfind most\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
+        instructions_break2 = (
+            "Next, you will repeat this process with sounds "
+            + "\nyou find the LEAST triggering or MOST NEUTRAL."
+        )
+        instructions6 = (
+            "Now, please choose \nthe sounds you \nfind most"
+            + "\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
+        )
         instructions7 = "\nNEUTRAL\n\n\n\n\n"
 
         function_present_instructions(instructions_break2, 0)
@@ -490,7 +507,10 @@ if step_select_sound_list or step_refine_sound_list:
 
     if step_refine_neutral:
 
-        instructions8 = "Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral \n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+        instructions8 = (
+            "Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral "
+            + "\n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+        )
         instructions9 = "5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n"
 
         refined_least_triggering_list = []

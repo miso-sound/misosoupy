@@ -12,11 +12,16 @@ import os  # handy system and path functions
 
 # Ensure that relative paths start from the same directory as this script
 def get_home_dir():
-    """Return the path name of the home directory where the script is saved, and change to that directory (if not already there)."""
+    """
+    Get the home directory.
 
-    home_dir = os.path.dirname(
-        os.path.abspath("__file__")
-    )  # NOTE: needed to manually change directory to /src/misosoupy/, since pwd and os.path were returning the directory above?
+    Return the path name of the home directory where the script is saved,
+    and change to that directory (if not already there).
+    """
+
+    home_dir = os.path.dirname(os.path.abspath("__file__"))
+    # NOTE: needed to manually change directory to /src/misosoupy/,
+    # since pwd and os.path were returning the directory above?
     os.chdir(home_dir)
 
     return home_dir
