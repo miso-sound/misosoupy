@@ -61,13 +61,10 @@ jobs:
     strategy:
       matrix:
         python:
-        - "3.7"  # oldest Python supported by PSF
+        - "3.7"
         platform:
         - ubuntu-latest
-        - macos-latest
         include:
-          - python: "3.8"
-            platform: macos-latest
           - python: "3.8"
             platform: windows-latest
     runs-on: ${{ matrix.platform }}
@@ -77,6 +74,10 @@ jobs:
         id: setup-python
         with:
           python-version: ${{ matrix.python }}
+      - name: Install system dependencies on macOS
+        if: matrix.platform == 'macos-latest'
+        run: |
+          brew install hdf5
       - name: Retrieve pre-built distribution files
         uses: actions/download-artifact@v3
         with: {name: python-distribution-files, path: dist/}
