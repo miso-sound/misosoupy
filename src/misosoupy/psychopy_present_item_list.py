@@ -351,7 +351,8 @@ def function_present_item_list(
                 mouse_down = mouse.getPressed()[0]
                 if (
                     mouse_down and not previous_mouse_down
-                ):  # Only add to list if new click (otherwise, outputs each time frame refreshes, even if in the same button click)
+                ):  # Only add to list if new click
+                    # (otherwise, outputs each time frame refreshes, even if in the same button click)
                     if items_chosen[s] == 0:  # item hasn't been chosen yet
                         if item_clicked is False:
                             item_clicked = True
