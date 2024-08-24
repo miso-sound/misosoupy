@@ -61,10 +61,11 @@ jobs:
     strategy:
       matrix:
         python:
+        - "3.7"
         - "3.8"
         platform:
         - windows-latest
-        - macos-latest
+        # - macos-latest
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
@@ -75,7 +76,7 @@ jobs:
       - name: Install system dependencies on macOS
         if: matrix.platform == 'macos-latest'
         run: |
-          brew install hdf5 lzo blosc
+          brew install hdf5
       - name: Retrieve pre-built distribution files
         uses: actions/download-artifact@v3
         with: {name: python-distribution-files, path: dist/}
