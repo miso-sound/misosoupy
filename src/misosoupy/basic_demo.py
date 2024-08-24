@@ -889,7 +889,7 @@ while soundsCompiled is False:
         core.quit()
 
     # Make output file to save selections
-    filename = dataDir + "\%s_%s_%s_%s" % (
+    filename = dataDir + r"\%s_%s_%s_%s" % (
         expInfo["participant"],
         expName,
         "SoundSelect",
