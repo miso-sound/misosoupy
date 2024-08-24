@@ -254,7 +254,7 @@ if step_select_sound_list or step_refine_sound_list:
                 initial_squares = most_triggering_list_all_pages[iPage]
             else:
                 iPage += 1
-                if iPage < num_pages and page_seen[iPage] == True:
+                if iPage < num_pages and page_seen[iPage]:
                     initial_squares = most_triggering_list_all_pages[iPage]
                 else:
                     initial_squares = [0] * num_items_per_page
@@ -314,7 +314,7 @@ if step_select_sound_list or step_refine_sound_list:
                     initial_squares = most_triggering_list_all_pages[iPage]
                 else:
                     iPage += 1
-                    if iPage < num_pages and page_seen[iPage] == True:
+                    if iPage < num_pages and page_seen[iPage]:
                         initial_squares = most_triggering_list_all_pages[iPage]
                     else:
                         initial_squares = [0] * num_items_per_page
@@ -414,7 +414,7 @@ if step_select_sound_list or step_refine_sound_list:
                 initial_squares = least_triggering_list_all_pages[iPage]
             else:
                 iPage += 1
-                if iPage < num_pages and page_seen[iPage] == True:
+                if iPage < num_pages and page_seen[iPage]:
                     initial_squares = least_triggering_list_all_pages[iPage]
                 else:
                     initial_squares = [0] * num_items_per_page
@@ -474,7 +474,7 @@ if step_select_sound_list or step_refine_sound_list:
                     initial_squares = least_triggering_list_all_pages[iPage]
                 else:
                     iPage += 1
-                    if iPage < num_pages and page_seen[iPage] == True:
+                    if iPage < num_pages and page_seen[iPage]:
                         initial_squares = least_triggering_list_all_pages[iPage]
                     else:
                         initial_squares = [0] * num_items_per_page
