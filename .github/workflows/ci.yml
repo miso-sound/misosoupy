@@ -75,7 +75,7 @@ jobs:
       - name: Install system dependencies on macOS
         if: matrix.platform == 'macos-latest'
         run: |
-          brew install hdf5
+          brew install lzo2 lzo blosc hdf5
       - name: Retrieve pre-built distribution files
         uses: actions/download-artifact@v3
         with: {name: python-distribution-files, path: dist/}
