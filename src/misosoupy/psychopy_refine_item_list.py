@@ -14,6 +14,7 @@ import numpy as np
 # --- Import packages ---
 from psychopy import core, event, logging, visual
 
+
 def function_exit_out(win):
     """Safely exit out of presentation, closing window and flushing log."""
 
@@ -21,20 +22,23 @@ def function_exit_out(win):
     win.close()
     core.quit()
 
-def function_present_refined_item_list(mean_length,
-                           setup_item_height,
-                           setup_square_outline_size, 
-                           setup_square_size,
-                           setup_text_color,
-                           setup_screen_color, 
-                           setup_continue_shape_color,
-                           setup_shape_line_color,
-                           win,
-                           items,  
-                           instructions1, 
-                           instructions2, 
-                           instructions2_color):
-    """Present all participant selections onscreen for further refinement. 
+
+def function_present_refined_item_list(
+    mean_length,
+    setup_item_height,
+    setup_square_outline_size,
+    setup_square_size,
+    setup_text_color,
+    setup_screen_color,
+    setup_continue_shape_color,
+    setup_shape_line_color,
+    win,
+    items,
+    instructions1,
+    instructions2,
+    instructions2_color,
+):
+    """Present all participant selections onscreen for further refinement.
         If step_refine_trigger is true, participants will refine their trigger sound selections.
         If step_refine_neutral is true, participants will refined their neutral sound selections.
         Input parameters are defined within run_misosoupy.py.
@@ -67,7 +71,7 @@ def function_present_refined_item_list(mean_length,
         Instruction word(s) to emphasize (e.g., MOST, LEAST), written in color.
     instructions2_color: str
         Default is 'firebrick' for MOST, 'green' for LEAST.
-    
+
     Returns
     -------
     items_chosen : list
@@ -75,7 +79,7 @@ def function_present_refined_item_list(mean_length,
         Length will equal length of "items".
     all_ranks : numpy array
         Record of ranks assigned to each item.
-        Length will equal length of "items", with 0s for un-selected items and chosen rank (e.g., 1-5) for selected items. 
+        Length will equal length of "items", with 0s for un-selected items and chosen rank (e.g., 1-5) for selected items.
     """
 
     # Determine how many rows/columns are needed
@@ -128,30 +132,46 @@ def function_present_refined_item_list(mean_length,
                 - setup_square_outline_size * 1.25 * (iYpos)
             )
 
-            all_word_position_values.append((current_x_position + (0.35), current_y_position))  
-            all_square_position_values.append((current_x_position - 0.2, current_y_position))
+            all_word_position_values.append(
+                (current_x_position + (0.35), current_y_position)
+            )
+            all_square_position_values.append(
+                (current_x_position - 0.2, current_y_position)
+            )
 
     all_screen_words = []
     all_boxes = []
     all_choices = []
     for iItem in range(0, len(items)):
         if (
-            num_columns > 1 and len(items[iItem]) > mean_length 
+            num_columns > 1 and len(items[iItem]) > mean_length
         ):  # for long labels, decrease font size
-            current_item_height = refined_item_height - 0.005 #0.01
+            current_item_height = refined_item_height - 0.005  # 0.01
         else:
             current_item_height = refined_item_height
-        if len(items[iItem]) > mean_length*2: # for really long labels, put on two lines
-            current_item_height=current_item_height-0.005
-            current_item_text_temp=items[iItem].replace("_", " ")
-            current_space_index=[i for i in range(len(current_item_text_temp)) if current_item_text_temp.startswith(" ",i)]
+        if (
+            len(items[iItem]) > mean_length * 2
+        ):  # for really long labels, put on two lines
+            current_item_height = current_item_height - 0.005
+            current_item_text_temp = items[iItem].replace("_", " ")
+            current_space_index = [
+                i
+                for i in range(len(current_item_text_temp))
+                if current_item_text_temp.startswith(" ", i)
+            ]
             if len(current_space_index) > 4:
-                current_item_break_point=current_space_index[3] #break on 4th space
+                current_item_break_point = current_space_index[3]  # break on 4th space
             else:
-                current_item_break_point=current_space_index[-1] #break on last space
-            current_item_text=current_item_text_temp[:current_item_break_point] + '\n\t' + current_item_text_temp[current_item_break_point:]
+                current_item_break_point = current_space_index[
+                    -1
+                ]  # break on last space
+            current_item_text = (
+                current_item_text_temp[:current_item_break_point]
+                + "\n\t"
+                + current_item_text_temp[current_item_break_point:]
+            )
         else:
-            current_item_text=items[iItem].replace("_", " ")    
+            current_item_text = items[iItem].replace("_", " ")
         all_screen_words.append(
             visual.TextStim(
                 win,
@@ -176,20 +196,34 @@ def function_present_refined_item_list(mean_length,
         )
         all_choices.append(
             visual.TextStim(
-                win, text=" ", color=setup_text_color, height=refined_item_height, bold=True
+                win,
+                text=" ",
+                color=setup_text_color,
+                height=refined_item_height,
+                bold=True,
             )
         )
 
     # # Prep Continue Button
     stim_text_instruction1 = visual.TextStim(
-        win, text=instructions1, pos=(-0.7, 0.1), color=setup_text_color, height=0.09, wrapWidth=6
+        win,
+        text=instructions1,
+        pos=(-0.7, 0.1),
+        color=setup_text_color,
+        height=0.09,
+        wrapWidth=6,
     )
     stim_text_instruction2 = visual.TextStim(
-        win, text=instructions2, pos=(-0.7, 0.05), color=instructions2_color, height=0.09, wrapWidth=6
+        win,
+        text=instructions2,
+        pos=(-0.7, 0.05),
+        color=instructions2_color,
+        height=0.09,
+        wrapWidth=6,
     )
     stim_text_continue = visual.TextStim(
         win,
-        text="CONTINUE", 
+        text="CONTINUE",
         pos=(0.7, -0.85),
         color=setup_screen_color,
         height=0.08,
@@ -197,7 +231,7 @@ def function_present_refined_item_list(mean_length,
     stim_shape_exit = visual.ShapeStim(
         win,
         vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-        pos=(.75, 0.9),
+        pos=(0.75, 0.9),
         size=(0.35, 0.2),
         opacity=100,
         fillColor=setup_screen_color,
@@ -207,8 +241,8 @@ def function_present_refined_item_list(mean_length,
     )
     stim_text_exit = visual.TextStim(
         win,
-        text="EXIT", 
-        pos=(.75, 0.9),
+        text="EXIT",
+        pos=(0.75, 0.9),
         color=setup_text_color,
         height=0.08,
     )
@@ -317,7 +351,7 @@ def function_present_refined_item_list(mean_length,
             )
             stim_text_continue = visual.TextStim(
                 win,
-                text="CONTINUE", 
+                text="CONTINUE",
                 pos=(0.7, -0.85),
                 color=setup_text_color,
                 height=0.08,
