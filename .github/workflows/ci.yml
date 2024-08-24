@@ -68,14 +68,14 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
-      - name: Install system dependencies on macOS
-      if: matrix.platform == 'macos-latest'
-      run: |
-        brew install hdf5
       - uses: actions/setup-python@v4
         id: setup-python
         with:
           python-version: ${{ matrix.python }}
+      - name: Install system dependencies on macOS
+        if: matrix.platform == 'macos-latest'
+        run: |
+          brew install hdf5
       - name: Retrieve pre-built distribution files
         uses: actions/download-artifact@v3
         with: {name: python-distribution-files, path: dist/}
