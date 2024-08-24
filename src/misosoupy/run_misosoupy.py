@@ -21,6 +21,9 @@ import os  # handy system and path functions
 
 import numpy as np
 
+# Setup paths and IDs
+import setup_misosoupy
+
 # Set up preferences ################
 step_import_sound_list = True
 step_select_sound_list = True
@@ -28,9 +31,6 @@ step_select_trigger, step_select_neutral = True, True
 step_refine_sound_list = True
 step_refine_trigger, step_refine_neutral = True, True
 step_organize_sounds = True
-
-# Setup paths and IDs
-import setup_misosoupy
 
 global home_dir
 home_dir = setup_misosoupy.get_home_dir()  # creates global variable "home_dir"
