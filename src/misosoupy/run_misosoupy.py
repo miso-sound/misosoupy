@@ -507,7 +507,7 @@ if (setup_steps.get('step_organize_sounds') is True):
             os.remove(file_name)
 
     with open(file_name, "w") as textfile:
-        if step_refine_sound_list:
+        if (setup_steps.get('step_refine_sound_list') is True):
             print(
                 "SOUND_TYPE\t",
                 "RANK\t",
@@ -525,7 +525,7 @@ if (setup_steps.get('step_organize_sounds') is True):
         for iMost in most_triggering_list:
             current_path = all_sound_files[np.char.find(all_sound_labels, iMost) >= 0]
             with open(file_name, "a") as textfile:
-                if step_refine_trigger:
+                if (setup_steps.get('step_refine_trigger') is True):
                     print(
                         "Trigger\t\t",
                         str(round(most_triggering_ranks[rank_position])) + "\t",
@@ -548,7 +548,7 @@ if (setup_steps.get('step_organize_sounds') is True):
         for iLeast in least_triggering_list:
             current_path = all_sound_files[np.char.find(all_sound_labels, iLeast) >= 0]
             with open(file_name, "a") as textfile:
-                if step_refine_neutral:
+                if (setup_steps.get('step_refine_neutral') is True):
                     print(
                         "Neutral\t\t",
                         str(round(least_triggering_ranks[rank_position])) + "\t",
