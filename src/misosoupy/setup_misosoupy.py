@@ -10,10 +10,9 @@ from __future__ import division
 import os  # handy system and path functions
 from importlib import resources
 from pathlib import Path
+from warnings import warn
 
 import pkg_resources
-
-import misosoupy
 
 
 # Ensure that relative paths start from the same directory as this script
@@ -67,6 +66,11 @@ def get_sound_list():
 
 def get_path_to_assets():
     """Get the path to the assets directory"""
+    try:
+        import misosoupy
+    except ImportError:
+        warn("Could not find 'misosoupy' package. Did you run 'pip install -e .'?")
+        return Path(__file__).absolute().parent / "assets"
     if hasattr(resources, "files"):
         return Path(resources.files(misosoupy) / "assets")
     else:
