@@ -69,6 +69,7 @@ def get_path_to_assets():
     try:
         import misosoupy
     except ImportError:
+        # Consider updating this warning if we put misosoupy on PyPI
         warn("Could not find 'misosoupy' package. Did you run 'pip install -e .'?")
         return Path(__file__).absolute().parent / "assets"
     if hasattr(resources, "files"):
