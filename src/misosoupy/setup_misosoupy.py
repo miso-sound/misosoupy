@@ -10,10 +10,9 @@ from __future__ import division
 import os  # handy system and path functions
 from importlib import resources
 from pathlib import Path
+from warnings import warn
 
 import pkg_resources
-
-import misosoupy
 
 
 # Ensure that relative paths start from the same directory as this script
@@ -25,7 +24,7 @@ def get_home_dir():
     and change to that directory (if not already there).
     """
 
-    home_dir = os.path.dirname(os.path.abspath("__file__"))
+    home_dir = os.path.dirname(os.path.abspath(__file__))
     # NOTE: needed to manually change directory to /src/misosoupy/,
     # since pwd and os.path were returning the directory above?
     os.chdir(home_dir)
@@ -67,6 +66,12 @@ def get_sound_list():
 
 def get_path_to_assets():
     """Get the path to the assets directory"""
+    try:
+        import misosoupy
+    except ImportError:
+        # Consider updating this warning if we put misosoupy on PyPI
+        warn("Could not find 'misosoupy' package. Did you run 'pip install -e .'?")
+        return Path(__file__).absolute().parent / "assets"
     if hasattr(resources, "files"):
         return Path(resources.files(misosoupy) / "assets")
     else:
