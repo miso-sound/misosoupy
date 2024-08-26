@@ -11,9 +11,22 @@ import math
 
 import numpy as np
 
+import os
+
 # --- Import packages ---
 from psychopy import core, event, logging, visual
 
+# Import config file and screen parameters
+import setup_misosoupy
+config_path = setup_misosoupy.get_home_dir() + os.sep + 'config.ini'
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
+
+setup_square_outline_size = setup_screen.get('setup_square_outline_size')
+setup_square_size = setup_screen.get('setup_square_size')
+setup_text_color = setup_screen.get('setup_text_color')
+setup_screen_color = setup_screen.get('setup_screen_color')
+setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
+setup_shape_line_color = setup_screen.get('setup_shape_line_color')
 
 def function_exit_out(win):
     """Safely exit out of presentation, closing window and flushing log."""
@@ -26,12 +39,6 @@ def function_exit_out(win):
 def function_present_refined_item_list(
     mean_length,
     setup_item_height,
-    setup_square_outline_size,
-    setup_square_size,
-    setup_text_color,
-    setup_screen_color,
-    setup_continue_shape_color,
-    setup_shape_line_color,
     win,
     items,
     instructions1,
@@ -49,18 +56,6 @@ def function_present_refined_item_list(
         Average number of characters comprising the sound labels. Used to determine font size.
     setup_item_height : int
         Font height. Default is 0.085.
-    setup_square_outline_size : int
-        Default is 0.12.
-    setup_square_size : int
-        Default is 0.1.
-    setup_text_color : str
-        Default is "black".
-    setup_screen_color : str
-        Default is "lightgray".
-    setup_continue_shape_color : str
-        Default is "gray".
-    setup_shape_line_color : str
-        Default is "black".
     win : visual.Window object
         Screen set up.
     items : list

@@ -25,13 +25,6 @@ import numpy as np
 import setup_misosoupy
 
 # Set up preferences ################
-step_import_sound_list = True
-step_select_sound_list = True
-step_select_trigger, step_select_neutral = True, True
-step_refine_sound_list = True
-step_refine_trigger, step_refine_neutral = True, True
-step_organize_sounds = True
-
 global home_dir
 home_dir = setup_misosoupy.get_home_dir()  # creates global variable "home_dir"
 global participant
@@ -45,7 +38,11 @@ source_sound_list = (
 
 path_to_assets = setup_misosoupy.get_path_to_assets()
 
-if step_import_sound_list:
+# Read config file
+config_path = home_dir + os.sep + 'config.ini'
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
+
+if (setup_steps.get('step_import_sound_list') is True):
     import import_sound_list
 
     [all_sound_files, all_sound_labels, unique_sound_labels] = (
@@ -54,21 +51,21 @@ if step_import_sound_list:
 else:
     raise Exception("Need sounds to select from!")
 
-if step_select_sound_list or step_refine_sound_list:
+if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step_refine_sound_list') is True):
     from psychopy import core, event, logging, visual
 
-    setup_full_screen_choice = True  # make True during actual task
-    setup_which_screen = 0  # 2 #make 1 when only 1 monitor
-    setup_screen_size = [1920, 1080]  # make [2048, 1152]
-    setup_screen_color = "lightgray"
-    setup_text_color = "black"
-    setup_continue_shape_color = "gray"
-    setup_shape_line_color = "black"
-    setup_square_outline_size = 0.12
-    setup_square_size = 0.1
-    num_columns_per_page = 2
-    num_items_per_column = 10
-    pause_time = 2  # stay on item screen for 2s before skipping
+    setup_full_screen_choice = setup_screen.get('setup_full_screen_choice')
+    setup_which_screen = setup_screen.get('setup_which_screen')
+    #setup_screen_size = setup_screen.get('setup_screen_size')
+    setup_screen_color = setup_screen.get('setup_screen_color')
+    setup_text_color = setup_screen.get('setup_text_color')
+    setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
+    setup_shape_line_color = setup_screen.get('setup_shape_line_color')
+    setup_square_outline_size = setup_screen.get('setup_square_outline_size')
+    setup_square_size = setup_screen.get('setup_square_size')
+    num_columns_per_page = setup_screen.get('num_columns_per_page')
+    num_items_per_column = setup_screen.get('num_items_per_column')
+    pause_time = setup_screen.get('pause_time')
 
     num_sound_labels = len(unique_sound_labels)
     num_items_per_page = num_items_per_column * num_columns_per_page
@@ -76,7 +73,6 @@ if step_select_sound_list or step_refine_sound_list:
 
     # --- Setup the Window ---
     win = visual.Window(
-        size=setup_screen_size,
         fullscr=setup_full_screen_choice,
         screen=setup_which_screen,
         color=setup_screen_color,
@@ -190,7 +186,7 @@ if step_select_sound_list or step_refine_sound_list:
                 win.flip()
                 continue_chosen = True
 
-    if step_select_trigger:
+    if (setup_steps.get('step_select_trigger') is True):
         import psychopy_present_item_list
 
         instructions_general = (
@@ -227,20 +223,11 @@ if step_select_sound_list or step_refine_sound_list:
             most_triggering_list_page, back_chosen_page = (
                 psychopy_present_item_list.function_present_item_list(
                     unique_sound_labels,
-                    num_columns_per_page,
-                    num_items_per_column,
                     num_items_per_page,
                     mean_length,
                     setup_item_height,
-                    setup_square_outline_size,
-                    setup_square_size,
-                    setup_text_color,
-                    setup_screen_color,
-                    setup_continue_shape_color,
-                    setup_shape_line_color,
                     win,
                     iPage,
-                    pause_time,
                     instructions1,
                     instructions2,
                     "firebrick",
@@ -287,20 +274,11 @@ if step_select_sound_list or step_refine_sound_list:
                 most_triggering_list_page, back_chosen_page = (
                     psychopy_present_item_list.function_present_item_list(
                         unique_sound_labels,
-                        num_columns_per_page,
-                        num_items_per_column,
                         num_items_per_page,
                         mean_length,
                         setup_item_height,
-                        setup_square_outline_size,
-                        setup_square_size,
-                        setup_text_color,
-                        setup_screen_color,
-                        setup_continue_shape_color,
-                        setup_shape_line_color,
                         win,
                         iPage,
-                        pause_time,
                         instructions1,
                         instructions2,
                         "firebrick",
@@ -334,7 +312,7 @@ if step_select_sound_list or step_refine_sound_list:
 
         done_with_most_triggering = True
 
-    if step_refine_trigger:
+    if (setup_steps.get('step_refine_trigger') is True):
         import psychopy_refine_item_list
 
         instructions_break1 = (
@@ -349,19 +327,13 @@ if step_select_sound_list or step_refine_sound_list:
         )
         instructions5 = "TOP 5\n\n\n\n\n\n\n\n\n\n"
 
-        function_present_instructions(instructions_break1, 0)
+        function_present_instructions(instructions_break1, 2)
 
         refined_most_triggering_list = []
         [most_triggering_list_refined, most_triggering_ranks] = (
             psychopy_refine_item_list.function_present_refined_item_list(
                 mean_length,
                 setup_item_height,
-                setup_square_outline_size,
-                setup_square_size,
-                setup_text_color,
-                setup_screen_color,
-                setup_continue_shape_color,
-                setup_shape_line_color,
                 win,
                 most_triggering_list,
                 instructions4,
@@ -377,7 +349,7 @@ if step_select_sound_list or step_refine_sound_list:
 
         refined_most_triggering_list = sorted(refined_most_triggering_list)
 
-    if step_select_neutral:
+    if (setup_steps.get('step_select_neutral') is True):
         instructions_break2 = (
             "Next, you will repeat this process with sounds "
             + "\nyou find the LEAST triggering or MOST NEUTRAL."
@@ -388,7 +360,7 @@ if step_select_sound_list or step_refine_sound_list:
         )
         instructions7 = "\nNEUTRAL\n\n\n\n\n"
 
-        function_present_instructions(instructions_break2, 0)
+        function_present_instructions(instructions_break2, 2)
 
         iPage = 0
         page_seen = [False] * num_pages
@@ -401,20 +373,11 @@ if step_select_sound_list or step_refine_sound_list:
             least_triggering_list_page, back_chosen_page = (
                 psychopy_present_item_list.function_present_item_list(
                     unique_sound_labels,
-                    num_columns_per_page,
-                    num_items_per_column,
                     num_items_per_page,
                     mean_length,
                     setup_item_height,
-                    setup_square_outline_size,
-                    setup_square_size,
-                    setup_text_color,
-                    setup_screen_color,
-                    setup_continue_shape_color,
-                    setup_shape_line_color,
                     win,
                     iPage,
-                    pause_time,
                     instructions6,
                     instructions7,
                     "green",
@@ -461,20 +424,11 @@ if step_select_sound_list or step_refine_sound_list:
                 least_triggering_list_page, back_chosen_page = (
                     psychopy_present_item_list.function_present_item_list(
                         unique_sound_labels,
-                        num_columns_per_page,
-                        num_items_per_column,
                         num_items_per_page,
                         mean_length,
                         setup_item_height,
-                        setup_square_outline_size,
-                        setup_square_size,
-                        setup_text_color,
-                        setup_screen_color,
-                        setup_continue_shape_color,
-                        setup_shape_line_color,
                         win,
                         iPage,
-                        pause_time,
                         instructions6,
                         instructions7,
                         "green",
@@ -506,7 +460,7 @@ if step_select_sound_list or step_refine_sound_list:
                 if least_triggering_index[iItem] == 1:
                     least_triggering_list.append(unique_sound_labels[iItem])
 
-    if step_refine_neutral:
+    if (setup_steps.get('step_refine_neutral') is True):
 
         instructions8 = (
             "Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral "
@@ -519,12 +473,6 @@ if step_select_sound_list or step_refine_sound_list:
             psychopy_refine_item_list.function_present_refined_item_list(
                 mean_length,
                 setup_item_height,
-                setup_square_outline_size,
-                setup_square_size,
-                setup_text_color,
-                setup_screen_color,
-                setup_continue_shape_color,
-                setup_shape_line_color,
                 win,
                 least_triggering_list,
                 instructions8,
@@ -541,10 +489,10 @@ if step_select_sound_list or step_refine_sound_list:
         refined_least_triggering_list = sorted(refined_least_triggering_list)
 
     instructions_done = "Done!"
-    function_present_instructions(instructions_done, 0)
+    function_present_instructions(instructions_done, 1)
     win.close()
 
-if step_organize_sounds:
+if (setup_steps.get('step_organize_sounds') is True):
     # Make output file to save selections
     data_dir = home_dir + os.sep + "Sound_Selections" + os.sep
     if not os.path.isdir(data_dir):
@@ -571,7 +519,7 @@ if step_organize_sounds:
             print("SOUND_TYPE\t", "SOUND_LABEL\t\t", "FILE_NAME(S)", file=textfile)
 
     # Cycle through selections to grab path names
-    if step_select_trigger:
+    if (setup_steps.get('step_select_trigger') is True):
         most_trigger_paths = []
         rank_position = 0
         for iMost in most_triggering_list:
@@ -594,7 +542,7 @@ if step_organize_sounds:
                     )
             rank_position += 1
 
-    if step_select_neutral:
+    if (setup_steps.get('step_select_neutral') is True):
         least_trigger_paths = []
         rank_position = 0
         for iLeast in least_triggering_list:
