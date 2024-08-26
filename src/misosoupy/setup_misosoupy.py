@@ -25,7 +25,7 @@ def get_home_dir():
     and change to that directory (if not already there).
     """
 
-    home_dir = os.path.dirname(os.path.abspath("__file__"))
+    home_dir = os.path.dirname(os.path.abspath(__file__))
     # NOTE: needed to manually change directory to /src/misosoupy/,
     # since pwd and os.path were returning the directory above?
     os.chdir(home_dir)
