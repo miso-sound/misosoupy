@@ -156,72 +156,23 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         instructions_general = instructions_general1 + instructions_general3 + instructions_general2 + instructions_general4
         psychopy_present_instructions.function_present_instructions(win, instructions_general, 1)
 
-        instructions1 = (
-            "First, please choose \nthe sounds you are \n\n triggered by."
-            + "\n\n\nIf none of these \nsounds are triggering, \ncontinue to the \nnext page."
-        )
-        instructions2 = "MOST\n\n\n\n\n\n"
         instructions_error = (
             "Please try that again.\n\nRemember, you must select at LEAST "
             + str(num_items_to_select)
             + " sounds."
         )
 
-        done_with_most_triggering = False
-        iPage = 0
-        page_seen = [False] * num_pages
-        most_triggering_list = []
-        most_triggering_list_all_pages = [
-            [0] * num_items_per_page
-        ] * num_pages  # initialize index with 0s
-        initial_squares = [0] * num_items_per_page  # choices from previous page
-        while iPage < num_pages:
-            instructions3 = "Page " + str(iPage + 1) + "/" + str(num_pages)
-            most_triggering_list_page, back_chosen_page = (
-                psychopy_present_item_list.function_present_item_list(
-                    unique_sound_labels,
-                    num_items_per_page,
-                    mean_length,
-                    setup_item_height,
-                    win,
-                    iPage,
-                    instructions1,
-                    instructions2,
-                    "firebrick",
-                    instructions3,
-                    initial_squares,
-                    most_triggering_list,
-                    done_with_most_triggering,
-                )
+        if (setup_steps.get('step_select_trigger') is True):
+            instructions1 = (
+                "First, please choose \nthe sounds you are \n\n triggered by."
+                + "\n\n\nIf none of these \nsounds are triggering, \ncontinue to the \nnext page."
             )
-            page_seen[iPage] = True
-            most_triggering_list_all_pages[iPage] = most_triggering_list_page
-
-            if back_chosen_page:  # if participant chooses back button
-                iPage -= 1
-                initial_squares = most_triggering_list_all_pages[iPage]
-            else:
-                iPage += 1
-                if iPage < num_pages and page_seen[iPage]:
-                    initial_squares = most_triggering_list_all_pages[iPage]
-                else:
-                    initial_squares = [0] * num_items_per_page
-
-        most_triggering_index_temp = np.array(most_triggering_list_all_pages)
-        most_triggering_index = (
-            most_triggering_index_temp.flatten()
-        )  # vectorizes to single column
-        for iItem in range(len(most_triggering_index)):
-            if most_triggering_index[iItem] == 1:
-                most_triggering_list.append(unique_sound_labels[iItem])
-
-        # check to make sure enough categories were chosen, if not redo
-        if len(most_triggering_list) < num_items_to_select:
-            psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
+            instructions2 = "MOST\n\n\n\n\n\n"
 
             done_with_most_triggering = False
             iPage = 0
             page_seen = [False] * num_pages
+            most_triggering_list = []
             most_triggering_list_all_pages = [
                 [0] * num_items_per_page
             ] * num_pages  # initialize index with 0s
@@ -262,12 +213,63 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
             most_triggering_index = (
                 most_triggering_index_temp.flatten()
             )  # vectorizes to single column
-            most_triggering_list = []
             for iItem in range(len(most_triggering_index)):
                 if most_triggering_index[iItem] == 1:
                     most_triggering_list.append(unique_sound_labels[iItem])
 
-        done_with_most_triggering = True
+            # check to make sure enough categories were chosen, if not redo
+            if len(most_triggering_list) < num_items_to_select:
+                psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
+
+                done_with_most_triggering = False
+                iPage = 0
+                page_seen = [False] * num_pages
+                most_triggering_list_all_pages = [
+                    [0] * num_items_per_page
+                ] * num_pages  # initialize index with 0s
+                initial_squares = [0] * num_items_per_page  # choices from previous page
+                while iPage < num_pages:
+                    instructions3 = "Page " + str(iPage + 1) + "/" + str(num_pages)
+                    most_triggering_list_page, back_chosen_page = (
+                        psychopy_present_item_list.function_present_item_list(
+                            unique_sound_labels,
+                            num_items_per_page,
+                            mean_length,
+                            setup_item_height,
+                            win,
+                            iPage,
+                            instructions1,
+                            instructions2,
+                            "firebrick",
+                            instructions3,
+                            initial_squares,
+                            most_triggering_list,
+                            done_with_most_triggering,
+                        )
+                    )
+                    page_seen[iPage] = True
+                    most_triggering_list_all_pages[iPage] = most_triggering_list_page
+
+                    if back_chosen_page:  # if participant chooses back button
+                        iPage -= 1
+                        initial_squares = most_triggering_list_all_pages[iPage]
+                    else:
+                        iPage += 1
+                        if iPage < num_pages and page_seen[iPage]:
+                            initial_squares = most_triggering_list_all_pages[iPage]
+                        else:
+                            initial_squares = [0] * num_items_per_page
+
+                most_triggering_index_temp = np.array(most_triggering_list_all_pages)
+                most_triggering_index = (
+                    most_triggering_index_temp.flatten()
+                )  # vectorizes to single column
+                most_triggering_list = []
+                for iItem in range(len(most_triggering_index)):
+                    if most_triggering_index[iItem] == 1:
+                        most_triggering_list.append(unique_sound_labels[iItem])
+
+            done_with_most_triggering = True
 
     if (setup_steps.get('step_refine_trigger') is True):
         import psychopy_refine_item_list
@@ -317,17 +319,26 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         refined_most_triggering_list = sorted(refined_most_triggering_list)
 
     if (setup_steps.get('step_select_neutral') is True):
-        instructions_break2 = (
-            "Next, you will repeat this process with sounds "
-            + "\nyou find the LEAST triggering or MOST NEUTRAL."
-        )
-        instructions6 = (
-            "Now, please choose \nthe sounds you \nfind most"
-            + "\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
-        )
-        instructions7 = "\nNEUTRAL\n\n\n\n\n"
+        if (setup_steps.get('step_select_trigger') is False): #this is the only/first category participants select
+            instructions6 = (
+                "First, please choose \nthe sounds you \nfind most"
+                + "\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
+            )
+            instructions7 = "\nNEUTRAL\n\n\n\n\n"
+            done_with_most_triggering = False
+            most_triggering_list = []
+        else:
+            instructions_break2 = (
+                "Next, you will repeat this process with sounds "
+                + "\nyou find the LEAST triggering or MOST NEUTRAL."
+            )
+            instructions6 = (
+                "Now, please choose \nthe sounds you \nfind most"
+                + "\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
+            )
+            instructions7 = "\nNEUTRAL\n\n\n\n\n"
 
-        psychopy_present_instructions.function_present_instructions(win, instructions_break2, 2)
+            psychopy_present_instructions.function_present_instructions(win, instructions_break2, 2)
 
         iPage = 0
         page_seen = [False] * num_pages
@@ -428,7 +439,20 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
                     least_triggering_list.append(unique_sound_labels[iItem])
 
     if (setup_steps.get('step_refine_neutral') is True):
+        if (setup_steps.get('step_refine_trigger') is False): #haven't seen refinement instructions yet
+            import psychopy_refine_item_list
+            instructions_break1 = (
+                "Great! \n\nOn the next page, you will see the sounds you selected. "
+                + "\n\nPlease choose your TOP "
+                + str(num_items_to_select)
+                + " most neutral \nsounds from this list, "
+                + "and rank order them from \n1 (more neutral) to "
+                + str(num_items_to_select)
+                + " (less neutral)."
+            )
+            psychopy_present_instructions.function_present_instructions(win, instructions_break1, 2)
 
+        
         instructions8 = (
             "Please rank the \n\nsounds to you. \n\n1 = more neutral\n"
             + str(num_items_to_select)
@@ -464,7 +488,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
     instructions_done = "Done!"
     psychopy_present_instructions.function_present_instructions(win, instructions_done, 1)
-    psychopy_exit_out.function_exit_out(win) #win.close()
+    win.close()
 
 if (setup_steps.get('step_organize_sounds') is True):
     # Make output file to save selections
