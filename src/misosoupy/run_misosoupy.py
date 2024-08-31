@@ -183,7 +183,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         instructions_error = (
             "Please try that again.\n\nRemember, you must select at LEAST "
             + str(num_items_to_select)
-            + " sounds."
+            + " sounds, if possible."
         )
 
         if (setup_steps.get('step_select_trigger') is True):
@@ -325,6 +325,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         refined_most_triggering_list = []
         [most_triggering_list_refined, most_triggering_ranks] = (
             psychopy_refine_item_list.function_present_refined_item_list(
+                num_items_to_select,
                 mean_length,
                 setup_item_height,
                 win,
@@ -411,8 +412,13 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
             if least_triggering_index[iItem] == 1:
                 least_triggering_list.append(unique_sound_labels[iItem])
 
-        # check to make sure enough categories were chosen, if not redo
-        if len(least_triggering_list) < num_items_to_select:
+        num_available_to_select = num_sound_labels - len(most_triggering_list)
+
+        # check to make sure enough categories were chosen, if not redo 
+        if num_available_to_select < num_items_to_select: # if there were less than X options to choose from
+            num_items_to_select = num_available_to_select
+            
+        if (len(least_triggering_list) < num_items_to_select): 
             psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
 
             iPage = 0
@@ -493,6 +499,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         refined_least_triggering_list = []
         [least_triggering_list_refined, least_triggering_ranks] = (
             psychopy_refine_item_list.function_present_refined_item_list(
+                num_items_to_select,
                 mean_length,
                 setup_item_height,
                 win,
