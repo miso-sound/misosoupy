@@ -42,6 +42,7 @@ path_to_assets = setup_misosoupy.get_path_to_assets()
 config_path = home_dir + os.sep + 'config.ini'
 [setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
 
+# Import sounds
 if (setup_steps.get('step_import_sound_list') is True):
     import import_sound_list
 
@@ -49,7 +50,17 @@ if (setup_steps.get('step_import_sound_list') is True):
         import_sound_list.function_import_sound_list(path_to_assets, source_sound_list)
     )  # 'naturalsounds165' sound_list.csv
 else:
-    raise Exception("Need sounds to select from!")
+    raise Exception("Need sounds to select from! Make sure Step_import_sound_list = True")
+
+# Error if setup step choices are incompatible
+if (setup_steps.get('step_select_sound_list') is False) and (setup_steps.get('step_select_trigger') is True or setup_steps.get('step_select_neutral') is True):
+    raise Exception("To select particular sounds (e.g., trigger, neutral), make sure Step_select_sound_list = True")
+if (setup_steps.get('step_select_sound_list') is False) and (setup_steps.get('step_refine_sound_list') is True):
+    raise Exception("Need to select sounds before you can refine them! Make sure Step_select_sound_list = True")
+if (setup_steps.get('step_refine_sound_list') is False) and (setup_steps.get('step_refine_trigger') is True or setup_steps.get('step_refine_neutral') is True):
+    raise Exception("To refine particular sounds (e.g., trigger, neutral), make sure Step_refine_sound_list = True")
+if (setup_steps.get('step_select_sound_list') is False) and (setup_steps.get('step_organize_sounds') is True):
+    raise Exception("Need to select sounds before you can organize them! Make sure Step_select_sound_list = True")
 
 if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step_refine_sound_list') is True):
     from psychopy import core, event, logging, visual
