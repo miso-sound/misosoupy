@@ -14,6 +14,7 @@ import os
 from psychopy import core, event, logging, visual
 
 # Import config file and screen parameters
+import psychopy_exit_out
 import setup_misosoupy
 config_path = setup_misosoupy.get_home_dir() + os.sep + 'config.ini'
 [setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
@@ -27,14 +28,6 @@ setup_screen_color = setup_screen.get('setup_screen_color')
 setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
 setup_shape_line_color = setup_screen.get('setup_shape_line_color')
 pause_time = setup_screen.get('pause_time')
-
-
-def function_exit_out(win):
-    """Safely exit out of presentation, closing window and flushing log."""
-
-    logging.flush()
-    win.close()
-    core.quit()
 
 
 def function_present_item_list(
@@ -337,7 +330,7 @@ def function_present_item_list(
         win.flip()
 
         if mouse.isPressedIn(stim_shape_exit):
-            function_exit_out(win)
+            psychopy_exit_out.function_exit_out(win)
 
         # Check for checkbox clicks
         for s in range(0, len(all_boxes)):

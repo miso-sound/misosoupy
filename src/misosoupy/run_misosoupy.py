@@ -101,104 +101,12 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     else:
         setup_item_height = 0.085
 
-    def function_exit_out():
-        """Safely exit out of presentation, closing window and flushing log."""
-
-        logging.flush()
-        win.close()
-        core.quit()
-
-    def function_present_instructions(instruction_text, wait_time):
-        """Present instruction text onscreen using PsychoPy.
-
-        Parameters
-        ----------
-        instruction_text : str
-            Text to display.
-        wait_time : int
-            Time (in seconds) to pause before CONTINUE button is displayed.
-        """
-
-        # Prep instructions
-        stim_text_instruction1 = visual.TextStim(
-            win,
-            text=instruction_text,
-            pos=(0, 0),
-            color=setup_text_color,
-            height=0.09,
-            wrapWidth=6,
-        )
-        # Prep Continue Button
-        stim_text_continue = visual.TextStim(
-            win,
-            text="Click here to continue",
-            pos=(0.7, -0.85),
-            color=setup_screen_color,
-            height=0.08,
-        )
-        stim_shape_exit = visual.ShapeStim(
-            win,
-            vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-            pos=(1, 1),
-            size=(0.35, 0.35),
-            opacity=100,
-            fillColor=setup_screen_color,
-            lineColor=None,
-            lineWidth=4.0,
-            name="stim_shape_exit",
-        )
-        stim_shape_continue = stim_shape_exit
-
-        mouse = event.Mouse(win=win, visible=True)
-        mouse.clickReset()
-        event.clearEvents()
-
-        continue_chosen = False
-        stim_text_instruction1.draw()
-        stim_shape_continue.draw()
-        stim_text_continue.draw()
-        stim_shape_exit.draw()
-        win.flip()
-        core.wait(wait_time)
-        while continue_chosen is False:
-            stim_text_instruction1.draw()
-            stim_shape_continue.draw()
-            stim_text_continue.draw()
-            stim_shape_exit.draw()
-            win.flip()
-
-            if mouse.isPressedIn(stim_shape_exit):
-                function_exit_out()
-
-            # Make Continue Button visible after 3 seconds
-            stim_shape_continue = visual.ShapeStim(
-                win,
-                vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),
-                pos=(0.7, -0.85),
-                size=(0.45, 0.2),
-                opacity=100,
-                fillColor=setup_continue_shape_color,
-                lineColor=setup_shape_line_color,
-                lineWidth=4.0,
-                name="stim_shape_continue",
-            )
-            stim_text_continue = visual.TextStim(
-                win,
-                text="CONTINUE",
-                pos=(0.7, -0.85),
-                color=setup_text_color,
-                height=0.08,
-            )
-
-            if mouse.isPressedIn(stim_shape_continue):
-                stim_text_instruction1.draw()
-                stim_shape_continue.draw()
-                stim_text_continue.draw()
-                win.flip()
-                continue_chosen = True
-
+    
+    # Start sound selection process
     if (setup_steps.get('step_select_trigger') is True):
         import psychopy_present_item_list
+        import psychopy_exit_out
+        import psychopy_present_instructions
 
         instructions_general = (
             "In this experiment, you will listen to sounds."
@@ -210,7 +118,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
             + "\n\nThere will be 5 pages for each prompt (most and least). "
             + "\nTry to choose AT LEAST 4-5 sounds for each prompt."
         )
-        function_present_instructions(instructions_general, 1)
+        psychopy_present_instructions.function_present_instructions(win, instructions_general, 1)
 
         instructions1 = (
             "First, please choose \nthe sounds you are \n\n triggered by."
@@ -271,7 +179,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
         # check to make sure enough categories were chosen, if not redo
         if len(most_triggering_list) < 5:
-            function_present_instructions(instructions_error, 1)
+            psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
 
             done_with_most_triggering = False
             iPage = 0
@@ -338,7 +246,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         )
         instructions5 = "TOP 5\n\n\n\n\n\n\n\n\n\n"
 
-        function_present_instructions(instructions_break1, 2)
+        psychopy_present_instructions.function_present_instructions(win, instructions_break1, 2)
 
         refined_most_triggering_list = []
         [most_triggering_list_refined, most_triggering_ranks] = (
@@ -371,7 +279,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         )
         instructions7 = "\nNEUTRAL\n\n\n\n\n"
 
-        function_present_instructions(instructions_break2, 2)
+        psychopy_present_instructions.function_present_instructions(win, instructions_break2, 2)
 
         iPage = 0
         page_seen = [False] * num_pages
@@ -422,7 +330,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
         # check to make sure enough categories were chosen, if not redo
         if len(least_triggering_list) < 5:
-            function_present_instructions(instructions_error, 1)
+            psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
 
             iPage = 0
             page_seen = [False] * num_pages
@@ -500,8 +408,8 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         refined_least_triggering_list = sorted(refined_least_triggering_list)
 
     instructions_done = "Done!"
-    function_present_instructions(instructions_done, 1)
-    win.close()
+    psychopy_present_instructions.function_present_instructions(win, instructions_done, 1)
+    psychopy_exit_out.function_exit_out(win) #win.close()
 
 if (setup_steps.get('step_organize_sounds') is True):
     # Make output file to save selections
