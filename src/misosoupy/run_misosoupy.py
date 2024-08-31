@@ -6,11 +6,9 @@ Created on Sat Jun  8 12:02:55 2024
 
 THINGS TO STILL ADD (AUG 23 2024):
 
-    Option to set minimum required sounds (current default: 5 per category)
-    Option to change instructions?
-    Option to change colors
+    Option to change colors?
     Option to select sounds without needing psychopy?
-
+    Option to query available sound lists and/or specify in config?
 
 """
 
