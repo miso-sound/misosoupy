@@ -63,8 +63,10 @@ if (setup_steps.get('step_select_sound_list') is False) and (setup_steps.get('st
     raise Exception("Need to select sounds before you can organize them! Make sure Step_select_sound_list = True")
 
 if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step_refine_sound_list') is True):
-    from psychopy import core, event, logging, visual
-
+    from psychopy import visual
+    import psychopy_exit_out
+    import psychopy_present_instructions
+    
     setup_full_screen_choice = setup_screen.get('setup_full_screen_choice')
     setup_which_screen = setup_screen.get('setup_which_screen')
     #setup_screen_size = setup_screen.get('setup_screen_size')
@@ -74,6 +76,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     setup_shape_line_color = setup_screen.get('setup_shape_line_color')
     setup_square_outline_size = setup_screen.get('setup_square_outline_size')
     setup_square_size = setup_screen.get('setup_square_size')
+    num_items_to_select = setup_screen.get('num_items_to_select')
     num_columns_per_page = setup_screen.get('num_columns_per_page')
     num_items_per_column = setup_screen.get('num_items_per_column')
     pause_time = setup_screen.get('pause_time')
@@ -103,21 +106,54 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
     
     # Start sound selection process
-    if (setup_steps.get('step_select_trigger') is True):
+    if (setup_steps.get('step_select_sound_list') is True):
         import psychopy_present_item_list
-        import psychopy_exit_out
-        import psychopy_present_instructions
-
-        instructions_general = (
+        
+        instructions_general1 = (
             "In this experiment, you will listen to sounds."
             + "\nIt is important that we use the most effective sounds for each participant."
-            + "\n\nOn the next pages, you will see the names of sounds. \nPlease select the sounds "
-            + "that you find \nthe MOST triggering (e.g., bothersome, unpleasant) "
-            + "and \nthe LEAST triggering (e.g., neutral, neither pleasant nor unpleasant)."
-            + "\nDo this by clicking the box next to the sound name."
-            + "\n\nThere will be 5 pages for each prompt (most and least). "
-            + "\nTry to choose AT LEAST 4-5 sounds for each prompt."
+            + "\n\nOn the next pages, you will see the names of sounds."
         )
+        instructions_general2 = ("\nDo this by clicking the box next to the sound name.")
+        if (setup_steps.get('step_select_trigger') is True) and (setup_steps.get('step_select_neutral') is True):
+            instructions_general3 = (
+                "\nPlease select the sounds that you find"
+                + "\nthe MOST triggering (e.g., bothersome, unpleasant) "
+                + "and \nthe LEAST triggering (e.g., neutral, neither pleasant nor unpleasant)."
+            )
+            instructions_general4 = (
+                "\n\nThere will be "
+                + str(num_pages)
+                + " page(s) for each prompt (most and least). "
+                + "\nTry to choose AT LEAST "
+                + str(num_items_to_select)
+                + " sounds for each prompt."
+            )
+        elif (setup_steps.get('step_select_trigger') is True) and (setup_steps.get('step_select_neutral') is False):
+            instructions_general3 = (
+                "\nPlease select the sounds that you find"
+                + "\nthe MOST triggering (e.g., bothersome, unpleasant). "
+            )
+            instructions_general4 = (
+                "\n\nThere will be "
+                + str(num_pages)
+                + " page(s).\nTry to choose AT LEAST "
+                + str(num_items_to_select)
+                + " sounds."
+            )
+        elif (setup_steps.get('step_select_trigger') is False) and (setup_steps.get('step_select_neutral') is True):
+            instructions_general3 = (
+                "\nPlease select the sounds that you find"
+                + "\nthe LEAST triggering (e.g., neutral, neither pleasant nor unpleasant)."
+            )
+            instructions_general4 = (
+                "\n\nThere will be "
+                + str(num_pages)
+                + " page(s).\nTry to choose AT LEAST "
+                + str(num_items_to_select)
+                + " sounds."
+            )
+        instructions_general = instructions_general1 + instructions_general3 + instructions_general2 + instructions_general4
         psychopy_present_instructions.function_present_instructions(win, instructions_general, 1)
 
         instructions1 = (
@@ -126,7 +162,9 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         )
         instructions2 = "MOST\n\n\n\n\n\n"
         instructions_error = (
-            "Please try that again.\n\nRemember, you must select at LEAST 5 sounds."
+            "Please try that again.\n\nRemember, you must select at LEAST "
+            + str(num_items_to_select)
+            + " sounds."
         )
 
         done_with_most_triggering = False
@@ -178,7 +216,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
                 most_triggering_list.append(unique_sound_labels[iItem])
 
         # check to make sure enough categories were chosen, if not redo
-        if len(most_triggering_list) < 5:
+        if len(most_triggering_list) < num_items_to_select:
             psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
 
             done_with_most_triggering = False
@@ -236,15 +274,25 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
         instructions_break1 = (
             "Great! \n\nOn the next page, you will see the sounds you selected. "
-            + "\n\nPlease choose your TOP 5 most triggering \nsounds from this list, "
-            + "and rank order them from \n1 (more triggering) to 5 (less triggering)."
+            + "\n\nPlease choose your TOP "
+            + str(num_items_to_select)
+            + " most triggering \nsounds from this list, "
+            + "and rank order them from \n1 (more triggering) to "
+            + str(num_items_to_select)
+            + " (less triggering)."
         )
         instructions4 = (
             "Please rank the \n\nsounds you \nare triggered by. "
-            + "\n\n1 = more triggering\n5 = less triggering \n\n"
-            + "Once you have \nselected your top 5, \ncontinue to the \nnext page."
+            + "\n\n1 = more triggering\n"
+            + str(num_items_to_select)
+            + " = less triggering \n\n"
+            + "Once you have \nselected your top "
+            + str(num_items_to_select)
+            +", \ncontinue to the \nnext page."
         )
-        instructions5 = "TOP 5\n\n\n\n\n\n\n\n\n\n"
+        instructions5 = ("TOP " 
+                         + str(num_items_to_select)
+                         +"\n\n\n\n\n\n\n\n\n\n")
 
         psychopy_present_instructions.function_present_instructions(win, instructions_break1, 2)
 
@@ -329,7 +377,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
                 least_triggering_list.append(unique_sound_labels[iItem])
 
         # check to make sure enough categories were chosen, if not redo
-        if len(least_triggering_list) < 5:
+        if len(least_triggering_list) < num_items_to_select:
             psychopy_present_instructions.function_present_instructions(win, instructions_error, 1)
 
             iPage = 0
@@ -382,10 +430,17 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     if (setup_steps.get('step_refine_neutral') is True):
 
         instructions8 = (
-            "Please rank the \n\nsounds to you. \n\n1 = more neutral\n5 = less neutral "
-            + "\n\n\nOnce you have \nselected your top 5, \ncontinue to the \nnext page."
+            "Please rank the \n\nsounds to you. \n\n1 = more neutral\n"
+            + str(num_items_to_select)
+            + " = less neutral "
+            + "\n\n\nOnce you have \nselected your top "
+            + str(num_items_to_select)
+            + ", \ncontinue to the \nnext page."
         )
-        instructions9 = "5 MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n"
+        instructions9 = (
+            str(num_items_to_select)
+            + " MOST NEUTRAL\n\n\n\n\n\n\n\n\n\n"
+        )
 
         refined_least_triggering_list = []
         [least_triggering_list_refined, least_triggering_ranks] = (

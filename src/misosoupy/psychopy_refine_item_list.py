@@ -28,6 +28,7 @@ setup_text_color = setup_screen.get('setup_text_color')
 setup_screen_color = setup_screen.get('setup_screen_color')
 setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
 setup_shape_line_color = setup_screen.get('setup_shape_line_color')
+num_items_to_select = setup_screen.get('num_items_to_select')
 
 def function_present_refined_item_list(
     mean_length,
@@ -278,7 +279,7 @@ def function_present_refined_item_list(
                         items_chosen[s] = 1
                         all_choices[s].pos = all_square_position_values[s]
                         all_choices[s].text = str(current_rank)
-                        if current_rank == 5:
+                        if current_rank == num_items_to_select:
                             all_ranks_chosen = True
                         else:
                             current_rank += 1
