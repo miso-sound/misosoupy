@@ -62,9 +62,33 @@ if (setup_steps.get('step_refine_sound_list') is False) and (setup_steps.get('st
 if (setup_steps.get('step_select_sound_list') is False) and (setup_steps.get('step_organize_sounds') is True):
     raise Exception("Need to select sounds before you can organize them! Make sure Step_select_sound_list = True")
 
+# Error if participant number is already used, otherwise prep data file
+if (setup_steps.get('step_organize_sounds') is True):
+    # Make output file to save selections
+    data_dir = home_dir + os.sep + "Sound_Selections" + os.sep
+    if not os.path.isdir(data_dir):
+        os.makedirs(data_dir)
+    file_name = data_dir + participant + ".txt"
+
+    usable_file_name_found = False
+    while usable_file_name_found is False:
+        if os.path.isfile(file_name):
+            if participant == "TEST":
+                os.remove(file_name)
+                usable_file_name_found = True
+            else:
+                print("Sound Selections file for this participant already exists! Choose a different participant name.")
+                
+                participant = (
+                    setup_misosoupy.get_participant_id()
+                )  # choose a new participant id
+                file_name = data_dir + participant + ".txt"
+
+        else:
+            usable_file_name_found = True
+
 if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step_refine_sound_list') is True):
     from psychopy import visual
-    import psychopy_exit_out
     import psychopy_present_instructions
     
     setup_full_screen_choice = setup_screen.get('setup_full_screen_choice')
@@ -491,19 +515,6 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     win.close()
 
 if (setup_steps.get('step_organize_sounds') is True):
-    # Make output file to save selections
-    data_dir = home_dir + os.sep + "Sound_Selections" + os.sep
-    if not os.path.isdir(data_dir):
-        os.makedirs(data_dir)
-    file_name = data_dir + participant + ".txt"
-    if os.path.isfile(file_name) and participant != "TEST":
-        if participant != "TEST":
-            raise Exception(
-                "Sound Selections file for this participant already exists! Choose a different participant name."
-            )
-        else:
-            os.remove(file_name)
-
     with open(file_name, "w") as textfile:
         if (setup_steps.get('step_refine_sound_list') is True):
             print(
