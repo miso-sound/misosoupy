@@ -19,8 +19,7 @@ from psychopy import core, event, logging, visual
 # Import config file and screen parameters
 import psychopy_exit_out
 import setup_misosoupy
-config_path = setup_misosoupy.get_home_dir() + os.sep + 'config.ini'
-[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file()
 
 setup_square_outline_size = setup_screen.get('setup_square_outline_size')
 setup_square_size = setup_screen.get('setup_square_size')
@@ -28,7 +27,6 @@ setup_text_color = setup_screen.get('setup_text_color')
 setup_screen_color = setup_screen.get('setup_screen_color')
 setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
 setup_shape_line_color = setup_screen.get('setup_shape_line_color')
-#num_items_to_select = setup_screen.get('num_items_to_select')
 
 def function_present_refined_item_list(
     num_items_to_select,

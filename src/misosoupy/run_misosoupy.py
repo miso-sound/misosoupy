@@ -35,11 +35,8 @@ source_sound_list = (
     setup_misosoupy.get_sound_list(path_to_assets)
 )  # creates global variable "source_sound_list"
 
-
-
 # Read config file
-config_path = home_dir + os.sep + 'config.ini'
-[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file()
 
 # Import sounds
 if (setup_steps.get('step_import_sound_list') is True):

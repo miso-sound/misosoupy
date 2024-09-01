@@ -90,7 +90,8 @@ def get_path_to_assets():
 
 # Read in config file
 # (code from https://medium.com/@lelambonzo/simplifying-configuration-file-parsing-in-python-ef8e2144b3b3)
-def parse_config_file(config_path): 
+config_path = get_home_dir() + os.sep + 'config.ini'
+def parse_config_file(): 
     config = configparser.ConfigParser()
     config.read(config_path)
 

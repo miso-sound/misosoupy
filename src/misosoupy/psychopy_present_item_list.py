@@ -16,8 +16,7 @@ from psychopy import core, event, logging, visual
 # Import config file and screen parameters
 import psychopy_exit_out
 import setup_misosoupy
-config_path = setup_misosoupy.get_home_dir() + os.sep + 'config.ini'
-[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file()
 
 num_columns_per_page = setup_screen.get('num_columns_per_page')
 num_items_per_column = setup_screen.get('num_items_per_column')
