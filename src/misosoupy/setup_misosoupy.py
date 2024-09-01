@@ -37,7 +37,7 @@ def get_home_dir():
 def get_participant_id():
     """Take user input of the participant ID (string) and return as variable "participant"."""
 
-    print("Please enter Participant ID:")
+    print("\nPlease type Participant ID, then press 'Enter':")
     participant = input()
     if len(participant) < 1:  # if no input
         participant = "TEST"
@@ -46,22 +46,31 @@ def get_participant_id():
     return participant
 
 
-def get_sound_list():
+def get_sound_list(path_to_assets):
     """Take user input of the desired sound list and return as variable "source_sound_list"."""
 
-    print(
-        'Choose your sound list: Press "1" for soundlist.csv (FOAMS), or "2" for naturalsounds165'
-    )
+    print("\nChecking for sound list options...") 
+    sound_list_options = []
+    for item in os.listdir(path_to_assets):
+        if not item.startswith(".") and not item.startswith("__"):
+            sound_list_options.append(item)
+    
+    print("Found", str(len(sound_list_options)),"option(s) in assets directory:")
+    display_options=[]
+    for iOption in range(1,len(sound_list_options)+1): 
+        display_options.append(["----> Type " + str(iOption) + " for " + sound_list_options[iOption-1]])
+    
+    for iOption in display_options:
+        print(iOption[0])
+    print("Press 'Enter' to submit selection.")
+
     sound_list_choice = int(input())
+    if sound_list_choice not in range(1,len(sound_list_options)+1):
+        print("Please try again.")
+        sound_list_choice = int(input())
+    source_sound_list = sound_list_options[sound_list_choice-1]
 
-    if sound_list_choice == 1:
-        source_sound_list = "sound_list.csv"  # FOAMS
-    elif sound_list_choice == 2:
-        source_sound_list = "naturalsounds165"
-    else:
-        print("Cannot determine sound list choice!")
-
-    print("Sound List is:", source_sound_list)
+    print("Sound List is:", source_sound_list,"\n")
 
     return source_sound_list
 

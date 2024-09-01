@@ -25,16 +25,17 @@ import setup_misosoupy
 # Set up preferences ################
 global home_dir
 home_dir = setup_misosoupy.get_home_dir()  # creates global variable "home_dir"
+path_to_assets = setup_misosoupy.get_path_to_assets()
 global participant
 participant = (
     setup_misosoupy.get_participant_id()
 )  # creates global variable "participant"
 global source_sound_list
 source_sound_list = (
-    setup_misosoupy.get_sound_list()
+    setup_misosoupy.get_sound_list(path_to_assets)
 )  # creates global variable "source_sound_list"
 
-path_to_assets = setup_misosoupy.get_path_to_assets()
+
 
 # Read config file
 config_path = home_dir + os.sep + 'config.ini'
