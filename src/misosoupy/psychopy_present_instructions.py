@@ -4,7 +4,6 @@
 """
 
 # --- Import packages ---
-import os 
 from psychopy import core, event, visual
 
 # Import config file and screen parameters
@@ -79,7 +78,7 @@ def function_present_instructions(win, instruction_text, wait_time):
             if mouse.isPressedIn(stim_shape_exit):
                 psychopy_exit_out.function_exit_out(win)
 
-            # Make Continue Button visible after 3 seconds
+            # Make Continue Button visible after wait_time seconds
             stim_shape_continue = visual.ShapeStim(
                 win,
                 vertices=((-0.5, -0.3), (-0.5, 0.3), (0.5, 0.3), (0.5, -0.3)),

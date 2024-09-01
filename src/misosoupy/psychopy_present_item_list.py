@@ -8,10 +8,8 @@ from __future__ import division
 
 import time
 
-import os
-
 # --- Import packages ---
-from psychopy import core, event, logging, visual
+from psychopy import core, event, visual
 
 # Import config file and screen parameters
 import psychopy_exit_out
@@ -456,4 +454,4 @@ def function_present_item_list(
                 stim_text_exit.draw()
                 win.flip()
 
-    return items_chosen, back_chosen  # results are a list of 0s and 1s
+    return items_chosen, back_chosen 

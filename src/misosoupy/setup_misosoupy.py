@@ -7,7 +7,7 @@ Created on Thu Aug 22 10:53:23 2023
 
 from __future__ import division
 
-import os  # handy system and path functions
+import os 
 from importlib import resources
 from pathlib import Path
 from warnings import warn
@@ -27,8 +27,6 @@ def get_home_dir():
     """
 
     home_dir = os.path.dirname(os.path.abspath(__file__))
-    # NOTE: needed to manually change directory to /src/misosoupy/,
-    # since pwd and os.path were returning the directory above?
     os.chdir(home_dir)
 
     return home_dir

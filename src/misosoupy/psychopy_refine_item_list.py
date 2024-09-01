@@ -8,13 +8,10 @@ Created on Sat Jun  8 12:38:17 2024
 from __future__ import division
 
 import math
-
 import numpy as np
 
-import os
-
 # --- Import packages ---
-from psychopy import core, event, logging, visual
+from psychopy import core, event, visual
 
 # Import config file and screen parameters
 import psychopy_exit_out
@@ -138,7 +135,7 @@ def function_present_refined_item_list(
         if (
             num_columns > 1 and len(items[iItem]) > mean_length
         ):  # for long labels, decrease font size
-            current_item_height = refined_item_height - 0.005  # 0.01
+            current_item_height = refined_item_height - 0.005  
         else:
             current_item_height = refined_item_height
         if (
@@ -303,7 +300,6 @@ def function_present_refined_item_list(
                     core.wait(0.25)
                     previous_mouse_down = False
 
-        # Make Continue Button visible after 1s
 
         if sum(items_chosen) != 0:  # if they've clicked something, give option to reset
             stim_text_reset = visual.TextStim(
@@ -370,4 +366,4 @@ def function_present_refined_item_list(
         if current_item_rank != " ":
             all_ranks[i] = int(current_item_rank)
 
-    return items_chosen, all_ranks  # results are a list of 0s and 1s
+    return items_chosen, all_ranks 

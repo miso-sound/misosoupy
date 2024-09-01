@@ -6,23 +6,18 @@ Created on Sat Jun  8 12:02:55 2024
 
 THINGS TO STILL ADD (AUG 23 2024):
 
-    Option to change colors?
     Option to select sounds without needing psychopy?
-    Option to query available sound lists and/or specify in config?
 
 """
 
 from __future__ import division
 
 import math
-import os  # handy system and path functions
-
+import os  
 import numpy as np
 
-# Setup paths and IDs
+# Setup paths and preferences
 import setup_misosoupy
-
-# Set up preferences ################
 global home_dir
 home_dir = setup_misosoupy.get_home_dir()  # creates global variable "home_dir"
 path_to_assets = setup_misosoupy.get_path_to_assets()
@@ -44,7 +39,7 @@ if (setup_steps.get('step_import_sound_list') is True):
 
     [all_sound_files, all_sound_labels, unique_sound_labels] = (
         import_sound_list.function_import_sound_list(path_to_assets, source_sound_list)
-    )  # 'naturalsounds165' sound_list.csv
+    )  
 else:
     raise Exception("Need sounds to select from! Make sure Step_import_sound_list = True")
 
@@ -89,7 +84,6 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     
     setup_full_screen_choice = setup_screen.get('setup_full_screen_choice')
     setup_which_screen = setup_screen.get('setup_which_screen')
-    #setup_screen_size = setup_screen.get('setup_screen_size')
     setup_screen_color = setup_screen.get('setup_screen_color')
     setup_text_color = setup_screen.get('setup_text_color')
     setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
@@ -340,7 +334,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
         refined_most_triggering_list = sorted(refined_most_triggering_list)
 
     if (setup_steps.get('step_select_neutral') is True):
-        if (setup_steps.get('step_select_trigger') is False): #this is the only/first category participants select
+        if (setup_steps.get('step_select_trigger') is False): #if this is the only/first category participants select
             instructions6 = (
                 "First, please choose \nthe sounds you \nfind most"
                 + "\n\n\n\nIf all of these sounds\nare triggering, \ncontinue to the \nnext page."
@@ -465,7 +459,7 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
                     least_triggering_list.append(unique_sound_labels[iItem])
 
     if (setup_steps.get('step_refine_neutral') is True):
-        if (setup_steps.get('step_refine_trigger') is False): #haven't seen refinement instructions yet
+        if (setup_steps.get('step_refine_trigger') is False): #if haven't seen refinement instructions yet
             import psychopy_refine_item_list
             instructions_break1 = (
                 "Great! \n\nOn the next page, you will see the sounds you selected. "
