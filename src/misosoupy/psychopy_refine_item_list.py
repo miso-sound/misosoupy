@@ -49,8 +49,9 @@ def function_present_refined_item_list(
     ----------
     num_items_to_select: int
         Number of sounds necessary for experiment, i.e., up to how many sounds participants rank.
-        Defined in config.ini, updated in misosoupy.py if multiple categories are selected for 
-        (e.g., trigger and neutral) and there are fewer than num_items_to_select options available.
+        Defined in config.ini (default = 5), updated in misosoupy.py if multiple categories are 
+        selected for (e.g., trigger and neutral) and there are fewer than num_items_to_select 
+        options available.
     mean_length : int
         Average number of characters comprising the sound labels. Used to determine font size.
     setup_item_height : int
