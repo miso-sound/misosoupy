@@ -14,6 +14,8 @@ from warnings import warn
 
 import pkg_resources
 
+import configparser
+
 
 # Ensure that relative paths start from the same directory as this script
 def get_home_dir():
@@ -76,3 +78,32 @@ def get_path_to_assets():
         return Path(resources.files(misosoupy) / "assets")
     else:
         return Path(pkg_resources.resource_filename("misosoupy", "assets"))
+
+# Read in config file
+# (code from https://medium.com/@lelambonzo/simplifying-configuration-file-parsing-in-python-ef8e2144b3b3)
+def parse_config_file(config_path): 
+    config = configparser.ConfigParser()
+    config.read(config_path)
+
+    steps_to_complete = {}
+    for key, value in config['STEPS'].items():
+        if value.lower() in 'true':
+            steps_to_complete[key] = True
+        elif value.lower() in 'false':
+            steps_to_complete[key] = False
+
+    screen_parameters = {}
+    for key, value in config['SCREEN'].items():
+        if value.isdigit():
+            screen_parameters[key] = int(value)
+        elif value.lower() in 'true':
+            screen_parameters[key] = True
+        elif value.lower() in 'false':
+            screen_parameters[key] = False
+        else:    
+            try:
+                screen_parameters[key] = float(value) 
+            except ValueError:
+                screen_parameters[key] = value
+
+    return steps_to_complete, screen_parameters

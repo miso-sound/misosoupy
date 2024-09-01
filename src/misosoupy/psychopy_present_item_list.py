@@ -8,34 +8,35 @@ from __future__ import division
 
 import time
 
+import os
+
 # --- Import packages ---
 from psychopy import core, event, logging, visual
 
+# Import config file and screen parameters
+import psychopy_exit_out
+import setup_misosoupy
+config_path = setup_misosoupy.get_home_dir() + os.sep + 'config.ini'
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
 
-def function_exit_out(win):
-    """Safely exit out of presentation, closing window and flushing log."""
-
-    logging.flush()
-    win.close()
-    core.quit()
+num_columns_per_page = setup_screen.get('num_columns_per_page')
+num_items_per_column = setup_screen.get('num_items_per_column')
+setup_square_outline_size = setup_screen.get('setup_square_outline_size')
+setup_square_size = setup_screen.get('setup_square_size')
+setup_text_color = setup_screen.get('setup_text_color')
+setup_screen_color = setup_screen.get('setup_screen_color')
+setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
+setup_shape_line_color = setup_screen.get('setup_shape_line_color')
+pause_time = setup_screen.get('pause_time')
 
 
 def function_present_item_list(
     unique_sound_labels,
-    num_columns_per_page,
-    num_items_per_column,
     num_items_per_page,
     mean_length,
     setup_item_height,
-    setup_square_outline_size,
-    setup_square_size,
-    setup_text_color,
-    setup_screen_color,
-    setup_continue_shape_color,
-    setup_shape_line_color,
     win,
     page_num,
-    pause_time,
     instructions1,
     instructions2,
     instructions2_color,
@@ -56,34 +57,16 @@ def function_present_item_list(
     ----------
     unique_sound_labels : np.array
         List of sound labels to present onscreen, defined in import_sound_list.py
-    num_columns_per_page : int
-        Default is 2.
-    num_items_per_column : int
-        Default is 10.
     num_items_per_page : int
         Default is 20.
     mean_length : int
         Average number of characters comprising the sound labels. Used to determine font size.
     setup_item_height : int
         Font height. Default is 0.085.
-    setup_square_outline_size : int
-        Default is 0.12.
-    setup_square_size : int
-        Default is 0.1.
-    setup_text_color : str
-        Default is "black".
-    setup_screen_color : str
-        Default is "lightgray".
-    setup_continue_shape_color : str
-        Default is "gray".
-    setup_shape_line_color : str
-        Default is "black".
     win : visual.Window object
         Screen set up.
     page_num : int
         Current page number.
-    pause_time : int
-        How long to pause on each page before continue button appears. Default is 2 (seconds).
     instructions1 : str
         Task instructions, written in black.
     instructions2 : str
@@ -347,7 +330,7 @@ def function_present_item_list(
         win.flip()
 
         if mouse.isPressedIn(stim_shape_exit):
-            function_exit_out(win)
+            psychopy_exit_out.function_exit_out(win)
 
         # Check for checkbox clicks
         for s in range(0, len(all_boxes)):

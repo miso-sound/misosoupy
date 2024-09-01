@@ -11,27 +11,29 @@ import math
 
 import numpy as np
 
+import os
+
 # --- Import packages ---
 from psychopy import core, event, logging, visual
 
+# Import config file and screen parameters
+import psychopy_exit_out
+import setup_misosoupy
+config_path = setup_misosoupy.get_home_dir() + os.sep + 'config.ini'
+[setup_steps, setup_screen]=setup_misosoupy.parse_config_file(config_path)
 
-def function_exit_out(win):
-    """Safely exit out of presentation, closing window and flushing log."""
-
-    logging.flush()
-    win.close()
-    core.quit()
-
+setup_square_outline_size = setup_screen.get('setup_square_outline_size')
+setup_square_size = setup_screen.get('setup_square_size')
+setup_text_color = setup_screen.get('setup_text_color')
+setup_screen_color = setup_screen.get('setup_screen_color')
+setup_continue_shape_color = setup_screen.get('setup_continue_shape_color')
+setup_shape_line_color = setup_screen.get('setup_shape_line_color')
+#num_items_to_select = setup_screen.get('num_items_to_select')
 
 def function_present_refined_item_list(
+    num_items_to_select,
     mean_length,
     setup_item_height,
-    setup_square_outline_size,
-    setup_square_size,
-    setup_text_color,
-    setup_screen_color,
-    setup_continue_shape_color,
-    setup_shape_line_color,
     win,
     items,
     instructions1,
@@ -45,22 +47,15 @@ def function_present_refined_item_list(
 
     Parameters
     ----------
+    num_items_to_select: int
+        Number of sounds necessary for experiment, i.e., up to how many sounds participants rank.
+        Defined in config.ini (default = 5), updated in misosoupy.py if multiple categories are 
+        selected for (e.g., trigger and neutral) and there are fewer than num_items_to_select 
+        options available.
     mean_length : int
         Average number of characters comprising the sound labels. Used to determine font size.
     setup_item_height : int
         Font height. Default is 0.085.
-    setup_square_outline_size : int
-        Default is 0.12.
-    setup_square_size : int
-        Default is 0.1.
-    setup_text_color : str
-        Default is "black".
-    setup_screen_color : str
-        Default is "lightgray".
-    setup_continue_shape_color : str
-        Default is "gray".
-    setup_shape_line_color : str
-        Default is "black".
     win : visual.Window object
         Screen set up.
     items : list
@@ -276,7 +271,7 @@ def function_present_refined_item_list(
         win.flip()
 
         if mouse.isPressedIn(stim_shape_exit):
-            function_exit_out()
+            psychopy_exit_out.function_exit_out(win)
 
         # Check for checkbox clicks
         for s in range(0, len(all_boxes)):
@@ -290,7 +285,7 @@ def function_present_refined_item_list(
                         items_chosen[s] = 1
                         all_choices[s].pos = all_square_position_values[s]
                         all_choices[s].text = str(current_rank)
-                        if current_rank == 5:
+                        if current_rank == num_items_to_select:
                             all_ranks_chosen = True
                         else:
                             current_rank += 1
