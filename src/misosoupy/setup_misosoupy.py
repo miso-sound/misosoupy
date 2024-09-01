@@ -103,7 +103,7 @@ def parse_config_file(config_path):
         else:    
             try:
                 screen_parameters[key] = float(value) 
-            except:
+            except ValueError:
                 screen_parameters[key] = value
 
     return steps_to_complete, screen_parameters
