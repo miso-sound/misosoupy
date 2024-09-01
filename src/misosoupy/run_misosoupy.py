@@ -16,7 +16,12 @@ import math
 import os  
 import numpy as np
 
-# Setup paths and preferences
+"""
+-------------------------------------------------------------------------------
+                        Set up paths and preferences
+-------------------------------------------------------------------------------
+"""
+# Read in paths, variables
 import setup_misosoupy
 global home_dir
 home_dir = setup_misosoupy.get_home_dir()  # creates global variable "home_dir"
@@ -32,16 +37,6 @@ source_sound_list = (
 
 # Read config file
 [setup_steps, setup_screen]=setup_misosoupy.parse_config_file()
-
-# Import sounds
-if (setup_steps.get('step_import_sound_list') is True):
-    import import_sound_list
-
-    [all_sound_files, all_sound_labels, unique_sound_labels] = (
-        import_sound_list.function_import_sound_list(path_to_assets, source_sound_list)
-    )  
-else:
-    raise Exception("Need sounds to select from! Make sure Step_import_sound_list = True")
 
 # Error if setup step choices are incompatible
 if (setup_steps.get('step_select_sound_list') is False) and (setup_steps.get('step_select_trigger') is True or setup_steps.get('step_select_neutral') is True):
@@ -78,6 +73,25 @@ if (setup_steps.get('step_organize_sounds') is True):
         else:
             usable_file_name_found = True
 
+"""
+-------------------------------------------------------------------------------
+                        Import sound labels
+-------------------------------------------------------------------------------
+"""
+if (setup_steps.get('step_import_sound_list') is True):
+    import import_sound_list
+
+    [all_sound_files, all_sound_labels, unique_sound_labels] = (
+        import_sound_list.function_import_sound_list(path_to_assets, source_sound_list)
+    )  
+else:
+    raise Exception("Need sounds to select from! Make sure Step_import_sound_list = True")
+
+"""
+-------------------------------------------------------------------------------
+                        Present sound labels onscreen
+-------------------------------------------------------------------------------
+"""
 if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step_refine_sound_list') is True):
     from psychopy import visual
     import psychopy_present_instructions
@@ -118,11 +132,13 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     else:
         setup_item_height = 0.085
 
-    
-    # Start sound selection process
+    """
+    ----------- Start sound selection process --------------------------------------------------------
+    """
     if (setup_steps.get('step_select_sound_list') is True):
         import psychopy_present_item_list
         
+        # Prep instruction screen, depending on whether trigger/neutral/both is chosen
         instructions_general1 = (
             "In this experiment, you will listen to sounds."
             + "\nIt is important that we use the most effective sounds for each participant."
@@ -176,6 +192,9 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
             + " sounds, if possible."
         )
 
+        """
+        ----------- Select trigger sounds --------------------------------------------------------
+        """
         if (setup_steps.get('step_select_trigger') is True):
             instructions1 = (
                 "First, please choose \nthe sounds you are \n\n triggered by."
@@ -285,6 +304,9 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
             done_with_most_triggering = True
 
+    """
+    ----------- Refine trigger sounds --------------------------------------------------------
+    """
     if (setup_steps.get('step_refine_trigger') is True):
         import psychopy_refine_item_list
 
@@ -333,6 +355,9 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
 
         refined_most_triggering_list = sorted(refined_most_triggering_list)
 
+    """
+    ----------- Select neutral sounds --------------------------------------------------------
+    """
     if (setup_steps.get('step_select_neutral') is True):
         if (setup_steps.get('step_select_trigger') is False): #if this is the only/first category participants select
             instructions6 = (
@@ -458,6 +483,9 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
                 if least_triggering_index[iItem] == 1:
                     least_triggering_list.append(unique_sound_labels[iItem])
 
+    """
+    ----------- Refine neutral sounds --------------------------------------------------------
+    """
     if (setup_steps.get('step_refine_neutral') is True):
         if (setup_steps.get('step_refine_trigger') is False): #if haven't seen refinement instructions yet
             import psychopy_refine_item_list
@@ -511,6 +539,11 @@ if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step
     psychopy_present_instructions.function_present_instructions(win, instructions_done, 1)
     win.close()
 
+"""
+-------------------------------------------------------------------------------
+                        Organize sound selections
+-------------------------------------------------------------------------------
+"""
 if (setup_steps.get('step_organize_sounds') is True):
     with open(file_name, "w") as textfile:
         if (setup_steps.get('step_refine_sound_list') is True):
