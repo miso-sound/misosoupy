@@ -95,6 +95,8 @@ else:
 if (setup_steps.get('step_select_sound_list') is True) or (setup_steps.get('step_refine_sound_list') is True):
     from psychopy import visual
     import psychopy_present_instructions
+
+    print("\n>>>>>>>>>>> Opening PsychoPy .................................")
     
     setup_full_screen_choice = setup_screen.get('setup_full_screen_choice')
     setup_which_screen = setup_screen.get('setup_which_screen')
