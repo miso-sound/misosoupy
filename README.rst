@@ -40,6 +40,21 @@ MisoSOUPy exists to assist researchers in optimizing their experimental stimuli 
    3) allows further refinement of the personalized sounds by requesting participants rank order the sounds they selected; and
    4) outputs a list of all sounds selected and ranked by the participant into a .txt file, including filenames for each sound for easy importation into a separate experimental paradigm.
 
+Examples
+========
+
+
+Setup
+=====
+
+To use MisoSOUPy, open and run
+
+   run_misosoupy.py 
+
+In the command window, you will be prompted to supply the participant number (or press 'Enter' for testing) as well as which sound list to select from, if multiple are found.
+
+
+
 
 Making Changes & Contributing
 =============================
