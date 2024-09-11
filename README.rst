@@ -127,6 +127,29 @@ Examples
 *Example: Sample output from selection of FOAMS stimuli for both trigger and neutral sounds, without the ranking step.*
 
 
+Installation
+============
+MisoSOUPy has been tested with Python 3.8.
+
+To install MisoSOUPy, run the following command:
+
+.. code-block:: bash
+
+    pip install misosoupy
+
+To install MisoSOUPy from source, clone the repository:
+
+.. code-block:: bash
+
+    git clone https://github.com/miso-sound/misosoupy.git
+
+Then run the following command:
+
+.. code-block:: bash
+
+    pip install .
+
+
 Setup
 =====
 
