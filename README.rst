@@ -139,7 +139,7 @@ By default, MisoSOUPy will request participants select and rank their top 5 trig
    # Request participants to select their least triggering (or neutral) sounds. If triggering sounds are selected first, these options will remain in the list but appear grayed out. Step_select_sound_list must be True for this option to be True. (Default = True)
    ``step_select_neutral = True``
 
-*Example: change the value for ``num_items_to_select`` in ``config.ini`` to match how many stimuli per category are needed for the experiment.*
+*Example: change the value for `num_items_to_select` in `config.ini` to match how many stimuli per category are needed for the experiment.*
    
    # Minimum number of sound labels participants must select in each sound category. If fewer labels than this number are selected, participants see an error screen and must restart. If step_refine_sound_list = True, participants will also rank order this number of sounds. Default = 5.
   ``num_items_to_select = 5``
