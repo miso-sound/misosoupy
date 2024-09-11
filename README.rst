@@ -108,7 +108,7 @@ Examples
 
 *Example: Ranking top 5 neutral sounds, utilizing the reset button to make changes.*
 
-**After selecting and ranking sounds, the participant's choices will be output to a tab-delimited .txt file.**
+**After selecting and ranking sounds, the participant's choices will be saved to a tab-delimited .txt file.**
 
 .. figure:: ./docs/media/data1.png
 
