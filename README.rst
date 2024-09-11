@@ -144,7 +144,7 @@ By default, MisoSOUPy will request participants select and rank their top 5 trig
    # Minimum number of sound labels participants must select in each sound category. If fewer labels than this number are selected, participants see an error screen and must restart. If step_refine_sound_list = True, participants will also rank order this number of sounds. Default = 5.
   ``num_items_to_select = 5``
 
-Put a folder with your sound files (or a .csv of the sound names, see ``FOAMS_sound_list.csv`` for an example) in the ``/misosoupy/assets/`` directory. Sound labels will be derived from the file names (or .csv) in this folder for presentation by MisoSOUPy.
+Put a folder with your sound files (or a .csv of the sound names, see `FOAMS_sound_list.csv` for an example) in the `/misosoupy/assets/` directory. Sound labels will be derived from the file names (or .csv) in this folder for presentation by MisoSOUPy.
 
 
 Making Changes & Contributing
