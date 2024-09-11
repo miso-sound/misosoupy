@@ -90,7 +90,7 @@ Examples
 
 *Example: Ranking trigger sound selections from 1 (more triggering) to 3 (less triggering).*
 
-**When more sounds are selected than need are needed for an experiment, not all sounds will be ranked. Refining the top sounds helps the researcher keep the number of sound choices consistent across participants.** 
+**When more sounds are selected than are needed for an experiment, not all sounds will be ranked. Refining the top sounds helps the researcher keep the number of sound choices consistent across participants.** 
 
 .. figure:: ./docs/media/2_MisoSoupy_DemoVid.gif
 
