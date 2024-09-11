@@ -32,7 +32,7 @@ A Python package to customize stimuli for experiments on misophonia based on par
 About
 =====
 
-Given the individual variability in sounds found to be triggering in misophonia, research experiments benefit from personalizing the stimuli for each participant. For instance, if a participant is bothered by office sounds but not chewing sounds, a study aiming to observe the effects of trigger sounds on performance wouldn't accurately capture the phenomenon if only chewing sounds were used in the experiment. 
+Given the individual variability in sounds found to be triggering in misophonia, research experiments benefit from personalizing the stimuli for each participant. For instance, if a participant is bothered by office sounds but not chewing sounds, a study aiming to observe the effects of trigger sounds on performance wouldn't accurately capture the phenomenon if only chewing sounds were used in the experiment.
 
 MisoSOUPy exists to assist researchers in optimizing their experimental stimuli for each participant via a user-friendly selection process onscreen. Specifically, MisoSOUPy does the following:
    1) imports a list of sounds/stimuli that an experimenter has access to;
@@ -52,17 +52,17 @@ Examples
 
 **Participants then see an instruction screen. Options are customizable, depending on which categories of sounds (and how many stimuli in each) are desired.**
 
-.. figure:: ./docs/media/instructions2.png 
+.. figure:: ./docs/media/instructions2.png
 
 *Example: Instructions for selecting both Trigger and Neutral sounds, at least 5 in each.*
 
 .. figure:: ./docs/media/instructions3.png
-   :scale: 50 % 
+   :scale: 50 %
    :width: 100 px
 
 *Example: Instructions for selecting only Trigger sounds, at least 4.*
 
-**Participants select sounds by clicking the box next to the name.** 
+**Participants select sounds by clicking the box next to the name.**
 
 .. figure:: ./docs/media/4_MisoSoupy_DemoVid.gif
 
@@ -90,7 +90,7 @@ Examples
 
 *Example: Ranking trigger sound selections from 1 (more triggering) to 3 (less triggering).*
 
-**When more sounds are selected than are needed for an experiment, not all sounds will be ranked. Refining the top sounds helps the researcher keep the number of sound choices consistent across participants.** 
+**When more sounds are selected than are needed for an experiment, not all sounds will be ranked. Refining the top sounds helps the researcher keep the number of sound choices consistent across participants.**
 
 .. figure:: ./docs/media/2_MisoSoupy_DemoVid.gif
 
@@ -127,20 +127,43 @@ Examples
 *Example: Sample output from selection of FOAMS stimuli for both trigger and neutral sounds, without the ranking step.*
 
 
+Installation
+============
+MisoSOUPy has been tested with Python 3.8.
+
+To install MisoSOUPy, run the following command:
+
+.. code-block:: bash
+
+    pip install misosoupy
+
+To install MisoSOUPy from source, clone the repository:
+
+.. code-block:: bash
+
+    git clone https://github.com/miso-sound/misosoupy.git
+
+Then run the following command:
+
+.. code-block:: bash
+
+    pip install .
+
+
 Setup
 =====
 
-To use MisoSOUPy, open and run ``run_misosoupy.py`` 
+To use MisoSOUPy, open and run ``run_misosoupy.py``
 
 By default, MisoSOUPy will request participants select and rank their top 5 trigger and neutral sounds. To change these default settings, edit ``config.ini``
 
 *Example: change `step_select_neutral` to `False` in `config.ini` to only have participants select trigger sounds.*
-   
+
    # Request participants to select their least triggering (or neutral) sounds. If triggering sounds are selected first, these options will remain in the list but appear grayed out. Step_select_sound_list must be True for this option to be True. (Default = True)
    ``step_select_neutral = True``
 
 *Example: change the value for `num_items_to_select` in `config.ini` to match how many stimuli per category are needed for the experiment.*
-   
+
    # Minimum number of sound labels participants must select in each sound category. If fewer labels than this number are selected, participants see an error screen and must restart. If step_refine_sound_list = True, participants will also rank order this number of sounds. Default = 5.
   ``num_items_to_select = 5``
 
@@ -150,7 +173,9 @@ Put a folder with your sound files (or a .csv of the sound names, see `FOAMS_sou
 Making Changes & Contributing
 =============================
 
-This project uses `pre-commit`_, please make sure to install it before making any
+You can consult the contributor's `guide`_ for more information on how to contribute to MisoSOUPy.
+
+Note that this project uses `pre-commit`_, please make sure to install it before making any
 changes::
 
     pip install pre-commit
@@ -162,3 +187,4 @@ It is a good idea to update the hooks to the latest version::
     pre-commit autoupdate
 
 .. _pre-commit: https://pre-commit.com/
+.. _guide: https://misosoupy.readthedocs.io/en/stable/contributing.html
