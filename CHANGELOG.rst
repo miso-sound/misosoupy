@@ -1,10 +1,32 @@
-=========
 Changelog
 =========
 
-Version 0.1
-===========
+All notable changes to this project will be documented in this file.
 
-- Feature A added
-- FIX: nasty bug #1729 fixed
-- add your changes here!
+The format is based on `Keep a
+Changelog <https://keepachangelog.com/en/1.1.0/>`__, and this project
+adheres to `Semantic
+Versioning <https://semver.org/spec/v2.0.0.html>`__.
+
+Unreleased
+----------
+
+Added
+~~~~~
+
+Changed
+~~~~~~~
+
+Fixed
+~~~~~
+
+Removed
+~~~~~~~
+
+[0.1.0] - 2024-09-11
+--------------------
+
+Added
+~~~~~
+
+-  Initial version of project on GitHub.
