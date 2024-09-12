@@ -20,6 +20,8 @@ Changed
 Fixed
 ~~~~~
 
+- Updated badges in README.
+
 Removed
 ~~~~~~~
 
