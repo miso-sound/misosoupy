@@ -4,19 +4,9 @@
 .. image:: https://readthedocs.org/projects/misosoupy/badge/?version=latest
     :alt: ReadTheDocs
     :target: https://misosoupy.readthedocs.io/en/stable/
-.. image:: https://img.shields.io/coveralls/github/miso-sound/misosoupy/main.svg
-    :alt: Coveralls
-    :target: https://coveralls.io/r/miso-sound/misosoupy
-    .. image:: https://img.shields.io/pypi/v/misosoupy.svg
-        :alt: PyPI-Server
-        :target: https://pypi.org/project/misosoupy/
-    .. image:: https://img.shields.io/conda/vn/conda-forge/misosoupy.svg
-        :alt: Conda-Forge
-        :target: https://anaconda.org/conda-forge/misosoupy
-    .. image:: https://pepy.tech/badge/misosoupy/month
-        :alt: Monthly Downloads
-        :target: https://pepy.tech/project/misosoupy
-|
+.. image:: https://img.shields.io/pypi/v/misosoupy.svg
+    :alt: PyPI-Server
+    :target: https://pypi.org/project/misosoupy/
 
 =========
 MisoSOUPy

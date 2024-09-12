@@ -20,8 +20,18 @@ Changed
 Fixed
 ~~~~~
 
+- Updated badges in README.
+
 Removed
 ~~~~~~~
+
+[0.1.1] - 2024-09-11
+--------------------
+
+Fixed
+~~~~~
+
+- Updated badges in README.
 
 [0.1.0] - 2024-09-11
 --------------------
