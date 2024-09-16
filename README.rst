@@ -44,7 +44,7 @@ Examples
 *Example: Instructions for selecting both Trigger and Neutral sounds, at least 5 in each.*
 
 .. figure:: ./docs/media/instructions3.png
-   :width: 100 px
+   :width: 500 px
 
 *Example: Instructions for selecting only Trigger sounds, at least 4.*
 
