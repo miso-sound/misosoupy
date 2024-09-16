@@ -17,10 +17,12 @@ Added
 Changed
 ~~~~~~~
 
+- Minor change to contributing guide (removed note).
+
 Fixed
 ~~~~~
 
-- Updated badges in README.
+- Updated badges and links in README.
 
 Removed
 ~~~~~~~
