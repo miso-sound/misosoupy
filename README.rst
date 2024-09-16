@@ -1,9 +1,6 @@
 .. These are examples of badges you might want to add to your README:
    please update the URLs accordingly
 
-.. image:: https://readthedocs.org/projects/misosoupy/badge/?version=latest
-    :alt: ReadTheDocs
-    :target: https://misosoupy.readthedocs.io/en/stable/
 .. image:: https://img.shields.io/pypi/v/misosoupy.svg
     :alt: PyPI-Server
     :target: https://pypi.org/project/misosoupy/
@@ -177,4 +174,4 @@ It is a good idea to update the hooks to the latest version::
     pre-commit autoupdate
 
 .. _pre-commit: https://pre-commit.com/
-.. _guide: https://misosoupy.readthedocs.io/en/stable/contributing.html
+.. _guide: https://github.com/miso-sound/misosoupy/blob/dev/CONTRIBUTING.rst
