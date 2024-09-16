@@ -17,15 +17,24 @@ Added
 Changed
 ~~~~~~~
 
+Fixed
+~~~~~
+
+Removed
+~~~~~~~
+
+[0.1.3] - 2024-09-16
+--------------------
+
+Changed
+~~~~~~~
+
 - Minor change to contributing guide (removed note).
 
 Fixed
 ~~~~~
 
 - Updated badges and links in README.
-
-Removed
-~~~~~~~
 
 [0.1.2] - 2024-09-11
 --------------------
