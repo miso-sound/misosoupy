@@ -12,8 +12,7 @@ If you are new to using `git <https://git-scm.com>`__ or have never
 collaborated in a project previously, please have a look at
 `contribution-guide.org <http://www.contribution-guide.org/>`__. Other
 resources are also listed in the excellent `guide created by
-FreeCodeCamp <https://github.com/freecodecamp/how-to-contribute-to-open-source>`__
- [1]_.
+FreeCodeCamp <https://github.com/freecodecamp/how-to-contribute-to-open-source>`__.
 
 Please notice, all users and contributors are expected to be **open,
 considerate, reasonable, and respectful**. When in doubt, `Python
@@ -284,10 +283,3 @@ used to release a new version for misosoupy:
    may have been accidentally included.
 6. Run tox -e publish – –repository pypi and check that everything was
    uploaded to `PyPI <https://pypi.org/>`__ correctly.
-
-.. [1]
-   Even though, these resources focus on open source projects and
-   communities, the general ideas behind collaborating with other
-   developers to collectively create software are general and can be
-   applied to all sorts of environments, including private companies and
-   proprietary code bases.
